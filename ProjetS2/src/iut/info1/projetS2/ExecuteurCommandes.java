@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2;
 
+import java.awt.Dimension;
+
 import javax.swing.JTextField;
 
 /**
@@ -13,11 +15,15 @@ import javax.swing.JTextField;
  */
 @SuppressWarnings("serial")
 public class ExecuteurCommandes extends JTextField {
+    
+    /** Dimensions de l'écran */
+    private static final Dimension dimensionExecuteur = new Dimension(400,30);
 
     /**
      * Créé un JTextField avec les propriétés de l'exécuteur de commandes
      */
     public ExecuteurCommandes() {
-        // TODO mettre les propriétés de l'exécuteur
+        super();
+        setPreferredSize(dimensionExecuteur);
     }
 }

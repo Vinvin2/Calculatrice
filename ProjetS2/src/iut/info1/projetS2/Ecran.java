@@ -4,6 +4,9 @@
  */
 package iut.info1.projetS2;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.JTextArea;
 
 /**
@@ -14,13 +17,23 @@ import javax.swing.JTextArea;
  */
 @SuppressWarnings("serial")
 public class Ecran extends JTextArea {
+    
+    /** Police d'écriture de l'écran */
+    private static final Font PoliceEcran = new Font("Verdana", Font.BOLD, 20);
+    /** Dimensions de l'écran */
+    private static final Dimension dimensionEcran = new Dimension(600,600);
 
     /**
      * Créé l'aire de texte correspondant à l'écran de contrôle des exécutions
      * de commandes
      */
     public Ecran() {
-        // TODO Auto-generated constructor stub
+        super();
+        setPreferredSize(dimensionEcran);
+        setFont(PoliceEcran);
+        setText("Bonsoir.");
+        setBackground(new Color(253,245,230));
+        setEditable(false);
     }
 
 }
