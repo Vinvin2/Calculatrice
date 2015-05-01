@@ -6,11 +6,9 @@ package iut.info1.projetS2;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-//import javax.swing.JOptionPane;
 
-//import java.awt.BorderLayout;
 import java.awt.Color;
-//import java.awt.GridLayout;
+
 
 /**
  * Création d'une interface graphique pour l'application Calculatrice
