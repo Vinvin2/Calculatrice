@@ -4,11 +4,14 @@
  */
 package iut.info1.projetS2;
 
+import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 
 /**
  * Classe qui permet de construire un bouton personnalisé
- * @author Sébastien
+ * @author groupe Projet
  *
  */
 @SuppressWarnings("serial")
@@ -20,7 +23,13 @@ public class Bouton extends JButton {
      */
     public Bouton(String texte) {
         super(texte);
-        // TODO mettre les propriétés de l'exécuteur
         
+     // On gère la taille des boutons
+     setPreferredSize(new Dimension(100, 60));
+ 
+     // On définit la couleur des boutons
+     setBackground(new Color(250,128,114));
+     
     }
+
 }

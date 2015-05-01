@@ -4,7 +4,6 @@
  */
 package iut.info1.projetS2;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 //import javax.swing.JOptionPane;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 //import java.awt.GridLayout;
-//import java.awt.Font;
 
 /**
  * Création d'une interface graphique pour l'application Calculatrice
@@ -27,11 +25,13 @@ public class Calculatrice extends JFrame {
 	/** Container principal de l'application */
 	private JPanel pan = new JPanel();
 	/** Bouton accueil */
-	private JButton boutonAcc = new JButton("ACCUEIL");
+	private Bouton boutonAcc = new Bouton("ACCUEIL");
 	/** Bouton aide */
-	private JButton boutonAide = new JButton("AIDE");
+	private Bouton boutonAide = new Bouton("AIDE");
 	/** Bouton quitter */
-	private JButton boutonQuit = new JButton("QUITTER");
+	private Bouton boutonQuit = new Bouton("QUITTER");
+	/** Bouton calculer */
+	private Bouton boutonCalc = new Bouton("CALCULER");
 
 	/**
 	 * Créé la fenêtre 
@@ -67,23 +67,14 @@ public class Calculatrice extends JFrame {
 		pan.add(boutonAcc);
 		pan.add(boutonAide);
 		pan.add(boutonQuit);
-
+		pan.add(boutonCalc);
+		
 //		GridLayout gl = new GridLayout();
 //		gl.setColumns(1); // Les boutons sont placés sur une colonne
 //		gl.setRows(3);    // et sur trois lignes
 //		this.setLayout(gl);
 //		gl.setHgap(8); //Cinq pixels d'espace entre les colonnes 
 //		gl.setVgap(8); //Cinq pixels d'espace entre les lignes 
-
-		// On gère la taille des boutons
-		boutonAcc.setPreferredSize(new Dimension(100, 60));
-		boutonAide.setPreferredSize(new Dimension(100, 60));
-		boutonQuit.setPreferredSize(new Dimension(100, 60));
-		
-		// On définit la couleur des boutons
-		boutonAcc.setBackground(new Color(250,128,114));
-		boutonAide.setBackground(new Color(250,128,114));
-		boutonQuit.setBackground(new Color(250,128,114));
 		
         // On rend visible la fenêtre
 		this.setVisible(true);
