@@ -24,11 +24,18 @@ import java.awt.Dimension;
 @SuppressWarnings("serial")
 public class Calculatrice extends JFrame {
 	
+	/** Container principal de l'application */
 	private JPanel pan = new JPanel();
+	/** Bouton accueil */
 	private JButton boutonAcc = new JButton("ACCUEIL");
+	/** Bouton aide */
 	private JButton boutonAide = new JButton("AIDE");
+	/** Bouton quitter */
 	private JButton boutonQuit = new JButton("QUITTER");
 
+	/**
+	 * Créé la fenêtre 
+	 */
 	public Calculatrice() {
 
 		super();
