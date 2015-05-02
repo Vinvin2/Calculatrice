@@ -73,12 +73,6 @@ public class Calculatrice extends JFrame {
 		pan.add(boutonQuit);
 		pan.add(boutonCalc);
 		
-//		GridLayout gl = new GridLayout();
-//		gl.setColumns(1); // Les boutons sont placés sur une colonne
-//		gl.setRows(3);    // et sur trois lignes
-//		this.setLayout(gl);
-//		gl.setHgap(8); //Cinq pixels d'espace entre les colonnes 
-//		gl.setVgap(8); //Cinq pixels d'espace entre les lignes 
 		
         // On rend visible la fenêtre
 		this.setVisible(true);
