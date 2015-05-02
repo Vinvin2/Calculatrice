@@ -32,7 +32,10 @@ public class Calculatrice extends JFrame {
 	private JButton boutonAide = new JButton("AIDE");
 	/** Bouton quitter */
 	private JButton boutonQuit = new JButton("QUITTER");
-
+	/** Ecran où les commandes et leur résultat seront affichées */
+	private Ecran ecran = new Ecran();
+        /** Champ de texte pour les exécutions de commandes */
+        private ExecuteurCommandes executeur = new ExecuteurCommandes();
 	/**
 	 * Créé la fenêtre 
 	 */
@@ -44,7 +47,7 @@ public class Calculatrice extends JFrame {
 		this.setTitle("Calculatrice");
 
 		// On définit la taille de la fenêtre
-		this.setSize(800, 600);
+		this.setSize(900, 700);
 
 		// On place la fenêtre au centre de l'écran
 		this.setLocationRelativeTo(null);
@@ -64,6 +67,8 @@ public class Calculatrice extends JFrame {
 		//Ajout des boutons à notre content pane
 		this.setContentPane(pan);
 		// Ces boutons sont placés sur la partie gauche de la fenêtre
+		pan.add(ecran);
+		pan.add(executeur);
 		pan.add(boutonAcc);
 		pan.add(boutonAide);
 		pan.add(boutonQuit);
