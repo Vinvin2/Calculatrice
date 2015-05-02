@@ -7,7 +7,8 @@ package iut.info1.projetS2;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 
 /**
@@ -20,13 +21,23 @@ import java.awt.Color;
 public class Calculatrice extends JFrame {
 	
 	/** Container principal de l'application */
-	private JPanel pan = new JPanel();
+	private Container containerPrincipal = new Container(900, 700);
+	
+	/** panel contenant les boutons de navigation */
+	private Container containerNavigation = new Container(100, 700);
+	
+	/** panel contenant les boutons de navigation */
+        private Container containerExecution = new Container(700, 700);
+	
 	/** Bouton accueil */
 	private Bouton boutonAcc = new Bouton("ACCUEIL");
+	
 	/** Bouton aide */
 	private Bouton boutonAide = new Bouton("AIDE");
+	
 	/** Bouton quitter */
 	private Bouton boutonQuit = new Bouton("QUITTER");
+	
 	/** Bouton calculer */
 	private Bouton boutonCalc = new Bouton("CALCULER");
 
@@ -57,23 +68,27 @@ public class Calculatrice extends JFrame {
 		// On empêche la modification de la taille de la fenêtre
 		this.setResizable(false);
 
-		// On définit la couleur de fond de la fenêtre 
-		pan.setBackground(new Color(255,228,196)); 
+
 		
 		// On prévient notre JFrame que notre JPanel sera son content pane
-		this.setContentPane(pan);
+		this.setContentPane(containerPrincipal);
 
 		//Ajout des boutons à notre content pane
-		this.setContentPane(pan);
+		this.setContentPane(containerPrincipal);
 		// Ces boutons sont placés sur la partie gauche de la fenêtre
-		pan.add(ecran);
-		pan.add(executeur);
-		pan.add(boutonAcc);
-		pan.add(boutonAide);
-		pan.add(boutonQuit);
-		pan.add(boutonCalc);
 		
+		containerNavigation.add(boutonAcc);
+		containerNavigation.add(boutonAide);
+		containerNavigation.add(boutonQuit);
 		
+		containerExecution.add(ecran);
+		containerExecution.add(executeur);
+	        containerExecution.add(boutonCalc);
+	        
+                containerPrincipal.add(containerNavigation);	        
+                containerPrincipal.add(containerExecution);		
+
+
         // On rend visible la fenêtre
 		this.setVisible(true);
 

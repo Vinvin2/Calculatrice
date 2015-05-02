@@ -24,6 +24,8 @@ public class ExecuteurCommandes extends JTextField {
      */
     public ExecuteurCommandes() {
         super();
+        
+        // taille
         setPreferredSize(dimensionExecuteur);
     }
 }
