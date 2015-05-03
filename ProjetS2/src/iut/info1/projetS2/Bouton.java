@@ -23,13 +23,13 @@ public class Bouton extends JButton {
      */
     public Bouton(String texte) {
         super(texte);
-        
-     // On gère la taille des boutons
-     setPreferredSize(new Dimension(100, 60));
- 
-     // On définit la couleur des boutons
-     setBackground(new Color(250,128,114));
-     
+
+        // On gère la taille des boutons
+        setPreferredSize(new Dimension(100, 60));
+
+        // On définit la couleur des boutons
+        setBackground(new Color(250,128,114));
+
     }
 
 }

@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class Container extends JPanel {
-    
+
     /**
      * Créé un JPanel avec les propriétés voulues
      * @param longueur du panel
@@ -24,10 +24,10 @@ public class Container extends JPanel {
      */
     public Container(int largeur, int longueur) {
         super();
-        
+
         // On définit la couleur de fond du panel
         setBackground(new Color(255,228,196));
-        
+
         // dimensions du panel
         Dimension dimContainer = new Dimension(largeur, longueur);
         setPreferredSize(dimContainer);

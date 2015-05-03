@@ -15,7 +15,7 @@ import javax.swing.JTextField;
  */
 @SuppressWarnings("serial")
 public class ExecuteurCommandes extends JTextField {
-    
+
     /** Dimensions de l'écran */
     private static final Dimension dimensionExecuteur = new Dimension(400,30);
 
@@ -24,7 +24,7 @@ public class ExecuteurCommandes extends JTextField {
      */
     public ExecuteurCommandes() {
         super();
-        
+
         // taille
         setPreferredSize(dimensionExecuteur);
     }
