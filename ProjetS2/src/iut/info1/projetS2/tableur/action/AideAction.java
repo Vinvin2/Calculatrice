@@ -4,30 +4,25 @@
  */
 package iut.info1.projetS2.tableur.action;
 
-import iut.info1.projetS2.tableur.Tableur;
-
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
 /** 
- * 
+ * Permet d'afficher l'aide lors de l'activation de l'évènement
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class AideAction extends AbstractAction {
     
-    private Tableur fenetre;
-    
     /**
-     * TODO commenter l'état initial atteint
-     * @param fenetre à afficher
-     * @param texte nom du menu
+     * 
+     * @param texte nom du sous-menu
      */
-    public AideAction(Tableur fenetre, String texte) {
+    public AideAction(String texte) {
         super(texte);
-        
-        this.fenetre = fenetre;
+
     }
 
     /**

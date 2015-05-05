@@ -13,20 +13,29 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
 
-/** TODO commenter la responsabilité de cette classe
+/** 
+ * Permet l'ajout d'en-têtes pour les lignes
  * @author Mickaël
  * @version 0.1
  */
 
+@SuppressWarnings({ "serial", "rawtypes" })
 class RowHeaderRenderer extends JLabel implements ListCellRenderer {
 
-    /** TODO commenter l'état initial atteint
-     * @param table
+    /** 
+     * Initilisation de nos en-têtes
+     * @param table notre tableur
      */
     RowHeaderRenderer(JTable table) {
         JTableHeader header = table.getTableHeader();
+        
+        // On rend la case opaque
         setOpaque(true);
+        
+        // 
         setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+        
+        // On centre nos nombres
         setHorizontalAlignment(CENTER);
         setForeground(header.getForeground());
         setBackground(header.getBackground());

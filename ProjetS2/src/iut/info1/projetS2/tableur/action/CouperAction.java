@@ -8,14 +8,17 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-/** TODO commenter la responsabilité de cette classe
+/**
+ * Permet de couper le texte à l'intérieur de la console dans le presse-papier
+ * lors de l'activation de l'évènement
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class CouperAction extends AbstractAction {
 
     /**
-     * TODO commenter l'état initial atteint
+     * 
      * @param texte nom du menu
      */
     public CouperAction(String texte) {

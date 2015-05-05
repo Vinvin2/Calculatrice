@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  * Paramétrage des panels de la calculatrice
- * @author Sébastien
+ * @author Mickael
  *
  */
 @SuppressWarnings("serial")

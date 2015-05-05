@@ -16,14 +16,17 @@ import javax.swing.AbstractAction;
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class GetAction extends AbstractAction {
     
+    /** */
+    @SuppressWarnings("unused")
     private Tableur fenetre;
     
     /**
-     * TODO commenter l'état initial atteint
+     * 
      * @param fenetre
-     * @param texte
+     * @param texte nom de notre sous-menu
      */
     public GetAction(Tableur fenetre, String texte) {
         super(texte);
@@ -33,10 +36,8 @@ public class GetAction extends AbstractAction {
     }
     
     /**
-     * 
+     * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
-        String aRenvoyer = fenetre.getConsole().getText();
-        fenetre.getLabel().setText(aRenvoyer);
     }
 }

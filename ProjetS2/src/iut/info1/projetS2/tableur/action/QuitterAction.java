@@ -11,16 +11,20 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
-/** TODO commenter la responsabilité de cette classe
+/** 
+ * Permet de fermer le tableur et de revenir au menu lors de l'activation de 
+ * cet évènement
  * @author Mickaël
  * @version 0.1
  */
 @SuppressWarnings("serial")
 public class QuitterAction extends AbstractAction {
     
+    /** fenêtre à fermer */
     private JFrame fenetre;
+    
     /**
-     * TODO commenter l'état initial atteint
+     *
      * @param fenetre fenetre à fermer
      * @param texte nom du menu
      */

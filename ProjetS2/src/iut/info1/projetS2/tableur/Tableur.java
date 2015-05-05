@@ -92,7 +92,7 @@ public class Tableur extends JFrame{
     }
 
     /** 
-     * Initialisation de notre fenetre du tableur
+     * Initialisation de la fenetre du tableur
      */
     private void build() {
         
@@ -141,8 +141,8 @@ public class Tableur extends JFrame{
         }
     };
         
-    /** TODO commenter le rôle de la méthode
-     * 
+    /**
+     * Permet de créer et d'initialiser notre table de 20 lignes et 26 colonnes
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void buildTableur() {
@@ -182,7 +182,8 @@ public class Tableur extends JFrame{
     }
 
     /** 
-     * Initialisation de notre menu
+     * Permet d'initialiser la barre de menu et d'y ajouter tous les menus 
+     * à l'intérieur
      */
     private void buildMenu() {
         
@@ -220,7 +221,7 @@ public class Tableur extends JFrame{
         menuAutre = new JMenu("?");
         
         // Ajout du sous-menu aide
-        item = new JMenuItem(new AideAction(this,"Aide"));
+        item = new JMenuItem(new AideAction("Aide"));
         menuAutre.add(item);
         
         // Ajout du sous-menu à propos
@@ -285,7 +286,9 @@ public class Tableur extends JFrame{
     
     
 
-    /** TODO commenter le rôle de la méthode
+    /** TODO 
+     * Permet de créer et d'initialiser toutes nos JPaneln notre JButton et 
+     * notre JTextField
      * @return notre panel
      */
     private JPanel buildContentPane() {
@@ -322,7 +325,7 @@ public class Tableur extends JFrame{
     }
 
     /** 
-     * Initialisation du bouton valider pour la console
+     * création et initialisation du bouton valider pour la console
      */
     private void buildJButton() {
 

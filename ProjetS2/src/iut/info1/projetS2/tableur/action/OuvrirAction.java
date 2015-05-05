@@ -8,14 +8,17 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-/** TODO commenter la responsabilité de cette classe
+/** 
+ * Permet de charger un fichier tableur lors de l'activation de 
+ * cet évènement
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class OuvrirAction extends AbstractAction {
 
     /**
-     * TODO commenter l'état initial atteint
+     * 
      * @param texte nom du menu
      */
     public OuvrirAction(String texte) {

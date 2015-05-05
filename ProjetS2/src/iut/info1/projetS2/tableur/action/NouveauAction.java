@@ -8,14 +8,16 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-/** TODO commenter la responsabilité de cette classe
+/** 
+ * Permet d'ouvrir un nouveau tableur lors de l'activation de notre évènement
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class NouveauAction extends AbstractAction {
     
     /**
-     * TODO commenter l'état initial atteint
+     * 
      * @param texte nom du menu
      */
     public NouveauAction(String texte) {

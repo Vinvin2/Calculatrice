@@ -11,18 +11,19 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-/** TODO commenter la responsabilité de cette classe
+/** 
+ * Permet d'afficher des informations lors de l'activation de l'évènement
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class AProposAction extends AbstractAction {
   
     private Tableur fenetre;
     
     /**
-     * TODO commenter l'état initial atteint
-     * @param fenetre
-     * @param texte
+     * @param fenetre fenetre dans laquelle on affiche le message
+     * @param texte nom du sous-menu
      */
     public AProposAction(Tableur fenetre, String texte) {
         super(texte);
@@ -30,6 +31,9 @@ public class AProposAction extends AbstractAction {
         this.fenetre = fenetre;
     }
     
+    /**
+     * Permet d'affecter une tache lors du déclenchement de l'évennement
+     */
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(fenetre, "Ce programme a été développé "
                                      + "par PERIES Mickaël et MIQUEL Jonathan");
