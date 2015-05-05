@@ -6,8 +6,7 @@ package iut.info1.projetS2;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,10 +16,11 @@ import java.util.regex.Pattern;
  * @author Sébastien
  *
  */
-public class ActionCalculer implements ActionListener, KeyListener {
+public class ActionCalculer implements ActionListener {
 
     /** Modèle d'expression du calcul sous forme de chaîne de caractères */
-    public static final Pattern REG_EX_CALCUL_SIMPLE = Pattern.compile("(\\d{1,15})[ ]*([+-/*])[ ]*(\\d{1,15})");
+    public static final Pattern REG_EX_CALCUL_SIMPLE = 
+            Pattern.compile("[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*([+-/*])[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
 
     /** Champ de texte pour les exécutions de commandes */
     private ExecuteurCommandes executeurAssocie;
@@ -52,22 +52,31 @@ public class ActionCalculer implements ActionListener, KeyListener {
      * Calcule et affiche le résultat de la commande
      */
     private void calcul() {
+        // on récupère le texte du textfield exécuteur de commandes
         String commande = executeurAssocie.getText();
-
+        
+        // on en insère le contenu dans l'écran
         ecran.insert(commande + "\n", ecran.getText().length() + 1);
+ 
 
         Matcher correcte = REG_EX_CALCUL_SIMPLE.matcher(commande);
-        int operande1,
-        operande2;
-        char operateur;
+        double operande1;       // 1ère opérande de l'opération
+        double operande2;       // 2ème opérande de l'opération
+        char operateur;         // opérateur de l'opération
 
-        int resultat = 0;
 
-        if (correcte.matches()) {
-            operande1 = Integer.parseInt(correcte.group(1));
+
+        if (correcte.matches()) {           
+            double resultat;    // résultat de l'opération
+            
+            // on transforme le premier nombre récupéré en double
+            // et on le stocke dans operande1, on fait de même pour l'operande2
+            operande1 = Double.parseDouble(correcte.group(1)); 
+            // on stocke l'opérateur
             operateur = correcte.group(2).charAt(0);
-            operande2 = Integer.parseInt(correcte.group(3));
+            operande2 = Double.parseDouble(correcte.group(3));
 
+            // on réalise le calcul associé à l'opérateur
             switch (operateur) {
             case '+':
                 resultat = operande1 + operande2;
@@ -78,49 +87,21 @@ public class ActionCalculer implements ActionListener, KeyListener {
             case '*':
                 resultat = operande1 * operande2;
                 break;
-            case '/':
+            default:
                 resultat = operande1 / operande2;
                 break;
-            default: 
-                break;
             }
-
+            // on l'affiche à la fin de l'écran
             ecran.insert("= " + resultat + "\n", ecran.getText().length() + 1);
 
         } else {
+            // si la syntaxe est erronée, on affiche une erreur
             ecran.insert("Erreur, la commande entrée n\'est pas disponible.\n", 
                     ecran.getText().length() + 1);
         }
-
+        // on vide le textfield executeur de commandes
         executeurAssocie.setText("");
 
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-     */
-    @Override
-    public void keyPressed(KeyEvent arg0) {
-        if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-            calcul();
-        }
-
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
-     */
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // ne fait rien
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-     */
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // ne fait rien
     }
 
 }
