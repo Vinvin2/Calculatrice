@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * On calcule le résultat de la commande entrée, on affiche cette commande
  * et le résultat sur l'écran
  * @author Sébastien
- *
+ * @version 0.1
  */
 public class ActionCalculer implements ActionListener {
 

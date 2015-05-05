@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 /**
  * Création d'une interface graphique pour l'application Calculatrice
  * @author 20-20
+ * @version 0.1
  */
 
 @SuppressWarnings("serial")
@@ -88,6 +89,7 @@ public class Calculatrice extends JFrame {
         this.setVisible(true);
 
         // on ajoute les actions qu'auront les différents boutons
+        boutonAcc.addActionListener(new ActionAccueil(this));
         boutonCalc.addActionListener(new ActionCalculer(this.executeur, this.ecran));
         boutonQuit.addActionListener(new ActionQuitter());
         getRootPane().setDefaultButton(boutonCalc);

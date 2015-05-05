@@ -17,6 +17,7 @@ import javax.swing.table.JTableHeader;
  * @author Mickaël
  * @version 0.1
  */
+
 class RowHeaderRenderer extends JLabel implements ListCellRenderer {
 
     /** TODO commenter l'état initial atteint

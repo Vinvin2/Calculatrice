@@ -21,8 +21,7 @@ public class Lanceur {
             public void run(){
                 //On crée une nouvelle instance de notre JDialog
                 Tableur fenetre = new Tableur();
-               
-                
+                        
             }
         });
     }

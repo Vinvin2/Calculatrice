@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 /**
  * Créé le champ permettant d'exécuter des commandes entrées en console
  * @author Sébastien
- *
+ * @version 0.1
  */
 @SuppressWarnings("serial")
 public class ExecuteurCommandes extends JTextField {

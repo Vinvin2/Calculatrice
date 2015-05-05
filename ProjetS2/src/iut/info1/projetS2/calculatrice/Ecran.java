@@ -7,20 +7,24 @@ package iut.info1.projetS2.calculatrice;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+
+//import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
  * L'écran est un JTextField ayant les propriétés de l'écran de contrôle des
  * exécutions de commandes
  * @author Sébastien
- *
+ * @version 0.1
  */
 @SuppressWarnings("serial")
 public class Ecran extends JTextArea {
 
     /** Police d'écriture de l'écran */
     private static final Font PoliceEcran = new Font("Verdana", Font.PLAIN, 15);
+    
     /** Dimensions de l'écran */
+    
     private static final Dimension dimensionEcran = new Dimension(600, 550);
 
     /**
@@ -30,20 +34,19 @@ public class Ecran extends JTextArea {
     public Ecran() {
         super();
 
-        // taille de l'écran
+        // Taille de l'écran
         setPreferredSize(dimensionEcran);
 
-        // police
+        // Police
         setFont(PoliceEcran);
 
-        // texte initial
+        // Texte initial
         setText("Entrez votre calcul, puis cliquez sur \"Calculer\".\n");
 
-
-        // couleur de fond
+        // Couleur de fond
         setBackground(new Color(253,245,230));
-
-        // zone non modifiable de texte
+        
+        // On empêche l'écran d'être éditable 
         setEditable(false);
     }
 

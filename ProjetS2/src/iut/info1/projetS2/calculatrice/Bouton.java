@@ -12,7 +12,7 @@ import javax.swing.JButton;
 /**
  * Classe qui permet de construire un bouton personnalisé
  * @author groupe Projet
- *
+ * @version 0.1
  */
 @SuppressWarnings("serial")
 public class Bouton extends JButton {

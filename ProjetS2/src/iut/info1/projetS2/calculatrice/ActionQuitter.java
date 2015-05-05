@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 /**
  * On quitte l'application via le bouton quitter
  * @author Sébastien
- *
+ * @version 0.1
  */
 public class ActionQuitter implements ActionListener {
 

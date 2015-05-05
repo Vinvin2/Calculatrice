@@ -14,7 +14,7 @@ import javax.swing.JButton;
 /**
  * Classe qui permet de construire un bouton personnalisé
  * @author groupe Projet
- *
+ * @version 0.1
  */
 @SuppressWarnings("serial")
 public class BoutonMenu extends JButton {
@@ -27,10 +27,11 @@ public class BoutonMenu extends JButton {
         super(texte);
 
         // On gère la taille des boutons
-        setPreferredSize(new Dimension(400, 150));
+        setPreferredSize(new Dimension(500, 150));
 
         // On définit la couleur des boutons
         setBackground(new Color(250,128,114));
+        
 
     }
 

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 /**
  * Paramétrage des panels de la calculatrice
  * @author Sébastien
- *
+ * @version 0.1
  */
 @SuppressWarnings("serial")
 public class Container extends JPanel {

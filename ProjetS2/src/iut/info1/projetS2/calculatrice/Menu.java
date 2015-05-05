@@ -9,10 +9,12 @@ import javax.swing.JFrame;
 
 /**
  * Création d'un menu qui offrira trois possibilités :
- * <ul><li>Mini Calculatrice<li>
+ * <ul><li>Mini Calculatrice</li>
  * 	   <li>Mini Tableur</li>
  * 	   <li>Quitter l'application</li>
+ * </ul>
  * @author 20-20
+ * @version 0.1
  */
 
 @SuppressWarnings("serial")
@@ -67,9 +69,13 @@ public class Menu extends JFrame {
 		
 		// On affecte une action pour chaque bouton
 		boutonQuit2.addActionListener(new ActionQuitter());
+		boutonCalculatrice.addActionListener(new ActionCalculatrice(this));
+		boutonTab.addActionListener(new ActionTableur(this));
 
 		// On rend visible la fenêtre
 		this.setVisible(true);
+		
+		containerPrincipal.add(containerNavigation);
 		
 	}
 }

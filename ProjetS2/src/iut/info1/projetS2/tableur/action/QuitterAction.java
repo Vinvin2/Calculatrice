@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2.tableur.action;
 
+import iut.info1.projetS2.calculatrice.Menu;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -12,6 +14,7 @@ import javax.swing.AbstractAction;
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class QuitterAction extends AbstractAction {
     
     /**
@@ -26,6 +29,7 @@ public class QuitterAction extends AbstractAction {
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
-        System.exit(0);
+    	new Menu();
+		//TODO fermer la fenetre tableur
     }
 }
