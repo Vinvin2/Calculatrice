@@ -11,11 +11,11 @@ package iut.info1.projetS2;
 public class Executeur {
 
     /**
-     * Méthode principale : lance la Calculatrice
+     * Méthode principale : lance l'application
      * @param args non utilisé
      */
     public static void main(String[] args) {
-        new Calculatrice();
+        new Menu();
     }
 
 }

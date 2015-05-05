@@ -6,7 +6,6 @@ package iut.info1.projetS2;
 
 import javax.swing.JFrame;
 
-
 /**
  * Création d'une interface graphique pour l'application Calculatrice
  * @author 20-20
@@ -42,13 +41,13 @@ public class Calculatrice extends JFrame {
     private ExecuteurCommandes executeur = new ExecuteurCommandes();
 
     /**
-     * Créé la fenêtre 
+     * Créé la fenêtre qui contiendra la mini-calculatrice
      */
     public Calculatrice() {
 
         super();
 
-        //Définit un titre pour la fenêtre
+        // On définit un titre pour la fenêtre
         this.setTitle("Calculatrice");
 
         // On définit la taille de la fenêtre
@@ -63,30 +62,27 @@ public class Calculatrice extends JFrame {
         // On empêche la modification de la taille de la fenêtre
         this.setResizable(false);
 
-
-
         // On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(containerPrincipal);
 
-        //Ajout des boutons à notre content pane
+        // Ajout des boutons à notre content pane
         this.setContentPane(containerPrincipal);
+        
         // Ces boutons sont placés sur la partie gauche de la fenêtre
-
         containerNavigation.add(boutonAcc);
         containerNavigation.add(boutonAide);
         containerNavigation.add(boutonQuit);
 
-        // les autres champs seront à droite
+        // Les autres champs seront à droite
         containerExecution.add(ecran);
         containerExecution.add(executeur);
         containerExecution.add(boutonCalc);
 
-        // les containers sont placés dans l'ordre suivant
-        // cela permet d'avoir les boutons de navigation en premier
+        // Les containers sont placés dans l'ordre suivant
+        // Cela permet d'avoir les boutons de navigation en premier
         // (a gauche)
         containerPrincipal.add(containerNavigation);	        
         containerPrincipal.add(containerExecution);		
-
 
         // On rend visible la fenêtre
         this.setVisible(true);

@@ -1,6 +1,6 @@
 /**
  * ExecuteurCommandes.java					2 mai 2015
- * IUT Info 1 2014/2015 groupe 3
+ * IUT Info 1 2014/2015 groupe projet
  */
 package iut.info1.projetS2;
 
@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 public class ExecuteurCommandes extends JTextField {
 
     /** Dimensions de l'écran */
-    private static final Dimension dimensionExecuteur = new Dimension(400,30);
+    private static final Dimension dimensionExecuteur = new Dimension(495,30);
 
     /**
      * Créé un JTextField avec les propriétés de l'exécuteur de commandes
