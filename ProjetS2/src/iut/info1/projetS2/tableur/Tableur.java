@@ -279,7 +279,7 @@ public class Tableur extends JFrame{
         menuFichier.add(item);
         
         // Ajout du sous-menu quitter
-        item = new JMenuItem(new QuitterAction("Quitter"));
+        item = new JMenuItem(new QuitterAction(this, "Quitter"));
         menuFichier.add(item);       
     }
     

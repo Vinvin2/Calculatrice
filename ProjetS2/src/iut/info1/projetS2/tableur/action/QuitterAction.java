@@ -9,6 +9,7 @@ import iut.info1.projetS2.calculatrice.Menu;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 
 /** TODO commenter la responsabilité de cette classe
  * @author Mickaël
@@ -17,19 +18,28 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class QuitterAction extends AbstractAction {
     
+    private JFrame fenetre;
     /**
      * TODO commenter l'état initial atteint
+     * @param fenetre fenetre à fermer
      * @param texte nom du menu
      */
-    public QuitterAction(String texte) {
+    public QuitterAction(JFrame fenetre, String texte) {
         super(texte);
+        
+        this.fenetre = fenetre;
     }
 
     /**
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
+        
+        // On ouvre le menu
     	new Menu();
-		//TODO fermer la fenetre tableur
+    	
+    	// On ferme notre tableur
+    	fenetre.dispose();
+		
     }
 }
