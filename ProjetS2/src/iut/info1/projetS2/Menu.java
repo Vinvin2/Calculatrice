@@ -70,6 +70,6 @@ public class Menu extends JFrame {
 
 		// On rend visible la fenêtre
 		this.setVisible(true);
-
+		
 	}
 }
