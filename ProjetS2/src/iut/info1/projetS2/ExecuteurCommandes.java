@@ -9,7 +9,7 @@ import java.awt.Dimension;
 import javax.swing.JTextField;
 
 /**
- * Créé le champ permettant d'exécuter des commandes
+ * Créé le champ permettant d'exécuter des commandes entrées en console
  * @author Sébastien
  *
  */
