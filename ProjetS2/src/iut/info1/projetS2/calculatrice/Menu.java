@@ -3,7 +3,7 @@
  * IUT Info 1 2014/2015 groupe projet
  */
 
-package iut.info1.projetS2;
+package iut.info1.projetS2.calculatrice;
 
 import javax.swing.JFrame;
 
