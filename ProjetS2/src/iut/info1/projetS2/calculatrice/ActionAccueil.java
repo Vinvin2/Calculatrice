@@ -11,29 +11,29 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- * Permet d'ouvrir la calculatric et de fermer le menu de l'appli
+ * Permet d'ouvrir le menu et de fermer la calculatrice
  * @author 20-20
  * @version 0.1
  */
 public class ActionAccueil implements ActionListener {
 
-	/** TODO commenter le rôle de ce champ */
-	private JFrame fenetre;
-	
+    /** Fenêtre que l'on devra fermer aprés avoir lancé la fenêtre d'accueil */
+    private JFrame fenetre;
+
     /**
-     * TODO commenter l'état initial atteint
+     * On récupère la fenêtre à fermer
      * @param fenetre
      */
     public ActionAccueil(JFrame fenetre) {
-    	
+
         this.fenetre = fenetre;
-        
+
     }
-    
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		new Menu();
-		fenetre.dispose();
-	}
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        new Menu();
+        fenetre.dispose();
+    }
 
 }

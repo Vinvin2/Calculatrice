@@ -13,17 +13,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- * Permet d'ouvrir la calculatric et de fermer le menu de l'appli
+ * Permet d'ouvrir le tableur et de fermer le menu de l'appli
  * @author 20-20
  * @version 0.1
  */
 public class ActionTableur implements ActionListener {
 
-	/** TODO commenter le rôle de ce champ */
+	/** fenêtre que l'on devra fermer */
 	private JFrame fenetre;
 	
     /**
-     * TODO commenter l'état initial atteint
+     * On récupère la fenêtre à fermer
      * @param fenetre
      */
     public ActionTableur(JFrame fenetre) {

@@ -35,10 +35,10 @@ public class ActionCalculer implements ActionListener {
      * @param ecran 
      */
     public ActionCalculer(ExecuteurCommandes executeur, Ecran ecran) {
-    	
+
         this.executeurAssocie = executeur;
         this.ecran = ecran;
-        
+
     }
 
     /* (non-Javadoc)
@@ -53,10 +53,10 @@ public class ActionCalculer implements ActionListener {
      * Calcule et affiche le résultat de la commande
      */
     private void calcul() {
-    	
+
         // on récupère le texte du textfield exécuteur de commandes
         String commande = executeurAssocie.getText();
-        
+
         // on en insère le contenu dans l'écran
         ecran.insert(commande + "\n", ecran.getText().length() + 1);
 
@@ -64,11 +64,12 @@ public class ActionCalculer implements ActionListener {
         double operande1;       // 1ère opérande de l'opération
         double operande2;       // 2ème opérande de l'opération
         char operateur;         // opérateur de l'opération
-        
 
-        if (correcte.matches()) {           
+
+        if (correcte.matches() && correcte.group(1).charAt(correcte.group(1).length() - 1) != '.'
+                && correcte.group(3).charAt(correcte.group(3).length() - 1) != '.') {           
             double resultat;    // résultat de l'opération
-            
+
             // On transforme le premier nombre récupéré en double
             // et on le stocke dans operande1, on fait de même pour l'operande2
             operande1 = Double.parseDouble(correcte.group(1)); 
@@ -96,7 +97,7 @@ public class ActionCalculer implements ActionListener {
 
         } else {
             // Si la syntaxe est erronée, on affiche une erreur
-            ecran.insert("Erreur, la commande entrée n\'est pas disponible.\n", 
+            ecran.insert("Erreur, le calcul entré est erroné.\n", 
                     ecran.getText().length() + 1);
         }
         // On vide le textfield executeur de commandes
