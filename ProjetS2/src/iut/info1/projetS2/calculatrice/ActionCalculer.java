@@ -7,9 +7,6 @@ package iut.info1.projetS2.calculatrice;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * On calcule le résultat de la commande entrée, on affiche cette commande
  * et le résultat sur l'écran
@@ -17,10 +14,6 @@ import java.util.regex.Pattern;
  * @version 0.1
  */
 public class ActionCalculer implements ActionListener {
-
-    /** Modèle d'expression du calcul sous forme de chaîne de caractères */
-    public static final Pattern REG_EX_CALCUL_SIMPLE = 
-            Pattern.compile("[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*([+-/*])[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
 
     /** Champ de texte pour les exécutions de commandes */
     private ExecuteurCommandes executeurAssocie;
@@ -46,63 +39,17 @@ public class ActionCalculer implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        calcul();
-    }
-
-    /**
-     * Calcule et affiche le résultat de la commande
-     */
-    private void calcul() {
-
         // on récupère le texte du textfield exécuteur de commandes
         String commande = executeurAssocie.getText();
-
-        // on en insère le contenu dans l'écran
+        
+        // on récupère le résultat de la commande
+        String resultat = Utilitaires.calcul(commande);
+        
+        // on insère la commande et son résultat à l'écran
         ecran.insert(commande + "\n", ecran.getText().length() + 1);
-
-        Matcher correcte = REG_EX_CALCUL_SIMPLE.matcher(commande);
-        double operande1;       // 1ère opérande de l'opération
-        double operande2;       // 2ème opérande de l'opération
-        char operateur;         // opérateur de l'opération
-
-
-        if (correcte.matches() && correcte.group(1).charAt(correcte.group(1).length() - 1) != '.'
-                && correcte.group(3).charAt(correcte.group(3).length() - 1) != '.') {           
-            double resultat;    // résultat de l'opération
-
-            // On transforme le premier nombre récupéré en double
-            // et on le stocke dans operande1, on fait de même pour l'operande2
-            operande1 = Double.parseDouble(correcte.group(1)); 
-            // On stocke l'opérateur
-            operateur = correcte.group(2).charAt(0);
-            operande2 = Double.parseDouble(correcte.group(3));
-
-            // On réalise le calcul associé à l'opérateur
-            switch (operateur) {
-            case '+':
-                resultat = operande1 + operande2;
-                break;
-            case '-':
-                resultat = operande1 - operande2;
-                break;
-            case '*':
-                resultat = operande1 * operande2;
-                break;
-            default:
-                resultat = operande1 / operande2;
-                break;
-            }
-            // On l'affiche à la fin de l'écran
-            ecran.insert("= " + resultat + "\n", ecran.getText().length() + 1);
-
-        } else {
-            // Si la syntaxe est erronée, on affiche une erreur
-            ecran.insert("Erreur, le calcul entré est erroné.\n", 
-                    ecran.getText().length() + 1);
-        }
+        ecran.insert(resultat, ecran.getText().length() + 1);
+        
         // On vide le textfield executeur de commandes
         executeurAssocie.setText("");
-
     }
-
 }
