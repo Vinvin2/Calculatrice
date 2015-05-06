@@ -1,4 +1,4 @@
-/**
+/*
  * Bouton.java					2 mai 2015
  * IUT Info 1 2014/2015 groupe projet
  */
