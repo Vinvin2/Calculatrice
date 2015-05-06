@@ -27,6 +27,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListModel;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 /** 
@@ -48,7 +49,7 @@ public class Tableur extends JFrame{
     private JTextField console;
     
     /** Modele de table par défaut */
-    private DefaultTableModel dm;
+    private AbstractTableModel modele;
     
     /** Tableur de notre application */
     private JTable tableur;
@@ -62,6 +63,9 @@ public class Tableur extends JFrame{
     
     /** Bouton valider de notre application */
     private JButton valider;
+    
+    /** Dollar à afficher */
+    private JLabel dollar;
     
     /** Texte à afficher */
     private JLabel label;
@@ -149,10 +153,12 @@ public class Tableur extends JFrame{
     private void buildTableur() {
         
         // Création d'un modèle de table
-        dm = new DefaultTableModel(lm.getSize(), 26); 
+        modele = new DefaultTableModel(lm.getSize(), 26); 
         
+        // Création d'un modèle de table
+        modele = new modeleDeTable();
         // Création du tableur
-        tableur = new JTable(dm);
+        tableur = new JTable(modele);
         
         // On empèche le repositionnement automatique
         tableur.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -327,6 +333,14 @@ public class Tableur extends JFrame{
         // On initialise notre JButton
         buildJButton();
         
+        // On initialise nos JLabel
+        buildJLabel();
+        
+        container.add(label);
+        
+        // Ajout du dollar dans notre JPane
+        panelConsole.add(dollar);
+
         // ajout de la console dans notre JPanel
         panelConsole.add(console);
         
@@ -337,6 +351,23 @@ public class Tableur extends JFrame{
         container.add(panelConsole);
         
         return container;
+        
+    }
+
+    /** TODO commenter le rôle de la méthode
+     * 
+     */
+    private void buildJLabel() {
+        label = new JLabel("Rien pour le moment");
+        
+     
+        dollar = new JLabel("$");
+        
+        // Déclaration d'une police et d'une taille
+        Font f = new Font("Serif", Font.PLAIN, 32);
+        
+        // Ajout de la police à notre console
+        dollar.setFont(f);
         
     }
 
@@ -383,9 +414,7 @@ public class Tableur extends JFrame{
         
         // On peut écrire à l'intérieur
         console.setEditable(true);
-       
-        // Texte par défaut 
-        console.setText("$");
+
     }
 
     /**
@@ -403,10 +432,10 @@ public class Tableur extends JFrame{
     }
 
     /**
-     * @return the dm
+     * @return the modele
      */
-    public DefaultTableModel getDm() {
-        return dm;
+    public AbstractTableModel getModele() {
+        return modele;
     }
 
     /**

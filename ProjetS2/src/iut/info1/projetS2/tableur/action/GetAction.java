@@ -5,6 +5,7 @@
 package iut.info1.projetS2.tableur.action;
 
 import iut.info1.projetS2.tableur.Tableur;
+import iut.info1.projetS2.tableur.*;
 
 import java.awt.event.ActionEvent;
 
@@ -39,5 +40,7 @@ public class GetAction extends AbstractAction {
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
+        String aRenvoyer = fenetre.getConsole().getText();
+        fenetre.getLabel().setText(aRenvoyer);
     }
 }
