@@ -22,6 +22,8 @@ public class CouperAction extends AbstractAction {
      * @param texte nom du menu
      */
     public CouperAction(String texte) {
+        
+        // Prend les attributs de AbstractAction
         super(texte);
     }
 
