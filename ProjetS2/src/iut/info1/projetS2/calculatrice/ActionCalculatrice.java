@@ -17,8 +17,13 @@ import javax.swing.JFrame;
  */
 public class ActionCalculatrice implements ActionListener {
 
+	/** TODO commenter le rôle de ce champ */
 	private JFrame fenetre;
 	
+    /**
+     * TODO commenter l'état initial atteint
+     * @param fenetre
+     */
     public ActionCalculatrice(JFrame fenetre) {
     	
         this.fenetre = fenetre;

@@ -19,8 +19,13 @@ import javax.swing.JFrame;
  */
 public class ActionTableur implements ActionListener {
 
+	/** TODO commenter le rôle de ce champ */
 	private JFrame fenetre;
 	
+    /**
+     * TODO commenter l'état initial atteint
+     * @param fenetre
+     */
     public ActionTableur(JFrame fenetre) {
     	
         this.fenetre = fenetre;
