@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class AProposAction extends AbstractAction {
   
+    /** Tableur */
     private Tableur fenetre;
     
     /**
