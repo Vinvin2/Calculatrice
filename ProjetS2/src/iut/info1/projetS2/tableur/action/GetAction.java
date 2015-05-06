@@ -21,7 +21,6 @@ import javax.swing.AbstractAction;
 public class GetAction extends AbstractAction {
     
     /** */
-    @SuppressWarnings("unused")
     private Tableur fenetre;
     
     /**
