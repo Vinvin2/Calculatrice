@@ -180,7 +180,7 @@ public class Tableur extends JFrame{
             + tableur.getRowMargin());
         
         // Permet de modifier l'affichage des éléments de la liste d'en-têtes
-        enteteLigne.setCellRenderer(new RowHeaderRenderer(tableur));
+        enteteLigne.setCellRenderer(new AffichageEnTeteLigne(tableur));
 
         // Ajout du tableur dans une JSrcollPane
         scroll = new JScrollPane(tableur);

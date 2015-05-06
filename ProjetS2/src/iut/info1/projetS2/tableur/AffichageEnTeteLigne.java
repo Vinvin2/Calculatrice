@@ -1,5 +1,5 @@
 /*
- * RowHeaderRenderer.java				5 mai 2015
+ * AffichageEnTeteLigne.java               5 mai 2015
  * IUT INFO1 2014-2015 
  */
 package iut.info1.projetS2.tableur;
@@ -19,13 +19,13 @@ import javax.swing.table.JTableHeader;
  */
 
 @SuppressWarnings({ "serial", "rawtypes" })
-class RowHeaderRenderer extends JLabel implements ListCellRenderer {
+class AffichageEnTeteLigne extends JLabel implements ListCellRenderer {
 
     /** 
      * Initilisation de nos en-têtes
      * @param table notre tableur
      */
-    RowHeaderRenderer(JTable table) {
+    AffichageEnTeteLigne(JTable table) {
         JTableHeader header = table.getTableHeader();
         
         // On rend la case opaque
@@ -51,7 +51,7 @@ class RowHeaderRenderer extends JLabel implements ListCellRenderer {
     }
 
     /**
-     * Retourne le Component qui a été configurer pour afficher la valeur
+     * Retourne le Component qui a été configuré pour afficher la valeur
      * spécifié
      * @param list la JList à dessiner
      * @param value La valeur retournée par list.getModel().getElementAt(index)
