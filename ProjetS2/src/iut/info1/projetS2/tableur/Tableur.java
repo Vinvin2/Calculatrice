@@ -192,7 +192,7 @@ public class Tableur extends JFrame{
         scroll = new JScrollPane(tableur);
         
         // Taille du tableur
-        scroll.setPreferredSize(new Dimension(700, 500));
+        scroll.setPreferredSize(new Dimension(740, 500));
         
         // Ajout des en-têtes de ligne à notre tableur
         scroll.setRowHeaderView(enteteLigne);
