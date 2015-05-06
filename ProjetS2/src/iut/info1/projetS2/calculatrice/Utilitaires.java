@@ -19,10 +19,10 @@ public class Utilitaires {
     public static final String REG_EX_CALCUL_SIMPLE = 
             ("[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*([+-/*])[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
     
-    /** TODO commenter le rôle de ce champ */
+    /** Modèle d'une expression entre parenthèses */
     public static final String REG_EX_PARENTHESES = "[(]" + REG_EX_CALCUL_SIMPLE + "[)]";
     
-    /** TODO commenter le rôle de ce champ */
+    /** */
     public static final String REG_EX_CALCUL_PARENTHESES = 
             (REG_EX_PARENTHESES + "([+-/*])" + REG_EX_PARENTHESES);
             
@@ -76,8 +76,11 @@ public class Utilitaires {
             // Si la syntaxe est erronée, on affiche une erreur
             aInserer = "Erreur, le calcul entré est erroné.\n";
         }
-
- 
+        // si le résultat est un entier, on l'écrit tel quel
+        if (aInserer.contains(".0\n")) {
+            aInserer = aInserer.substring(0, aInserer.length()-3);
+            aInserer = aInserer.concat("\n");
+        }
 
         return (aInserer);
     }
@@ -118,6 +121,7 @@ public class Utilitaires {
             
             
             resultat = calcul(strRes1 + commande.charAt(posfin1+1) + strRes2);
+            
             // On l'affiche à la fin de l'écran
             aInserer = resultat;
 
