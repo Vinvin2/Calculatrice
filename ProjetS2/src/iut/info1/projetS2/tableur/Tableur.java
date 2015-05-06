@@ -58,7 +58,7 @@ public class Tableur extends JFrame{
     
     /** Liste pour notre tableur */
     @SuppressWarnings("rawtypes")
-    private JList rowHeader;
+    private JList enteteLigne;
     
     /** Bouton valider de notre application */
     private JButton valider;
@@ -125,13 +125,14 @@ public class Tableur extends JFrame{
     }
     
     /**
-     * 
+     * Permet d'implanter une ListModel grâce à la classe AbstractListModel
      */
     @SuppressWarnings("rawtypes")
-    ListModel lm = new AbstractListModel<Object>() {
+    ListModel lm = new AbstractListModel() {
         String headers[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9","10"
                             ,"11","12","13","14","15","16","17","18","19","20"};
 
+        // Retourne le nombre d'éléments présents dans la liste
         public int getSize() {
             return headers.length;
         }
@@ -146,6 +147,8 @@ public class Tableur extends JFrame{
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void buildTableur() {
+        
+        // Création d'un modèle de table
         dm = new DefaultTableModel(lm.getSize(), 26); 
         
         // Création du tableur
@@ -166,17 +169,30 @@ public class Tableur extends JFrame{
         // Ajout de la police à notre tableur
         tableur.setFont(f);
         
-        rowHeader = new JList(lm);
-        rowHeader.setFixedCellWidth(50);
+        // Création d'un JList qui affiche les données contenues dans lm
+        enteteLigne = new JList(lm);
+        
+        // On met la longueur de chaque en-têtes à 50px
+        enteteLigne.setFixedCellWidth(50);
 
-        rowHeader.setFixedCellHeight(tableur.getRowHeight()
+        // On aligne la hauteur de nos en-têtes avec les autres lignes du tableur
+        enteteLigne.setFixedCellHeight(tableur.getRowHeight()
             + tableur.getRowMargin());
-        rowHeader.setCellRenderer(new RowHeaderRenderer(tableur));
+        
+        // Permet de modifier l'affichage des éléments de la liste d'en-têtes
+        enteteLigne.setCellRenderer(new RowHeaderRenderer(tableur));
 
+        // Ajout du tableur dans une JSrcollPane
         scroll = new JScrollPane(tableur);
+        
+        // Taille du tableur
         scroll.setPreferredSize(new Dimension(700, 500));
-        scroll.setRowHeaderView(rowHeader);
-        getContentPane().add(scroll, BorderLayout.CENTER);
+        
+        // Ajout des en-têtes de ligne à notre tableur
+        scroll.setRowHeaderView(enteteLigne);
+        
+        // Ajout  de notre tableau dans le JPanel principal
+        container.add(scroll, BorderLayout.CENTER);
         
 
     }
@@ -408,11 +424,11 @@ public class Tableur extends JFrame{
     }
 
     /**
-     * @return the rowHeader
+     * @return the enteteLigne
      */
     @SuppressWarnings("rawtypes")
-    public JList getRowHeader() {
-        return rowHeader;
+    public JList getenteteLigne() {
+        return enteteLigne;
     }
 
     /**

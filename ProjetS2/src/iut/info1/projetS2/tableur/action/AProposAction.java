@@ -36,6 +36,8 @@ public class AProposAction extends AbstractAction {
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
+        
+        // Ouverture d'une fenetre avec un message
         JOptionPane.showMessageDialog(fenetre, "Ce programme a été développé "
                                      + "par PERIES Mickaël et MIQUEL Jonathan");
     }
