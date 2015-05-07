@@ -1,5 +1,5 @@
 /*
- * Executeur.java					30 avr. 2015
+ * Commandes.java					30 avr. 2015
  * IUT Info 1 2014/2015 groupe projet
  */
 
@@ -13,7 +13,7 @@ package iut.info1.projetS2.tableur.action;
 public class Commandes {
 
 	/**
-	 * appelé sur l'évènement Valider
+	 * appelé sur l'évènement 'click sur Valider'
 	 * @param aTraiter
 	 */
 	public static void actionValider(String aTraiter) {
