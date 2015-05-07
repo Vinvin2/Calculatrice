@@ -14,7 +14,7 @@ public class Commandes {
 
 	/**
 	 * appelé sur l'évènement 'click sur Valider'
-	 * @param aTraiter
+	 * @param aTraiter T
 	 */
 	public static void actionValider(String aTraiter) {
 		
