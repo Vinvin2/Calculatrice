@@ -1,4 +1,4 @@
-/**
+/*
  * Executeur.java					30 avr. 2015
  * IUT Info 1 2014/2015 groupe projet
  */
