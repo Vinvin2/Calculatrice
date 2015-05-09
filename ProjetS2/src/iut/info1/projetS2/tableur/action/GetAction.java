@@ -17,14 +17,13 @@ import javax.swing.AbstractAction;
  * @author Mickaël
  * @version 0.1
  */
-@SuppressWarnings("serial")
 public class GetAction extends AbstractAction {
     
     /** */
     private Tableur fenetre;
     
     /**
-     * 
+     * TODO EXPLIQUER A QUOI CA SERT BORDEL DE MERDE
      * @param fenetre
      * @param texte nom de notre sous-menu
      */
@@ -39,7 +38,8 @@ public class GetAction extends AbstractAction {
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
-        String aRenvoyer = fenetre.getConsole().getText();
-        fenetre.getLabel().setText(aRenvoyer);
+        this.fenetre.getActions().actionValider();
+
+
     }
 }

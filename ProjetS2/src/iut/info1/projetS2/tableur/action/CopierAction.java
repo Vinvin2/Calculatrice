@@ -30,6 +30,6 @@ public class CopierAction extends AbstractAction {
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
-     
+        
     }
 }
