@@ -20,7 +20,7 @@ public class modeleDeTable extends AbstractTableModel {
                                     "L","M","N","O","P","Q","R","S","T","U","V",
                                     "X","Y","Z"};
     /** Tableau stockant nos données */
-    private Object[][] donnees = new Object[20][26];
+    public Object[][] donnees = new Object[20][26];
 
     /* (non-Javadoc)
      * @see javax.swing.table.TableModel#getColumnCount()
@@ -62,5 +62,20 @@ public class modeleDeTable extends AbstractTableModel {
         donnees[row][col] = value;
         fireTableCellUpdated(row, col);
     }
+
+    /**
+     * @return the nomColonnes
+     */
+    public String[] getNomColonnes() {
+        return nomColonnes;
+    }
+
+    /**
+     * @return the donnees
+     */
+    public Object getDonnees() {
+        return donnees;
+    }
  
+    
 }
