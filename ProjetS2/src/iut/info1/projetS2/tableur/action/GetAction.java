@@ -39,6 +39,7 @@ public class GetAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         this.fenetre.getActions().actionValider();
 
 
@@ -46,6 +47,9 @@ public class GetAction extends AbstractAction {
         Object value = new Object[20][26];
        
         String aRenvoyer = fenetre.getConsole().getText();
+>>>>>>> origin/master
+=======
+        this.fenetre.getActions().actionValider();
 >>>>>>> origin/master
     }
 }
