@@ -85,6 +85,9 @@ public class Tableur extends JFrame{
     /** Sous-menu de notre application */
     private JMenuItem item;
     
+    /** contient les commandes liées à cette fenetre */
+    private Commandes actions;
+    
     /**
      * Création d'un objet tableur
      */
@@ -126,6 +129,12 @@ public class Tableur extends JFrame{
         
         // On initialise notre talbeur
         buildTableur();
+        
+        /*
+         *  On lie le tableur avec une classe Commandes car l'execution de
+         *  commandes est liee a un tableur precis
+         */
+        actions = new Commandes(this);
     }
     
     /**
@@ -509,4 +518,10 @@ public class Tableur extends JFrame{
         return lm;
     }
 
+    /**
+     * @return the actions
+     */
+    public Commandes getActions() {
+        return actions;
+    }
 }
