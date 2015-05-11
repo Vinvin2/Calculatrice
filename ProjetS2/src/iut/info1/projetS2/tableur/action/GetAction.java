@@ -38,18 +38,6 @@ public class GetAction extends AbstractAction {
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-<<<<<<< HEAD
         this.fenetre.getActions().actionValider();
-
-
-=======
-        Object value = new Object[20][26];
-       
-        String aRenvoyer = fenetre.getConsole().getText();
->>>>>>> origin/master
-=======
-        this.fenetre.getActions().actionValider();
->>>>>>> origin/master
     }
 }
