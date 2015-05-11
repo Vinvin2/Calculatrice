@@ -29,7 +29,7 @@ public class Bouton extends JButton {
 
         // On définit la couleur des boutons
         setBackground(new Color(255,160,122));
-
+   
     }
 
 }

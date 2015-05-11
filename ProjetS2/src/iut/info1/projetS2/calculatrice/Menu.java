@@ -26,6 +26,13 @@ public class Menu extends JFrame {
 	/** panel contenant les boutons de navigation */
 	private Container containerNavigation = new Container(700, 700);
 
+	/** panel contenant du vide */
+	private Container vide = new Container(900,80);
+	
+	/** panel contenant un espace */
+	private Container espace1 = new Container(900,10);
+	private Container espace2 = new Container(900,10);
+	
 	/** Bouton Calculatrice */
 	private BoutonMenu boutonCalculatrice = new BoutonMenu("MINI CALCULATRICE");
 
@@ -64,8 +71,11 @@ public class Menu extends JFrame {
 		
 		// On place les boutons au centre de l'écran sur une ligne verticale
 		containerNavigation.add(boutonCalculatrice);
+		containerNavigation.add(espace1);
 		containerNavigation.add(boutonTab);
-		containerNavigation.add(boutonQuit2);
+		containerNavigation.add(espace2);
+        containerNavigation.add(boutonQuit2);
+        
 		
 		// On affecte une action pour chaque bouton
 		boutonQuit2.addActionListener(new ActionQuitter());
@@ -75,6 +85,7 @@ public class Menu extends JFrame {
 		// On rend visible la fenêtre
 		this.setVisible(true);
 		
+		containerPrincipal.add(vide);
 		containerPrincipal.add(containerNavigation);
 		
 	}
