@@ -88,6 +88,9 @@ public class Tableur extends JFrame{
     /** contient les commandes liées à cette fenêtre */
     private Commandes actions;
     
+    /** contient les commandes liées à cette fenetre */
+    private Commandes actions;
+    
     /**
      * Création d'un objet tableur
      */
@@ -132,7 +135,11 @@ public class Tableur extends JFrame{
         
         /*
          *  On lie le tableur avec une classe Commandes car l'execution de
+<<<<<<< HEAD
          *  commandes est liée à un tableur précis
+=======
+         *  commandes est liee a un tableur precis
+>>>>>>> origin/master
          */
         actions = new Commandes(this);
     }
@@ -524,6 +531,9 @@ public class Tableur extends JFrame{
     public Commandes getActions() {
         return actions;
     }
+<<<<<<< HEAD
 
     
+=======
+>>>>>>> origin/master
 }
