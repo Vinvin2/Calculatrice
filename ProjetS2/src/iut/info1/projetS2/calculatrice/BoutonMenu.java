@@ -6,6 +6,7 @@ package iut.info1.projetS2.calculatrice;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JButton;
 
@@ -29,6 +30,12 @@ public class BoutonMenu extends JButton {
 
         // On définit la couleur des boutons
         setBackground(new Color(255,160,122));
+        
+       // Déclaration d'une police et d'une taille
+        Font f = new Font("Calibri", Font.PLAIN, 32);
+        
+        // Ajout de la police à notre console
+        setFont(f);
         
 
     }

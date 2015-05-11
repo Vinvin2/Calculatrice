@@ -6,6 +6,7 @@ package iut.info1.projetS2.calculatrice;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JButton;
 
@@ -29,6 +30,8 @@ public class Bouton extends JButton {
 
         // On définit la couleur des boutons
         setBackground(new Color(255,160,122));
+        
+     
    
     }
 
