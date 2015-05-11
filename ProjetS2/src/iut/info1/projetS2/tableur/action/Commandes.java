@@ -31,11 +31,13 @@ public class Commandes {
     public static final String REG_affich2
     = "([A-Z])\\s*([0]*[1]{0,1}\\d||[0]*[2][0])\\s+(.*)";
 
-    /** REGEX pour définir s'il y a calcul à faire ou non (via '=') */
+    /** REGEX pour définir s'il y a calcul, type: nombreLettre =aAfficher */
     private static final String REG_needCalc
-    = "(([A-Z])\\s*([0]*[1]{0,1}\\d||[0]*[2][0])\\s+[=].*)||"
-            + "(([0]*[1]{0,1}\\d||[0]*[2][0])\\s*([A-Z])\\s+[=].*)";
-
+    = "(([A-Z])\\s*([0]*[1]{0,1}\\d||[0]*[2][0])\\s+[=].*)";
+    
+    /** REGEX pour définir s'il y a calcul, type: nombreLettre =aAfficher */
+    private static final String REG_needCalc2
+    = "(([0]*[1]{0,1}\\d||[0]*[2][0])\\s*([A-Z])\\s+[=](.*))";
 
     /**
      * appelé sur l'évènement 'click sur Valider', permet d'agir en fonction
@@ -47,11 +49,12 @@ public class Commandes {
 
         // test via pattern si besoin de calcul ou pas
         Pattern testSiCalc = Pattern.compile(REG_needCalc);
+        Pattern testSiCalc2 = Pattern.compile(REG_needCalc2);
         Matcher matchSiCalc = testSiCalc.matcher(aRenvoyer);
+        Matcher matchSiCalc2 = testSiCalc2.matcher(aRenvoyer);
 
         // on oriente selon l'entrée
-        if (matchSiCalc.matches()) {
-            this.fenetre.getLabel().setText("Pas géré encore lel");
+        if (matchSiCalc.matches() || matchSiCalc2.matches()) {
             this.affichageCalcule();
         } else {
             this.affichageSimple();
@@ -126,19 +129,7 @@ public class Commandes {
      * @return le resultat de ce calcul
      */
     public double calcul(String aCalculer) {
-        Matcher lol = Pattern.compile("((\\d+)\\s+)+").matcher(aCalculer);
-        if (lol.matches()) {
-            this.fenetre.getLabel().setText(String.valueOf(lol.groupCount()));
-            for (int i = 1; i < lol.groupCount() - 1; i++) {
-                if (i % 2 == 0) {
-                    this.fenetre.getModele().setValueAt(lol.group(i), 0, i); 
-                } else {
-                    this.fenetre.getModele().setValueAt(lol.group(i), 1, i); 
-                }
-            }
-        } else {
-            this.fenetre.getLabel().setText("no match");
-        }
+        
         return Double.NaN; // bouchon
     }
 
@@ -148,7 +139,8 @@ public class Commandes {
      * entré dans la 'ligne de commande'
      */
     public void affichageCalcule() {
-        this.calcul(this.fenetre.getConsole().getText());
+        String aAfficher = String.valueOf(this.calcul(this.fenetre
+                .getConsole().getText()));
     }
 
 
