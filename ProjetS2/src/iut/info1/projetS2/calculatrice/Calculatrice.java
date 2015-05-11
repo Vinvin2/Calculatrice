@@ -5,6 +5,7 @@
 package iut.info1.projetS2.calculatrice;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 /**
  * Création d'une interface graphique pour l'application Calculatrice
@@ -38,6 +39,10 @@ public class Calculatrice extends JFrame {
 
     /** Ecran où les commandes et leur résultat seront affichées */
     private Ecran ecran = new Ecran();
+    
+    /** Barre de défilement pour l'écran */
+    private JScrollPane scroll = new JScrollPane(ecran);
+    
     /** Champ de texte pour les exécutions de commandes */
     private ExecuteurCommandes executeur = new ExecuteurCommandes();
 
@@ -93,6 +98,7 @@ public class Calculatrice extends JFrame {
         boutonCalc.addActionListener(new ActionCalculer(this.executeur, this.ecran));
         boutonQuit.addActionListener(new ActionQuitter());
         getRootPane().setDefaultButton(boutonCalc);
+        getContentPane().add(scroll);
 
     }
 

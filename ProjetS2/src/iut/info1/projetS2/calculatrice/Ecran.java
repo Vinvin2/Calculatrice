@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
-//import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -44,13 +43,11 @@ public class Ecran extends JTextArea {
         setText("Entrez votre calcul, puis cliquez sur \"Calculer\".\n");
 
         // Couleur de fond
-        setBackground(new Color(0,0,0));
-        
-        // Couleur de police
-        setForeground(new Color(0,238,0));
+        setBackground(new Color(253,245,230));
         
         // On empêche l'écran d'être éditable 
         setEditable(false);
+        
     }
 
 }
