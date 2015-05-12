@@ -17,8 +17,7 @@ public class Utilitaires {
 
     /** Modèle d'expression du calcul sous forme de chaîne de caractères */
     public static final String REG_EX_CALCUL_SIMPLE = 
-            ("[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*([+-/*])[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*"
-            		+ "\\TAB\\MEM\\QUIT");
+            ("[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*([+-/*])[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
     
     /** Modèle d'une expression entre parenthèses */
     public static final String REG_EX_PARENTHESES = "[(]" + REG_EX_CALCUL_SIMPLE + "[)]";
