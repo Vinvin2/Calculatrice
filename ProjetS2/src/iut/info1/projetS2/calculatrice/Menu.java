@@ -31,6 +31,8 @@ public class Menu extends JFrame {
 	
 	/** panel contenant un espace */
 	private Container espace1 = new Container(900,10);
+	
+	/** panel contenant un second espace */
 	private Container espace2 = new Container(900,10);
 	
 	/** Bouton Calculatrice */
