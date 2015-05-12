@@ -19,10 +19,6 @@ public class Utilitaires {
     public static final String REG_EX_CALCUL_SIMPLE = 
             ("[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*([+-/*])[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
     
-    /** Modèle d'un calcul avec des parenthèses simple : (15 + 1) / (1 + 1) */
-    public static final String REG_EX_CALCUL_PARENTHESES_NIVEAU2 = 
-            ("[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*([+-/*])[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*");
-    
     /** Modèle d'un calcul avec des parenthèses */
     public static final String REG_EX_CALCUL_PARENTHESES_NIVEAU1A = 
             ("[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*([+-/*])" + "[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
@@ -30,18 +26,27 @@ public class Utilitaires {
     /** modèle d'un calcul avec des parenthèses simple à 1 niveau */
     private static final String REG_EX_CALCUL_PARENTHESES_NIVEAU1B = 
             "[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*" + "([+-/*])[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*";
+    
+    
+    /** Modèle d'un calcul avec des parenthèses simple : (15 + 1) / (1 + 1) */
+    public static final String REG_EX_CALCUL_PARENTHESES_NIVEAU2 = 
+            ("[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*([+-/*])[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*");
+    
+
             
     /** pattern calcul sans parentheses */
     private static Pattern patCalcSimple = Pattern.compile(REG_EX_CALCUL_SIMPLE);
     
-    /** pattern calcul parentheses niveau 2 */
-    private static Pattern patCalcParenth2 = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU2);
     
     /** pattern calcul parentheses niveau 1 : type (2-1) / 1 */
     private static Pattern patCalcParenth1A = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU1A);
 
     /** pattern calcul parentheses niveau 1 : type 1 + (2-1) */
     private static Pattern patCalcParenth1B = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU1B);
+    
+    
+    /** pattern calcul parentheses niveau 2 */
+    private static Pattern patCalcParenth2 = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU2);
     
     
     /**
