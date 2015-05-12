@@ -24,17 +24,24 @@ public class Utilitaires {
             ("[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*([+-/*])[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*");
     
     /** Modèle d'un calcul avec des parenthèses */
-    public static final String REG_EX_CALCUL_PARENTHESES_NIVEAU1 = 
+    public static final String REG_EX_CALCUL_PARENTHESES_NIVEAU1A = 
             ("[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*([+-/*])" + "[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
+
+    /** modèle d'un calcul avec des parenthèses simple à 1 niveau */
+    private static final String REG_EX_CALCUL_PARENTHESES_NIVEAU1B = 
+            "[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*" + "([+-/*])[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*";
             
     /** pattern calcul sans parentheses */
-    public static Pattern patCalcSimple = Pattern.compile(REG_EX_CALCUL_SIMPLE);
+    private static Pattern patCalcSimple = Pattern.compile(REG_EX_CALCUL_SIMPLE);
     
     /** pattern calcul parentheses niveau 2 */
-    public static Pattern patCalcParenth2 = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU2);
+    private static Pattern patCalcParenth2 = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU2);
     
-    /** pattern calcul parentheses niveau 1 */
-    public static Pattern patCalcParenth1 = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU1);
+    /** pattern calcul parentheses niveau 1 : type (2-1) / 1 */
+    private static Pattern patCalcParenth1A = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU1A);
+
+    /** pattern calcul parentheses niveau 1 : type 1 + (2-1) */
+    private static Pattern patCalcParenth1B = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU1B);
     
     
     /**
@@ -103,13 +110,13 @@ public class Utilitaires {
      * @param commande 
      * @return aInserer le texte à insérer dans l'écran
      */
-    public static String calculParenth1(String commande) {
+    public static String calculParenth1A(String commande) {
         
 
 
         String aInserer; // le resultat de la commande
 
-        Matcher calcOk = patCalcParenth1.matcher(commande);
+        Matcher calcOk = patCalcParenth1A.matcher(commande);
 
         aInserer = "\0";
         if (calcOk.matches()) {           
@@ -126,6 +133,39 @@ public class Utilitaires {
             strRes1 = strRes1.substring(2, strRes1.length() - 1);
             
             aInserer = calculSimple(strRes1 + calcOk.group(4) + calcOk.group(5));
+            
+
+        }
+        return (aInserer);
+        
+    }
+    
+    /**
+     * Calcule et affiche le résultat de la commande
+     * @param commande 
+     * @return aInserer le texte à insérer dans l'écran
+     */
+    public static String calculParenth1B(String commande) {
+        
+        String aInserer; // le resultat de la commande
+
+        Matcher calcOk = patCalcParenth1B.matcher(commande);
+
+        aInserer = "\0";
+        if (calcOk.matches()) {           
+            String strRes1;     // résultat du calcul1     
+            
+            int posdeb = commande.indexOf('(');
+            int posfin = commande.indexOf(')');
+            
+            strRes1 = commande.substring(posdeb+1, posfin);           
+            // On transforme le premier nombre récupéré en double
+            // et on le stocke dans operande1, on fait de même pour l'operande2
+            strRes1 = calculSimple(strRes1);
+            
+            strRes1 = strRes1.substring(2, strRes1.length() - 1);
+            
+            aInserer = calculSimple(calcOk.group(1) + calcOk.group(2) + strRes1);
             
 
         }
@@ -184,22 +224,24 @@ public class Utilitaires {
      * @param commande à exécuter
      * @return aInserer le texte à insérer dans l'écran
      */
-    public static String calcul(String commande) {
-        
-
+    public static String calcul(String commande) {        
 
         String aInserer; // le resultat de la commande
 
         Matcher calcParenth2Ok = patCalcParenth2.matcher(commande);
         Matcher calcSimpleOk = patCalcSimple.matcher(commande);
-        Matcher calcParenth1Ok = patCalcParenth1.matcher(commande);
+        Matcher calcParenth1AOk = patCalcParenth1A.matcher(commande);
+        Matcher calcParenth1BOk = patCalcParenth1B.matcher(commande);
+        
         aInserer = "\0";
         if (calcParenth2Ok.matches()) {                       
             aInserer = calculParenth2(commande);
         } else if (calcSimpleOk.matches()){
             aInserer = calculSimple(commande);
-        } else if (calcParenth1Ok.matches()){
-            aInserer = calculParenth1(commande);
+        } else if (calcParenth1AOk.matches()){
+            aInserer = calculParenth1A(commande);
+        } else if (calcParenth1BOk.matches()){
+            aInserer = calculParenth1B(commande);
         } else {
             aInserer = "Erreur de commande.\n";
         }
