@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2.calculatrice;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
@@ -80,7 +82,9 @@ public class Calculatrice extends JFrame {
         containerNavigation.add(boutonQuit);
 
         // Les autres champs seront à droite
-        containerExecution.add(ecran);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setPreferredSize(new Dimension(600, 550));
+        containerExecution.add(scroll);
         containerExecution.add(executeur);
         containerExecution.add(boutonCalc);
 
@@ -99,7 +103,6 @@ public class Calculatrice extends JFrame {
         boutonCalc.addActionListener(new ActionCalculer(this.executeur, this.ecran));
         boutonQuit.addActionListener(new ActionQuitter());
         getRootPane().setDefaultButton(boutonCalc);
-        getContentPane().add(scroll);
 
     }
 

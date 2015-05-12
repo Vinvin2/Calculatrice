@@ -18,13 +18,13 @@ import javax.swing.JTextArea;
  */
 @SuppressWarnings("serial")
 public class Ecran extends JTextArea {
-
+    
     /** Police d'écriture de l'écran */
     private static final Font PoliceEcran = new Font("Verdana", Font.PLAIN, 15);
     
     /** Dimensions de l'écran */
     
-    private static final Dimension dimensionEcran = new Dimension(600, 550);
+    private static final Dimension dimensionEcran = new Dimension(600, 3000);
 
     /**
      * Créé l'aire de texte correspondant à l'écran de contrôle des exécutions
@@ -34,7 +34,7 @@ public class Ecran extends JTextArea {
         super();
 
         // Taille de l'écran
-        setPreferredSize(dimensionEcran);
+        setSize(dimensionEcran);
 
         // Police
         setFont(PoliceEcran);
