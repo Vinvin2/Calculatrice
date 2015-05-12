@@ -22,7 +22,7 @@ public class Utilitaires {
     /** Modèle d'une expression entre parenthèses */
     public static final String REG_EX_PARENTHESES = "[(]" + REG_EX_CALCUL_SIMPLE + "[)]";
     
-    /** */
+    /** Modèle d'un calcul avec des parenthèses */
     public static final String REG_EX_CALCUL_PARENTHESES = 
             (REG_EX_PARENTHESES + "([+-/*])" + REG_EX_PARENTHESES);
             
