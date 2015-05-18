@@ -73,9 +73,11 @@ public class modeleDeTable extends AbstractTableModel {
     /**
      * @return the donnees
      */
-    public Object getDonnees() {
+    public Object[][] getDonnees() {
         return donnees;
     }
+
+
  
     
 }

@@ -11,21 +11,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Toolkit;
-
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.ListModel;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -38,6 +32,9 @@ import javax.swing.table.DefaultTableModel;
  */
 @SuppressWarnings("serial")
 public class Tableur extends JFrame{
+    
+    /** JFrame de notre classe */
+    private static Tableur fenetre;
     
     /** Container principal de l'application */
     private Container container;
@@ -52,7 +49,7 @@ public class Tableur extends JFrame{
     private AbstractTableModel modele;
     
     /** Tableur de notre application */
-    private JTable tableur;
+    private static JTable tableur;
     
     /** Barre de scroll pour notre tableur */
     private JScrollPane scroll;
@@ -69,21 +66,6 @@ public class Tableur extends JFrame{
     
     /** Texte à afficher */
     private JLabel label;
-    
-    /** Barre de menu de notre application */
-    private JMenuBar menuBar;
-    
-    /** Menu fichier de notre application */
-    private JMenu menuFichier;
-    
-    /** Menu editer de notre application */
-    private JMenu menuEditer;
-    
-    /** Menu autre de notre application */
-    private JMenu menuAutre;
-    
-    /** Sous-menu de notre application */
-    private JMenuItem item;
 
     /** contient les commandes liées à cette fenêtre */
     private Commandes actions;
@@ -96,7 +78,9 @@ public class Tableur extends JFrame{
         
         // On initialise notre fenetre
         build();
+        
     }
+    
 
     /** 
      * Initialisation de la fenetre du tableur
@@ -125,10 +109,13 @@ public class Tableur extends JFrame{
         setContentPane(buildContentPane());
         
         // On inititalise notre menu
-        buildMenu();
+        Menu.buildMenu();
         
         // On initialise notre talbeur
         buildTableur();
+        
+        // Affichage de la barre de menu
+        setJMenuBar(Menu.getMenuBar());
         
         /*
          *  On lie le tableur avec une classe Commandes car l'execution de
@@ -212,115 +199,10 @@ public class Tableur extends JFrame{
         container.add(scroll, BorderLayout.CENTER);
         
 
-    }
+    }   
 
-    /** 
-     * Permet d'initialiser la barre de menu et d'y ajouter tous les menus 
-     * à l'intérieur
-     */
-    private void buildMenu() {
-        
-        // Création de la barre de menu
-        menuBar = new JMenuBar();
-        
-        // Initialisation du menu fichier
-        buildMenuFichier();
-        
-        // Initialisation du menu editer
-        buildMenuEditer();
-             
-        // Initialisation du menu autre
-        buildMenuAutre();                               
-        
-        // Ajout du menu fichier dans la barre de menu
-        menuBar.add(menuFichier);
-        
-        // Ajout du menu éditer dans la barre de menu
-        menuBar.add(menuEditer);
-        
-        // Ajout du menu autre dans la barre de menu
-        menuBar.add(menuAutre);
-        
-        // Affichage de la barre de menu
-        setJMenuBar(menuBar);
-    }
-
-    /** 
-     * Permet d'initialiser le menu autre et tout ses sous-menus
-     */
-    private void buildMenuAutre() {
-        
-        // Création du menu autre
-        menuAutre = new JMenu("?");
-        
-        // Ajout du sous-menu aide
-        item = new JMenuItem(new AideAction("Aide"));
-        menuAutre.add(item);
-        
-        // Ajout du sous-menu à propos
-        item = new JMenuItem(new AProposAction(this,"A propos"));
-        menuAutre.add(item);
-    }
-
-    /** 
-     * Permet d'initialiser le menu éditer et tout ses sous-menus
-     */
-    private void buildMenuEditer() {
-       
-        // Création du menu Editer
-        menuEditer = new JMenu("Editer");
-        
-        // Ajout du sous-menu copier
-        item = new JMenuItem(new CopierAction("Copier"));
-        item.setAccelerator(KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit()
-        .getMenuShortcutKeyMask(), false));
-        menuEditer.add(item);
-        
-        // Ajout du sous-menu couper
-        item = new JMenuItem(new CouperAction("Couper"));
-        item.setAccelerator(KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit()
-        .getMenuShortcutKeyMask(), false));
-        menuEditer.add(item);
-        
-        // Ajout du sous-menu coller
-        item = new JMenuItem(new CollerAction("Coller"));
-        item.setAccelerator(KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit()
-        .getMenuShortcutKeyMask(), false));
-        menuEditer.add(item);       
-    }
-
-    /** 
-     * Permet d'initialiser le menu fichier et tout ses sous-menus
-     */
-    private void buildMenuFichier() {
-        
-        // Création du menu fichier
-        menuFichier = new JMenu("Fichier");
-        
-        // Ajout du sous-menu nouveau
-        item = new JMenuItem(new NouveauAction("Nouveau"));
-        menuFichier.add(item);
-        
-        // Ajout d'une barre de séparation
-        menuFichier.insertSeparator(1);
-        
-        // Ajout du sous-menu ouvrir
-        item = new JMenuItem(new OuvrirAction("Ouvrir"));
-        menuFichier.add(item);
-        
-        // Ajout du sous-menu sauver
-        item = new JMenuItem(new SauverAction("Sauver"));
-        menuFichier.add(item);
-        
-        // Ajout du sous-menu quitter
-        item = new JMenuItem(new QuitterAction(this, "Quitter"));
-        menuFichier.add(item);       
-    }
-    
-    
-
-    /** TODO 
-     * Permet de créer et d'initialiser toutes nos JPaneln notre JButton et 
+    /**
+     * Permet de créer et d'initialiser toutes nos JPanel, notre JButton et 
      * notre JTextField
      * @return notre panel
      */
@@ -429,6 +311,13 @@ public class Tableur extends JFrame{
     }
 
     /**
+     * @return the fenetre
+     */
+    public static Tableur getFenetre() {
+        return fenetre;
+    }
+
+    /**
      * @return the panelConsole
      */
     public Container getPanelConsole() {
@@ -452,7 +341,7 @@ public class Tableur extends JFrame{
     /**
      * @return the tableur
      */
-    public JTable getTableur() {
+    public static JTable getTableur() {
         return tableur;
     }
 
@@ -483,34 +372,6 @@ public class Tableur extends JFrame{
      */
     public JLabel getLabel() {
         return label;
-    }
-
-    /**
-     * @return the menuFichier
-     */
-    public JMenu getMenuFichier() {
-        return menuFichier;
-    }
-
-    /**
-     * @return the menuEditer
-     */
-    public JMenu getMenuEditer() {
-        return menuEditer;
-    }
-
-    /**
-     * @return the menuAutre
-     */
-    public JMenu getMenuAutre() {
-        return menuAutre;
-    }
-
-    /**
-     * @return the item
-     */
-    public JMenuItem getItem() {
-        return item;
     }
 
     /**

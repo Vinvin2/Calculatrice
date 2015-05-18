@@ -6,6 +6,8 @@ package iut.info1.projetS2.tableur.action;
 
 import iut.info1.projetS2.calculatrice.Menu;
 
+import iut.info1.projetS2.tableur.Tableur;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -21,14 +23,14 @@ import javax.swing.JFrame;
 public class QuitterAction extends AbstractAction {
     
     /** fenêtre à fermer */
-    private JFrame fenetre;
+    private Tableur fenetre;
     
     /**
      *
      * @param fenetre fenetre à fermer
      * @param texte nom du menu
      */
-    public QuitterAction(JFrame fenetre, String texte) {
+    public QuitterAction(Tableur fenetre, String texte) {
         super(texte);
         
         this.fenetre = fenetre;
@@ -42,8 +44,13 @@ public class QuitterAction extends AbstractAction {
         // On ouvre le menu
     	new Menu();
     	
-    	// On ferme notre tableur
-    	fenetre.dispose();
+    	try {
+    	    // On ferme notre tableur
+    	    fenetre.dispose();
+    	
+    	} catch (NullPointerException error) {
+    	    
+    	}
 		
     }
 }

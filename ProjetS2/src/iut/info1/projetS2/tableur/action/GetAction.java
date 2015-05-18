@@ -5,6 +5,7 @@
 package iut.info1.projetS2.tableur.action;
 
 import iut.info1.projetS2.tableur.Tableur;
+import iut.info1.projetS2.tableur.Tests;
 import iut.info1.projetS2.tableur.modeleDeTable;
 
 import java.awt.event.ActionEvent;
@@ -39,5 +40,6 @@ public class GetAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
         this.fenetre.getActions().actionValider();
+        new Tests(fenetre);
     }
 }
