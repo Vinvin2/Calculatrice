@@ -140,7 +140,7 @@ public class Utilitaires {
          */
         resultat = listeOperande.get(0);
         
-        for (int i=0; (i < listeOperateur.size()) && (i+1 < listeOperande.size()); i++) {
+        for (int i=0; i < listeOperateur.size() ; i++) {
             switch (listeOperateur.get(i)) {
             case '+': resultat += listeOperande.get(i+1);
                       break;
