@@ -4,7 +4,6 @@
  */
 package iut.info1.projetS2.utilitaires;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
