@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2.utilitaires;
 
+import iut.info1.projetS2.calculatrice.ActionCalculer;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -19,40 +21,8 @@ public class Utilitaires {
 
     /** Tableau contenant toutes les cases mémoires */
     public static Variable[] casesMem = new Variable[26];
-    /** Modèle d'expression du calcul sous forme de chaîne de caractères */
-    public static final String REG_EX_CALCUL_SIMPLE = 
-            ("[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*([+-/*])[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
-    
-    /** Modèle d'un calcul avec des parenthèses */
-    public static final String REG_EX_CALCUL_PARENTHESES_NIVEAU1A = 
-            ("[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*([+-/*])" + "[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
-
-    /** modèle d'un calcul avec des parenthèses simple à 1 niveau */
-    private static final String REG_EX_CALCUL_PARENTHESES_NIVEAU1B = 
-            "[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*" + "([+-/*])[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*";
-    
-    
-    /** Modèle d'un calcul avec des parenthèses simple : (15 + 1) / (1 + 1) */
-    public static final String REG_EX_CALCUL_PARENTHESES_NIVEAU2 = 
-            ("[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*([+-/*])[ ]*[(]" + REG_EX_CALCUL_SIMPLE + "[)][ ]*");
     
 
-            
-    /** pattern calcul sans parentheses */
-    private static Pattern patCalcSimple = Pattern.compile(REG_EX_CALCUL_SIMPLE);
-    
-    
-    /** pattern calcul parentheses niveau 1 : type (2-1) / 1 */
-    private static Pattern patCalcParenth1A = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU1A);
-
-    /** pattern calcul parentheses niveau 1 : type 1 + (2-1) */
-    private static Pattern patCalcParenth1B = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU1B);
-    
-    
-    /** pattern calcul parentheses niveau 2 */
-    private static Pattern patCalcParenth2 = Pattern.compile(REG_EX_CALCUL_PARENTHESES_NIVEAU2);
-    
-    
     /**
      * On essaye un d'avancer là, surtout sur le calcul typiquement le 
      * 4+4+...+(insérer ici n calculs)+...+2 on implémentera plus tard les
@@ -155,212 +125,7 @@ public class Utilitaires {
         return resultat; // resultat du calcul
     }
     
-    /**
-     * Calcule et affiche le résultat de la commande
-     * @param commande 
-     * @return aInserer le texte à insérer dans l'écran
-     */
-    public static String calculSimple(String commande) {
-        
 
-
-        String aInserer; // le resultat de la commande
-
-        Matcher calcSimpleOk = patCalcSimple.matcher(commande);
-
-        double operande1;       // 1ère opérande de l'opération
-        double operande2;       // 2ème opérande de l'opération
-        char operateur;         // opérateur de l'opération
-        
-        if (calcSimpleOk.matches() && calcSimpleOk.group(1).charAt(calcSimpleOk.group(1).length() - 1) != '.'
-                && calcSimpleOk.group(3).charAt(calcSimpleOk.group(3).length() - 1) != '.') {           
-            double resultat;    // résultat de l'opération
-
-            // On transforme le premier nombre récupéré en double
-            // et on le stocke dans operande1, on fait de même pour l'operande2
-            operande1 = Double.parseDouble(calcSimpleOk.group(1)); 
-            // On stocke l'opérateur
-            operateur = calcSimpleOk.group(2).charAt(0);
-            operande2 = Double.parseDouble(calcSimpleOk.group(3));
-
-            // On réalise le calcul associé à l'opérateur
-            switch (operateur) {
-            case '+':
-                resultat = operande1 + operande2;
-                break;
-            case '-':
-                resultat = operande1 - operande2;
-                break;
-            case '*':
-                resultat = operande1 * operande2;
-                break;
-            default:
-                resultat = operande1 / operande2;
-                break;
-            }
-            // On l'affiche à la fin de l'écran
-            aInserer = "= " + resultat + "\n";
-
-        } else {
-            // Si la syntaxe est erronée, on affiche une erreur
-            aInserer = "Erreur, le calcul entré est erroné.\n";
-        }
-        // si le résultat est un entier, on l'écrit tel quel
-        if (aInserer.contains(".0\n")) {
-            aInserer = aInserer.substring(0, aInserer.length()-3);
-            aInserer = aInserer.concat("\n");
-        }
-
-        return (aInserer);
-        
-    }
-     
-    
-    /**
-     * Calcule et affiche le résultat de la commande
-     * @param commande 
-     * @return aInserer le texte à insérer dans l'écran
-     */
-    public static String calculParenth1A(String commande) {
-        
-
-
-        String aInserer; // le resultat de la commande
-
-        Matcher calcOk = patCalcParenth1A.matcher(commande);
-
-        aInserer = "\0";
-        if (calcOk.matches()) {           
-            String strRes1;     // résultat du calcul1     
-            
-            int posdeb = commande.indexOf('(');
-            int posfin = commande.indexOf(')');
-            
-            strRes1 = commande.substring(posdeb+1, posfin);           
-            // On transforme le premier nombre récupéré en double
-            // et on le stocke dans operande1, on fait de même pour l'operande2
-            strRes1 = calculSimple(strRes1);
-            
-            strRes1 = strRes1.substring(2, strRes1.length() - 1);
-            
-            aInserer = calculSimple(strRes1 + calcOk.group(4) + calcOk.group(5));
-            
-
-        }
-        return (aInserer);
-        
-    }
-    
-    /**
-     * Calcule et affiche le résultat de la commande
-     * @param commande 
-     * @return aInserer le texte à insérer dans l'écran
-     */
-    public static String calculParenth1B(String commande) {
-        
-        String aInserer; // le resultat de la commande
-
-        Matcher calcOk = patCalcParenth1B.matcher(commande);
-
-        aInserer = "\0";
-        if (calcOk.matches()) {           
-            String strRes1;     // résultat du calcul1     
-            
-            int posdeb = commande.indexOf('(');
-            int posfin = commande.indexOf(')');
-            
-            strRes1 = commande.substring(posdeb+1, posfin);           
-            // On transforme le premier nombre récupéré en double
-            // et on le stocke dans operande1, on fait de même pour l'operande2
-            strRes1 = calculSimple(strRes1);
-            
-            strRes1 = strRes1.substring(2, strRes1.length() - 1);
-            
-            aInserer = calculSimple(calcOk.group(1) + calcOk.group(2) + strRes1);
-            
-
-        }
-        return (aInserer);
-        
-    }
-    
-    
-    
-    
-    /**
-     * Calcule et affiche le résultat de la commande
-     * @param commande 
-     * @return aInserer le texte à insérer dans l'écran
-     */
-    public static String calculParenth2(String commande) {
-        
-
-
-        String aInserer; // le resultat de la commande
-
-        Matcher calcParenthesesOk = patCalcParenth2.matcher(commande);
-
-        aInserer = "\0";
-        if (calcParenthesesOk.matches()) {           
-            String strRes1;     // résultat du calcul1
-            String strRes2;      // résultat du calcul2      
-            
-            int posdeb1 = commande.indexOf('(');
-            int posfin1 = commande.indexOf(')');
-            
-            int posdeb2 = commande.lastIndexOf('(');
-            int posfin2 = commande.lastIndexOf(')');
-            
-            strRes1 = commande.substring(posdeb1+1, posfin1);
-            strRes2 = commande.substring(posdeb2+1, posfin2);            
-            // On transforme le premier nombre récupéré en double
-            // et on le stocke dans operande1, on fait de même pour l'operande2
-            strRes1 = calculSimple(strRes1);
-            strRes2 = calculSimple(strRes2);
-            
-            strRes1 = strRes1.substring(2, strRes1.length() - 1);
-            strRes2 = strRes2.substring(2, strRes2.length() - 1);
-            
-            aInserer = calculSimple(strRes1 + calcParenthesesOk.group(4) + strRes2);
-            
-
-        }
-        return (aInserer);
-        
-    }
-
-    
-    /**
-     * Utilise la méthode adéquate en fonction de la commande
-     * @param commande à exécuter
-     * @return aInserer le texte à insérer dans l'écran
-     */
-    public static String calcul(String commande) {        
-
-        String aInserer; // le resultat de la commande
-
-        Matcher calcParenth2Ok = patCalcParenth2.matcher(commande);
-        Matcher calcSimpleOk = patCalcSimple.matcher(commande);
-        Matcher calcParenth1AOk = patCalcParenth1A.matcher(commande);
-        Matcher calcParenth1BOk = patCalcParenth1B.matcher(commande);
-        
-        aInserer = "\0";
-        if (calcParenth2Ok.matches()) {                       
-            aInserer = calculParenth2(commande);
-        } else if (calcSimpleOk.matches()){
-            aInserer = calculSimple(commande);
-        } else if (calcParenth1AOk.matches()){
-            aInserer = calculParenth1A(commande);
-        } else if (calcParenth1BOk.matches()){
-            aInserer = calculParenth1B(commande);
-        } else {
-            aInserer = "Erreur de commande.\n";
-        }
-            
-        return (aInserer);
-        
-    }
-    
     /**
      * Si la commande est une affectation de type 15 + 4 = A, alors cette
      * méthode est utilisée. On réalise l'opération demandée, puis on affecte
@@ -390,7 +155,30 @@ public class Utilitaires {
             // sinon on met à jour sa valeur
             casesMem[nomvar - 65].setValeur(resultat);
         }
+        
         return resultat;
     }
 
+    /**
+     * Lorsque l'utilisateur entre "MEM", la calculatrice passe en mode mémoire,
+     * ainsi, de nouvelles méthodes seront utilisables (dans la classe 
+     * CommandesMemoires)
+     * @param commande la commande entrée par l'utilisateur
+     * @return un message de confirmation si la commande a bien été exécutée,
+     * null sinon
+     */
+    public String passageMem(String commande) {
+        // on regarde si la commande MEM a bien été entrée
+        Pattern patMem = Pattern.compile("(\\s*)MEM(\\s*)");
+        Matcher memok = patMem.matcher(commande);
+        // si c'est le cas, le boolean modeMem de ActionCalculer est activé
+        if (memok.matches()) {
+            ActionCalculer.modeMem = true;
+            return "Mode mémoire actif.";
+        } else {
+            return null;
+        }
+
+        
+    }
 }

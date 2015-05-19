@@ -17,11 +17,15 @@ import java.awt.event.ActionListener;
  */
 public class ActionCalculer implements ActionListener {
 
+    /** booleen permettant de savoir si on est en mode MEM ou non */
+    public static boolean modeMem = false;
+    
     /** Champ de texte pour les exécutions de commandes */
     private ExecuteurCommandes executeurAssocie;
 
     /** Ecran où les commandes et leur résultat seront affichées */
     private Ecran ecran;
+    
 
     /**
      * Permettra de récupérer le texte présent dans l'ecran et l'executeur
@@ -42,13 +46,18 @@ public class ActionCalculer implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // on récupère le texte du textfield exécuteur de commandes
-        String commande = executeurAssocie.getText();     
-        // on récupère le résultat de la commande
-        double resultat = Utilitaires.calculIntermediaire(commande);
-        // on insère la commande et son résultat à l'écran
-        ecran.insert(commande + "\n", ecran.getText().length());
-        ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+        String commande = executeurAssocie.getText();
         
+        // on insère la commande à l'écran
+        ecran.insert(commande + "\n", ecran.getText().length());
+        
+        if (!modeMem) {
+            double resultat = Utilitaires.calculIntermediaire(commande);
+            // on insère le résultat à l'écran
+            ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+        } else {
+            
+        }
         // On vide le textfield executeur de commandes
         executeurAssocie.setText("");
         
