@@ -27,7 +27,7 @@ public class ActionCalculer implements ActionListener {
     private Ecran ecran;
 
     /** Vérifie si on est en mode mémoire ou non */
-    private static boolean modeMem = false;
+    private static boolean modeMem;
     
 
     /**
@@ -44,7 +44,8 @@ public class ActionCalculer implements ActionListener {
     }
 
     /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @see java.awt.event.ActionListener#actionPerformed
+     * (java.awt.event.ActionEvent)
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -85,7 +86,15 @@ public class ActionCalculer implements ActionListener {
             
             if (fonctionok == 1) {      // commande RAZ
                 // on informe l'utilisateur que la commande a été effectuée
+                CommandesMemoire.raz(commande);
                 ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 2) {       // commande VOIR
+                // on informe l'utilisateur que la commande a été effectuée
+                ecran.insert(CommandesMemoire.voir(commande)
+                            + "\n", ecran.getText().length());
+            } else if (fonctionok == 3) {       // commande QUIT
+                // on informe l'utilisateur que la commande a été effectuée
+                ecran.insert("Mode mémoire inactif.\n", ecran.getText().length());
             }
         }
         // On vide le textfield executeur de commandes
@@ -103,18 +112,23 @@ public class ActionCalculer implements ActionListener {
     public static int fonctionAUtiliserNonMem (String commande) {
         
         int fonctionok = 0;
-        // on créé des patterns permettant de détecter chaque fonction utilisable
+        // on créé des patterns permettant de détecter chaque fonction 
+        // utilisable
         Pattern patMem = Pattern.compile("(\\s*)MEM(\\s*)");
         Matcher memok = patMem.matcher(commande);
         
         Pattern patAffect = Pattern.compile(".*( = [A-Z])");
         Matcher affectok = patAffect.matcher(commande);
         
+        Pattern patCalcul = Pattern.compile(".*(\\d)");
+        Matcher calculok = patCalcul.matcher(commande);
+        
         if (memok.matches()) {
             fonctionok = 1;     // MEM
+            modeMem = true;
         } else if (affectok.matches()) {
             fonctionok = 2;     // affectation (15+15 = A)
-        } else {
+        } else if (calculok.matches()){
             fonctionok = 3;     // calcul normal
         }
 
@@ -130,21 +144,26 @@ public class ActionCalculer implements ActionListener {
     public static int fonctionAUtiliserMem (String commande) {
         
         int fonctionok = 0;
-        // on créé des patterns permettant de détecter chaque fonction utilisable
+        // on créé des patterns permettant de détecter chaque fonction 
+        // utilisable
         Pattern patRaz = Pattern.compile("(\\s*)RAZ.*");
         Matcher razok = patRaz.matcher(commande);
         
+        Pattern patVoir = Pattern.compile("\\s*VOIR.*");
+        Matcher voirok = patVoir.matcher(commande);
+        
+        Pattern patQuit = Pattern.compile("\\s*QUIT\\s*");
+        Matcher quitok = patQuit.matcher(commande);
+        
         if (razok.matches()) {
             fonctionok = 1;     // RAZ
+        } else if (voirok.matches()) {
+            fonctionok = 2;     // MEM
+        } else if (quitok.matches()) {
+            fonctionok = 3;     // QUIT
+            modeMem = false;
         }
         return fonctionok;
-    }
-
-    /**
-     * @param nouveauMode the modeMem to set
-     */
-    public static void setModeMem(boolean nouveauMode) {
-        modeMem = nouveauMode;
     }
     
 }

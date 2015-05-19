@@ -4,13 +4,13 @@
  */
 package iut.info1.projetS2.utilitaires;
 
-import iut.info1.projetS2.calculatrice.ActionCalculer;
-
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Regroupe toutes les commandes qui modifieront les cases mémoires de la calculatrice
+ * Regroupe toutes les commandes qui modifieront les cases mémoires 
+ * de la calculatrice
  * @author Sébastien
  * @version 1.0
  */
@@ -51,26 +51,15 @@ public class CommandesMemoire {
         return resultat;
     }
     
-    
-    /**
-     * Lorsque l'utilisateur entre "MEM", la calculatrice passe en mode mémoire,
-     * ainsi, de nouvelles méthodes seront utilisables (dans la classe 
-     * CommandesMemoires)
-     * @param commande la commande entrée par l'utilisateur
-     * null sinon
-     */
-    public static void passageMem(String commande) {
-        ActionCalculer.setModeMem(true);        // le mode mémoire sera détecté
-    }
-    
     /**
      * Remet à zéro les cases mémoires spécifiées
      * @param commande la commande entrée par l'utilisateur
      */
     public static void raz(String commande) {
         // on regarde si le pattern convient
-        Pattern patRaz = Pattern.compile("\\s*RAZ\\s*[A-Z]");
-        Matcher razok = patRaz.matcher(commande);
+        Pattern patRazSimple = Pattern.compile("\\s*RAZ\\s*[A-Z]");
+        Pattern patRazMultiple = Pattern.compile("\\s*RAZ\\s*[A-Z]..[A-Z]");
+        Matcher razok = patRazSimple.matcher(commande);
         
         if (razok.matches()) {
             char nomvar;    
@@ -80,5 +69,75 @@ public class CommandesMemoire {
             // on l'initialise
             casesMem[nomvar - 65] = new Variable(nomvar, 0);
         }
+        
+        razok = patRazMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on les remet toutes à zéro
+        if (razok.matches()) {
+            char nomvar1 = commande.charAt(commande.length() - 4);
+            char nomvar2 = commande.charAt(commande.length() - 1);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    casesMem[nomvar - 65] = new Variable(nomvar, 0);
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    casesMem[nomvar - 65] = new Variable(nomvar, 0);
+                } 
+            }
+        }
+    }
+    
+    /**
+     * Affiche les noms et valeurs des variables spécifiées
+     * @param commande la commande entrée par l'utilisateur
+     * @return les variables à afficher et leur valeur
+     */
+    public static String voir(String commande) {
+        
+        String aRetourner = "";
+        // on regarde si le pattern convient
+        Pattern patVoirSimple = Pattern.compile("\\s*VOIR\\s*[A-Z]");
+        Pattern patVoirMultiple = Pattern.compile("\\s*VOIR\\s*[A-Z]..[A-Z]");
+        Matcher voirok = patVoirSimple.matcher(commande);
+        
+        if (voirok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable à initialiser
+            nomvar = commande.charAt(commande.length() - 1);
+            // on l'initialise
+            if (casesMem[nomvar - 65] != null) {
+                aRetourner = casesMem[nomvar - 65].toString();
+            } else {
+                aRetourner = "Variable " + nomvar + " non déclarée";
+            }
+        }
+
+        voirok = patVoirMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on les affiches toutes
+        if (voirok.matches()) {
+            char nomvar1 = commande.charAt(commande.length() - 4);
+            char nomvar2 = commande.charAt(commande.length() - 1);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    if (casesMem[nomvar - 65] != null) {
+                        aRetourner = aRetourner.concat
+                        (casesMem[nomvar - 65].toString() + "\n");
+                    } else {
+                        aRetourner = aRetourner.concat
+                        ("Variable " + nomvar + " non déclarée");
+                    }
+                }              
+            } else {
+                for(char nomvar = nomvar2 ; nomvar >= nomvar1 ; nomvar--) {
+                    aRetourner = aRetourner.concat
+                            (casesMem[nomvar - 65].toString() + "\n");
+                } 
+            }
+        }
+        
+        return aRetourner;
     }
 }
