@@ -19,10 +19,12 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class AProposAction extends AbstractAction {
   
-    /** Tableur */
+    /** fenetre de notre tableur */
     private Tableur fenetre;
     
     /**
+     * Récupération des informations essentielles comme l'instance de la 
+     * JFrame et le nom de notre sous-menu.
      * @param fenetre fenetre dans laquelle on affiche le message
      * @param texte nom du sous-menu
      */
@@ -33,7 +35,8 @@ public class AProposAction extends AbstractAction {
     }
     
     /**
-     * Permet d'affecter une tache lors du déclenchement de l'évennement
+     * Ouvre une nouvelle fenetre (JOptionPane) qui affiche un message pour 
+     * donner de plus amples informations sur les dévellopeurs.
      */
     public void actionPerformed(ActionEvent e) {
         

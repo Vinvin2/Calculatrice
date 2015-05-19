@@ -5,13 +5,11 @@
 package iut.info1.projetS2.tableur.action;
 
 import iut.info1.projetS2.calculatrice.Menu;
-
 import iut.info1.projetS2.tableur.Tableur;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JFrame;
 
 /** 
  * Permet de fermer le tableur et de revenir au menu lors de l'activation de 
@@ -22,12 +20,13 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class QuitterAction extends AbstractAction {
     
-    /** fenêtre à fermer */
+    /** Fenetre de notre application */
     private Tableur fenetre;
-    
+
     /**
-     *
-     * @param fenetre fenetre à fermer
+     * Récupération des informations essentielles comme l'instance de la 
+     * JFrame et le nom de notre sous-menu.
+     * @param fenetre de notre tableur
      * @param texte nom du menu
      */
     public QuitterAction(Tableur fenetre, String texte) {
@@ -37,7 +36,10 @@ public class QuitterAction extends AbstractAction {
     }
 
     /**
-     * Permet d'affecter une tache lors du déclenchement de l'évennement
+     * Affiche une fenetre contenant un message pour savoir si l'utilisateur
+     * veut vraiment quitter, si oui le tableur sera automatiquement sauvegardé,
+     * la fenetre tableur fermée et la fenetre menu ouverte.
+     * Si non on revient au tableur sans rien faire.
      */
     public void actionPerformed(ActionEvent e) {
         
@@ -49,7 +51,7 @@ public class QuitterAction extends AbstractAction {
     	    fenetre.dispose();
     	
     	} catch (NullPointerException error) {
-    	    
+    	  
     	}
 		
     }

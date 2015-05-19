@@ -4,16 +4,11 @@
  */
 package iut.info1.projetS2.tableur;
 
-import static iut.info1.projetS2.tableur.Tableur.*;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.TextArea;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 /** TODO commenter la responsabilité de cette classe
@@ -110,6 +105,7 @@ public class Tests extends JFrame {
         // recupération du texte de la console
         String aRenvoyer = fenetre.getConsole().getText();
         
+        @SuppressWarnings("unused")
         String test ="Test";
         
         text.insert(aRenvoyer, text.getText().length());

@@ -82,7 +82,7 @@ public class Menu {
         menuAutre = new JMenu("?");
         
         // Ajout du sous-menu aide
-        item = new JMenuItem(new AideAction("Aide"));
+        item = new JMenuItem(new AideAction(getFenetre(),"Aide"));
         menuAutre.add(item);
         
         // Ajout du sous-menu à propos
@@ -99,19 +99,19 @@ public class Menu {
         menuEditer = new JMenu("Editer");
         
         // Ajout du sous-menu copier
-        item = new JMenuItem(new CopierAction("Copier"));
+        item = new JMenuItem(new CopierAction(getFenetre(),"Copier"));
         item.setAccelerator(KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit()
         .getMenuShortcutKeyMask(), false));
         menuEditer.add(item);
         
         // Ajout du sous-menu couper
-        item = new JMenuItem(new CouperAction("Couper"));
+        item = new JMenuItem(new CouperAction(getFenetre(),"Couper"));
         item.setAccelerator(KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit()
         .getMenuShortcutKeyMask(), false));
         menuEditer.add(item);
         
         // Ajout du sous-menu coller
-        item = new JMenuItem(new CollerAction("Coller"));
+        item = new JMenuItem(new CollerAction(getFenetre(),"Coller"));
         item.setAccelerator(KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit()
         .getMenuShortcutKeyMask(), false));
         menuEditer.add(item);       
@@ -126,18 +126,18 @@ public class Menu {
         menuFichier = new JMenu("Fichier");
         
         // Ajout du sous-menu nouveau
-        item = new JMenuItem(new NouveauAction("Nouveau"));
+        item = new JMenuItem(new NouveauAction(getFenetre(),"Nouveau"));
         menuFichier.add(item);
         
         // Ajout d'une barre de séparation
         menuFichier.insertSeparator(1);
         
         // Ajout du sous-menu ouvrir
-        item = new JMenuItem(new OuvrirAction("Ouvrir"));
+        item = new JMenuItem(new OuvrirAction(getFenetre(),"Ouvrir"));
         menuFichier.add(item);
         
         // Ajout du sous-menu sauver
-        item = new JMenuItem(new SauverAction("Sauver"));
+        item = new JMenuItem(new SauverAction(getFenetre(),"Sauver"));
         menuFichier.add(item);
         
         // Ajout du sous-menu quitter

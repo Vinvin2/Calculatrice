@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2.tableur.action;
 
+import iut.info1.projetS2.tableur.Tableur;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -16,12 +18,20 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class NouveauAction extends AbstractAction {
     
+    /** Fenetre de notre application */
+    @SuppressWarnings("unused")
+    private Tableur fenetre;
+
     /**
-     * 
+     * Récupération des informations essentielles comme l'instance de la 
+     * JFrame et le nom de notre sous-menu.
+     * @param fenetre de notre tableur
      * @param texte nom du menu
      */
-    public NouveauAction(String texte) {
+    public NouveauAction(Tableur fenetre, String texte) {
         super(texte);
+        
+        this.fenetre = fenetre;
     }
 
     /**

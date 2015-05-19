@@ -78,7 +78,8 @@ public class Tableur extends JFrame{
         
         // On initialise notre fenetre
         build();
-        
+       
+        fenetre = this;
     }
     
 
@@ -154,7 +155,7 @@ public class Tableur extends JFrame{
         modele = new DefaultTableModel(lm.getSize(), 26); 
         
         // Création d'un modèle de table
-        modele = new modeleDeTable();
+        modele = new ModeleDeTable();
         // Création du tableur
         tableur = new JTable(modele);
         

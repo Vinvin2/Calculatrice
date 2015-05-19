@@ -38,7 +38,7 @@ public class OutilsFichier {
      * @param table  tableau à 2 dimensions contenant des String
      * @return un booléen égal à vrai ssi la sauvegarde a bien été effecuée
      */
-    public static boolean enregistrerPaireLigneArret(Object[][] table) {
+    public static boolean enregistrerTableur(Object[][] table) {
         boolean reussi = true;      // vrai ssi l'enregistrement a réussi
         
         // création et ouverture du fichier NOM_FICHIER_PAIRE
@@ -59,12 +59,12 @@ public class OutilsFichier {
     /**
      * Restauration des paires "arret/ligne".
      * Les paires sont supposées être présentes dans le fichier de nom 
-     * NOM_FICHIER_PAIRE, sous la forme d'un tableau à 2 dimensions contenant
-     * des valeurs de type String
+     * NOM_FICHIER_TABLEUR, sous la forme d'un tableau à 2 dimensions contenant
+     * des valeurs de type Object.
      * @return un tableau à 2 dimensions contenant des chaînes de caractères
      *         ou bien la valeur null si un problème empêche l'accès au fichier
      */
-    public static Object[][] restaurerPaireLigneArret()  {
+    public static Object[][] restaurerPaireLignTableur()  {
         
         // objet tampon dans lequel est placé l'objet lu dans le fichier  
         Object[][] tampon = null;  

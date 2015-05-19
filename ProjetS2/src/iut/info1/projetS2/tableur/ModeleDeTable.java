@@ -1,19 +1,17 @@
 /*
- * modeleDeTable.java				6 mai 2015
+ * modeleDeTable.java               6 mai 2015
  * IUT INFO1 2014-2015 
  */
 package iut.info1.projetS2.tableur;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 /** TODO commenter la responsabilité de cette classe
  * @author Mickaël
  * @version 0.1
  */
-public class modeleDeTable extends AbstractTableModel {
+@SuppressWarnings("serial")
+public class ModeleDeTable extends AbstractTableModel {
     
     /** Liste de toutes nos en-têtes */
     private String[] nomColonnes = {"A","B","C","D","E","F","G","H","I","J","K",
@@ -81,10 +79,6 @@ public class modeleDeTable extends AbstractTableModel {
      * @param donnees the donnees to set
      */
     public static void setDonnees(Object[][] donnees) {
-        modeleDeTable.donnees = donnees;
-    }
-
-
- 
-    
+        ModeleDeTable.donnees = donnees;
+    }    
 }

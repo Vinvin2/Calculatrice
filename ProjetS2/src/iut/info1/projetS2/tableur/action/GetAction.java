@@ -5,6 +5,7 @@
 package iut.info1.projetS2.tableur.action;
 
 import iut.info1.projetS2.tableur.Tableur;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -15,15 +16,17 @@ import javax.swing.AbstractAction;
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class GetAction extends AbstractAction {
     
-    /** */
+    /** Fenetre de notre application */
     private Tableur fenetre;
-    
+
     /**
-     * TODO EXPLIQUER A QUOI CA SERT BORDEL DE MERDE
-     * @param fenetre
-     * @param texte nom de notre sous-menu
+     * Récupération des informations essentielles comme l'instance de la 
+     * JFrame et le nom de notre sous-menu.
+     * @param fenetre de notre tableur
+     * @param texte nom du menu
      */
     public GetAction(Tableur fenetre, String texte) {
         super(texte);
