@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class CommandesMemoire {
     
     /** Tableau contenant toutes les cases mémoires */
-    public static Variable[] casesMem = new Variable[26];
+    private static Variable[] casesMem = new Variable[26];
     
     /**
      * Si la commande est une affectation de type 15 + 4 = A, alors cette
@@ -57,22 +57,28 @@ public class CommandesMemoire {
      * ainsi, de nouvelles méthodes seront utilisables (dans la classe 
      * CommandesMemoires)
      * @param commande la commande entrée par l'utilisateur
-     * @return un message de confirmation si la commande a bien été exécutée,
      * null sinon
      */
-    public static String passageMem(String commande) {
-        return "Mode mémoire actif.\n";
+    public static void passageMem(String commande) {
+        ActionCalculer.setModeMem(true);        // le mode mémoire sera détecté
     }
     
     /**
      * Remet à zéro les cases mémoires spécifiées
      * @param commande la commande entrée par l'utilisateur
-     * @return ok si la remise à zéro a été correctement effectuée, un message
-     * d'erreur sinon
      */
-    public static String raz(String commande) {
-        // TODO le corps de raz
-        return null;
+    public static void raz(String commande) {
+        // on regarde si le pattern convient
+        Pattern patRaz = Pattern.compile("\\s*RAZ\\s*[A-Z]");
+        Matcher razok = patRaz.matcher(commande);
         
+        if (razok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable à initialiser
+            nomvar = commande.charAt(commande.length() - 1);
+            // on l'initialise
+            casesMem[nomvar - 65] = new Variable(nomvar, 0);
+        }
     }
 }
