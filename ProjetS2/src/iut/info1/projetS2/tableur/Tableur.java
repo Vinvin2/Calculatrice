@@ -46,7 +46,7 @@ public class Tableur extends JFrame{
     private JTextField console;
     
     /** Modele de table par défaut */
-    private AbstractTableModel modele;
+    private static AbstractTableModel modele;
     
     /** Tableur de notre application */
     private static JTable tableur;
@@ -124,6 +124,14 @@ public class Tableur extends JFrame{
          *  commandes est liee a un tableur precis
          */
         actions = new Commandes(this);
+    }
+    
+    /**
+     * Permet de raffraichir le tableur après une modification
+     */
+    public static void refresh() {
+        tableur.setModel(modele);
+        modele.fireTableDataChanged();
     }
     
     /**

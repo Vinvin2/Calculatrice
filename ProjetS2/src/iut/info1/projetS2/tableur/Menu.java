@@ -6,15 +6,7 @@ package iut.info1.projetS2.tableur;
 
 import static iut.info1.projetS2.tableur.Tableur.*;
 
-import iut.info1.projetS2.tableur.action.AProposAction;
-import iut.info1.projetS2.tableur.action.AideAction;
-import iut.info1.projetS2.tableur.action.CollerAction;
-import iut.info1.projetS2.tableur.action.CopierAction;
-import iut.info1.projetS2.tableur.action.CouperAction;
-import iut.info1.projetS2.tableur.action.NouveauAction;
-import iut.info1.projetS2.tableur.action.OuvrirAction;
-import iut.info1.projetS2.tableur.action.QuitterAction;
-import iut.info1.projetS2.tableur.action.SauverAction;
+import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.Toolkit;
 
@@ -133,7 +125,7 @@ public class Menu {
         menuFichier.insertSeparator(1);
         
         // Ajout du sous-menu ouvrir
-        item = new JMenuItem(new OuvrirAction(getFenetre(),"Ouvrir"));
+        item = new JMenuItem(new ChargerAction(getFenetre(),"Charger"));
         menuFichier.add(item);
         
         // Ajout du sous-menu sauver
@@ -141,7 +133,7 @@ public class Menu {
         menuFichier.add(item);
         
         // Ajout du sous-menu quitter
-        item = new JMenuItem(new QuitterAction(getFenetre(), "Quitter"));
+        item = new JMenuItem(new AccueilAction(getFenetre(), "Accueil"));
         menuFichier.add(item);       
     }
     

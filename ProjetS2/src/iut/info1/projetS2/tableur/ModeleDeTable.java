@@ -75,10 +75,25 @@ public class ModeleDeTable extends AbstractTableModel {
         return donnees;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.table.AbstractTableModel#fireTableDataChanged()
+     */
+    @Override
+    public void fireTableDataChanged() {
+        // TODO Auto-generated method stub
+        super.fireTableDataChanged();
+    }
+
     /**
      * @param donnees the donnees to set
      */
     public static void setDonnees(Object[][] donnees) {
         ModeleDeTable.donnees = donnees;
+/*        fireTableDataChanged();
+        for (int i = 0; i < donnees.length; i++) {
+            for (int j = 0; j < donnees[i].length; j++) {
+                setValueAt(donnees, i, j);
+            }
+        }*/
     }    
 }

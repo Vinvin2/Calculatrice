@@ -28,9 +28,9 @@ public class OutilsFichier {
      * Nom du fichier dans lequel est enregistré le tableau à 2 dimensions
      * contenant les paires "arrêt/ligne".
      */
-    public final static String NOM_FICHIER = "fichier_tableur.bin";
+    public static String nomFichier;
       
-    
+
     /**
      * Enregistre dans le fichier ayant pour nom NOM_FICHIER_PAIRE
      * le tableau contenant les paires "ligne/arrêt". Il s'agit d'un tableau
@@ -43,7 +43,7 @@ public class OutilsFichier {
         
         // création et ouverture du fichier NOM_FICHIER_PAIRE
         try(ObjectOutputStream fichier = new ObjectOutputStream(
-                    new FileOutputStream(NOM_FICHIER))) {
+                    new FileOutputStream(nomFichier + ".tabix"))) {
                        
             // On écrit l'objet argument dans le fichier
             fichier.writeObject(table);  
@@ -71,7 +71,7 @@ public class OutilsFichier {
         
         // ouverture du fichier et lecture de l'objet qu'il contient
         try(ObjectInputStream fichier = new ObjectInputStream(
-                    new FileInputStream(NOM_FICHIER))) {           
+                    new FileInputStream(nomFichier + ".tabix"))) {           
             
             // lecture de l'objet contenu dans le fichier
             tampon = (Object[][]) fichier.readObject();

@@ -7,6 +7,7 @@ package iut.info1.projetS2.tableur.action;
 import iut.info1.projetS2.tableur.ModeleDeTable;
 import iut.info1.projetS2.tableur.OutilsFichier;
 import iut.info1.projetS2.tableur.Tableur;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -41,6 +42,14 @@ public class SauverAction extends AbstractAction {
      * en cas de réussite mais aussi en cas d'échec.
      */
     public void actionPerformed(ActionEvent e) {
+        
+        // On boucle tant que le nom du fichier est incorrect
+        do {
+            
+            // Ouvre une fenetre demandant le nom du fichier à sauvegarder
+            OutilsFichier.nomFichier = JOptionPane.showInputDialog(fenetre,
+                             "Veuillez entrer le nom du fichier à sauvegarder");
+        } while (OutilsFichier.nomFichier.length() == 0);
         
         // Saugarde le tableau de données du tableur dans un fichier
         if (OutilsFichier.enregistrerTableur(ModeleDeTable.getDonnees())) {
