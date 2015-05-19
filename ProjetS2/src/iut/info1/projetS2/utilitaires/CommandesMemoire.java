@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2.utilitaires;
 
+import iut.info1.projetS2.calculatrice.Aide;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -131,12 +133,77 @@ public class CommandesMemoire {
                 }              
             } else {
                 for(char nomvar = nomvar2 ; nomvar >= nomvar1 ; nomvar--) {
-                    aRetourner = aRetourner.concat
-                            (casesMem[nomvar - 65].toString() + "\n");
+                    if (casesMem[nomvar - 65] != null) {
+                        aRetourner = aRetourner.concat
+                        (casesMem[nomvar - 65].toString() + "\n");
+                    } else {
+                        aRetourner = aRetourner.concat
+                        ("Variable " + nomvar + " non déclarée");
+                    }
                 } 
             }
         }
         
         return aRetourner;
+    }
+    
+    /**
+     * Ajoute 1 aux variables spécifiées
+     * @param commande la commande entrée par l'utilisateur
+     */
+    public static void incr(String commande) {
+        // on regarde si le pattern convient
+        Pattern patIncrSimple = Pattern.compile("\\s*INCR\\s*[A-Z]");
+        Pattern patIncrMultiple = Pattern.compile("\\s*INCR\\s*[A-Z]..[A-Z]");
+        Matcher incrok = patIncrSimple.matcher(commande);
+        
+        if (incrok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable à initialiser
+            nomvar = commande.charAt(commande.length() - 1);
+            // on y ajoute 1 si la variable a été initialisée
+            if (casesMem[nomvar - 65] != null) {
+                casesMem[nomvar - 65].setValeur
+                                (casesMem[nomvar - 65].getValeur() + 1);
+            }
+        }
+        
+        incrok = patIncrMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on les remet toutes à zéro
+        if (incrok.matches()) {
+            char nomvar1 = commande.charAt(commande.length() - 4);
+            char nomvar2 = commande.charAt(commande.length() - 1);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    if (casesMem[nomvar - 65] != null) {
+                        casesMem[nomvar - 65].setValeur
+                                        (casesMem[nomvar - 65].getValeur() + 1);
+                    }
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    if (casesMem[nomvar - 65] != null) {
+                        casesMem[nomvar - 65].setValeur
+                                        (casesMem[nomvar - 65].getValeur() + 1);
+                    }
+                } 
+            }
+        }
+    }
+    
+    /**
+     * Affiche la fenêtre d'aide
+     * @param commande la commande entrée par l'utilisateur
+     */
+    public static void aide(String commande) {
+        // on regarde si le pattern convient
+        Pattern patAide = Pattern.compile("\\s*AIDE\\s*");
+        Matcher aideok = patAide.matcher(commande);
+        
+        if (aideok.matches()) {
+            new Aide();
+        }
     }
 }
