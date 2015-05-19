@@ -97,21 +97,20 @@ public class TestUtilitaires {
         String commandeSimplifiee = commande;
         double resultat = Double.NaN;
         Matcher calcComplexeOk = PATTERN_COMPLEXE.matcher(commandeSimplifiee);
-
-        
+        int nbOperateur;
+        nbOperateur = compteOperateurs(commandeSimplifiee);
         if(calcComplexeOk.matches()) {
-            System.out.println(calcComplexeOk.groupCount());
-        while (calcComplexeOk.groupCount() > 3) {
-
-            String expressionATraiter;
-            expressionATraiter = commandeSimplifiee.substring(0, calcComplexeOk.end(3));
-            System.out.println(expressionATraiter);
-            resultat = calcul(expressionATraiter);
-            System.out.println(resultat);
-            commandeSimplifiee.replace(expressionATraiter, Double.toString(resultat));
-            }
+            do {
+                String expressionATraiter;
+                expressionATraiter = commandeSimplifiee.substring(0, calcComplexeOk.end(3));
+                resultat = calcul(expressionATraiter);
+                commandeSimplifiee = commandeSimplifiee.replace(expressionATraiter, Double.toString(resultat));
+                nbOperateur--;
+            } while (nbOperateur > 1);
+            
+            resultat = calcul(commandeSimplifiee);
         }
-        
+
         return resultat;
         
     }
@@ -122,10 +121,21 @@ public class TestUtilitaires {
      * @param commande à exécuter
      * @return aInserer le texte à insérer dans l'écran
      */
-    public static String execCommande(String commande) {        
+    private static int compteOperateurs(String commande) {        
+        
+        int nbOperateur;
+        nbOperateur = 0;
+        for (int i = 0 ; i < commande.length(); i++) {
+            if (commande.charAt(i) == '+' || 
+                commande.charAt(i) == '*' ||
+                commande.charAt(i) == '-' ||
+                commande.charAt(i) == '/') {
+                    nbOperateur++;
+            }
 
-            
-        return null;
+        }
+
+        return nbOperateur;
         
     }
 }

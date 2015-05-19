@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2.calculatrice;
 
+import iut.info1.projetS2.utilitaires.Utilitaires;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -43,11 +45,11 @@ public class ActionCalculer implements ActionListener {
         String commande = executeurAssocie.getText();
         
         // on récupère le résultat de la commande
-        String resultat = Utilitaires.calcul(commande);
+        double resultat = Utilitaires.calculIntermediaire(commande);
         
         // on insère la commande et son résultat à l'écran
-        ecran.insert(commande + "\n", ecran.getText().length() + 1);
-        ecran.insert(resultat, ecran.getText().length() + 1);
+        ecran.insert(commande + "\n", ecran.getText().length());
+        ecran.insert(" = " + resultat + "\n", ecran.getText().length());
         
         // On vide le textfield executeur de commandes
         executeurAssocie.setText("");
