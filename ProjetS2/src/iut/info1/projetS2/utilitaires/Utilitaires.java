@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
  */
 public class Utilitaires {
 
+    /** Tableau contenant toutes les cases mémoires */
+    public static Variable[] casesMem = new Variable[26];
     /** Modèle d'expression du calcul sous forme de chaîne de caractères */
     public static final String REG_EX_CALCUL_SIMPLE = 
             ("[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*([+-/*])[ ]*([-+]?[ ]*\\d+\\.?\\d*)[ ]*");
@@ -357,6 +359,38 @@ public class Utilitaires {
             
         return (aInserer);
         
+    }
+    
+    /**
+     * Si la commande est une affectation de type 15 + 4 = A, alors cette
+     * méthode est utilisée. On réalise l'opération demandée, puis on affecte
+     * le résultat à la variable concernée
+     * @param commande la commande à traiter
+     * @return le résultat de la commande
+     */
+    public static double affectation (String commande) {
+        String calculARealiser; // le calcul que l'on devra effectuer
+        double resultat;        // son résultat
+        char nomvar;            // le nom de la variable à affecter
+        
+        // TODO : moyen de prendre en compte les espaces
+        calculARealiser = commande.substring(0, commande.length() - 4);
+
+        // on fait le calcul
+        resultat = calculIntermediaire(calculARealiser);
+        
+        // on prend le nom de la variable
+        nomvar = commande.charAt(commande.length()-1);
+        
+        // on vérifie si la variable n'a jamais été initialisée
+        if (casesMem[nomvar - 65] == null) {
+            // on créé alors cette variable
+            casesMem[nomvar - 65] = new Variable(nomvar, resultat);
+        } else {
+            // sinon on met à jour sa valeur
+            casesMem[nomvar - 65].setValeur(resultat);
+        }
+        return resultat;
     }
 
 }

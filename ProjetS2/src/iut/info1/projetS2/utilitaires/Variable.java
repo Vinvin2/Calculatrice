@@ -23,9 +23,47 @@ public class Variable {
      * @param valeur
      */
     public Variable(char nom, double valeur) {
-        if (nom >= 65 && nom <= 90) {
+        if (nom >= 65 && nom <= 90) {   // si le nom est un caractère majuscule
             this.nom = nom;
             this.valeur = valeur;
         }
     }
+
+    /**
+     * @return le nom
+     */
+    public char getNom() {
+        return nom;
+    }
+
+    /**
+     * @param nom le nom à set
+     */
+    public void setNom(char nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * @return la valeur
+     */
+    public double getValeur() {
+        return valeur;
+    }
+
+    /**
+     * @param valeur la valeur à set
+     */
+    public void setValeur(double valeur) {
+        this.valeur = valeur;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Variable [nom=" + nom + ", valeur=" + valeur + "]";
+    }
+    
+    
 }
