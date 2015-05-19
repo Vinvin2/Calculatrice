@@ -20,7 +20,7 @@ public class modeleDeTable extends AbstractTableModel {
                                     "L","M","N","O","P","Q","R","S","T","U","V",
                                     "X","Y","Z"};
     /** Tableau stockant nos données */
-    public Object[][] donnees = new Object[20][26];
+    public static Object[][] donnees = new Object[20][26];
 
     /* (non-Javadoc)
      * @see javax.swing.table.TableModel#getColumnCount()
@@ -73,8 +73,15 @@ public class modeleDeTable extends AbstractTableModel {
     /**
      * @return the donnees
      */
-    public Object[][] getDonnees() {
+    public static Object[][] getDonnees() {
         return donnees;
+    }
+
+    /**
+     * @param donnees the donnees to set
+     */
+    public static void setDonnees(Object[][] donnees) {
+        modeleDeTable.donnees = donnees;
     }
 
 
