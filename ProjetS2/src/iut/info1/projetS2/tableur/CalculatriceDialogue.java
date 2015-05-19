@@ -2,12 +2,13 @@ package iut.info1.projetS2.tableur;
 
 import javax.swing.JOptionPane;
 
-/** TODO commenter la responsabilité de cette classe
+/** 
+ * Programme de test
  * @author Mickaël
  * @version 0.1
  */
 public class CalculatriceDialogue {
-    /** TODO commenter le rôle de la méthode
+    /** 
      * @param args
      */
     public static void main(String[] args){

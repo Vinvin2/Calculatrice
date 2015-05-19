@@ -6,7 +6,9 @@ package iut.info1.projetS2.tableur;
 
 import javax.swing.table.AbstractTableModel;
 
-/** TODO commenter la responsabilité de cette classe
+/** 
+ * Initialisation du modèle de la table et de toutes les méthodes qui vont 
+ * avec la table.
  * @author Mickaël
  * @version 0.1
  */
@@ -51,11 +53,7 @@ public class ModeleDeTable extends AbstractTableModel {
         
         return true;
     }
-    /** TODO commenter le rôle de la méthode
-     * @param value
-     * @param row
-     * @param col
-     */
+
     public void setValueAt(Object value, int row, int col) {
         donnees[row][col] = value;
         fireTableCellUpdated(row, col);
@@ -80,7 +78,7 @@ public class ModeleDeTable extends AbstractTableModel {
      */
     @Override
     public void fireTableDataChanged() {
-        // TODO Auto-generated method stub
+      
         super.fireTableDataChanged();
     }
 

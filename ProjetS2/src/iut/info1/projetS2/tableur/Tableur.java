@@ -256,8 +256,8 @@ public class Tableur extends JFrame{
         
     }
 
-    /** TODO commenter le rôle de la méthode
-     * 
+    /** 
+     * Initialisation de notre JLabel
      */
     private void buildJLabel() {
         label = new JLabel("Rien pour le moment");
