@@ -1,5 +1,5 @@
 /*
- * Commandes.java					30 avr. 2015
+ * Commandes.java                                       30 avr. 2015
  * IUT Info 1 2014/2015 groupe projet
  */
 
@@ -14,9 +14,9 @@ import iut.info1.projetS2.utilitaires.Utilitaires;
 /**
  * Méthode contenant l'ensemble des commandes interprétables par le tableur
  * --> Important : <--
- * La classe commande est instaciable et sera FORCEMENT liée à un tableur (lors de
- * l'instanciation de ce dernier)
- * @author Jonathan
+ * La classe commande est instaciable et sera FORCEMENT liée à un tableur (lors
+ * de l'instanciation de ce dernier)
+ * @author jo
  * @version 0.1
  */
 public class Commandes {
@@ -40,14 +40,18 @@ public class Commandes {
     private static final String REG_needCalc2
     = "([0]*[1]{0,1}\\d||[0]*[2][0])\\s*([A-Z])\\s+[=]\\s*(.*)";
 
+    /** REGEX pour identifier les différentes méthodes de copie */
+    private static final String REG_COP = "COP\\s+(.+)\\s+(.+)\\s+";
+
     /**
-     * appelé sur l'évènement 'click sur Valider', permet d'agir en fonction
+     * Appelé sur l'évènement 'click sur Valider', permet d'agir en fonction
      * de ce que l'user a tapé dans sa 'ligne de commande'
      */
     public void actionValider() {
         // recupération du texte de la console
         String aRenvoyer = fenetre.getConsole().getText();
-
+        // TODO test via pattern si une commande est appelée
+        
         // test via pattern si besoin de calcul ou pas
         Pattern testSiCalc = Pattern.compile(REG_needCalc);
         Pattern testSiCalc2 = Pattern.compile(REG_needCalc2);
@@ -64,7 +68,7 @@ public class Commandes {
 
 
     /**
-     * affichage de texte paramêtre, la position est récupérée automatiquement
+     * Affichage de texte paramêtre, la position est récupérée automatiquement
      * depuis la ligne de commande
      * @param aAfficher String à afficher dans le tableur
      */
@@ -131,6 +135,7 @@ public class Commandes {
 
         if (lig > -1 & col > -1) { // La syntaxe est ok on a pu tout récupérer
             this.fenetre.getModele().setValueAt(aAfficherTraite, lig, col);
+            this.fenetre.getConsole().setText("");
         } else { // syntaxiquement faux
             this.fenetre.getLabel().setText("Erreur de syntaxe type: "
                     + "A1 texte ou 1A texte");
@@ -139,23 +144,25 @@ public class Commandes {
     
     
     /**
-     * permet un simple affichage de ce que l'utilisateur a entré dans la
+     * Permet un simple affichage de ce que l'utilisateur a entré dans la
      * 'ligne de commande' de type nombreLettre aAfficher
      *                          ou lettreNombre aAfficher
      */
     public void affichageSimple() {
         String aAfficher = this.fenetre.getConsole().getText();
-        this.affichage(aAfficher);
+        this.affichage(aAfficher); // affichage du texte voulu
+        this.fenetre.getLabel().setText("Texte affiché");
     }
 
 
     /**
-     * permet d'afficher dans une case du tableur le résultat d'un calcul
+     * Permet d'afficher dans une case du tableur le résultat d'un calcul
      * entré dans la 'ligne de commande'
      */
     public void affichageCalcule() {
         String aAfficher = this.fenetre.getConsole().getText();
-        this.affichage(aAfficher);
+        this.affichage(aAfficher); // affichage du texte (après calcul)
+        this.fenetre.getLabel().setText("Calcul effectué");
     }
 
 
