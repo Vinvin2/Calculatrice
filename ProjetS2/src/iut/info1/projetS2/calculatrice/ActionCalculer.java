@@ -53,7 +53,7 @@ public class ActionCalculer implements ActionListener {
         String commande = executeurAssocie.getText();
 
         // on insère la commande à l'écran
-        ecran.insert(commande + "\n", ecran.getText().length());
+        ecran.insert(" " + commande + "\n", ecran.getText().length());
         if (!modeMem) {
             // on cherche une fonction non liée au mode mémoire et correspondant
             // à la commande
@@ -62,20 +62,39 @@ public class ActionCalculer implements ActionListener {
             if (fonctionok == 1){       // commande MEM
                 
                 // on informe l'utilisateur qu'il passe en mode mémoire
-                ecran.insert("Mode mémoire actif.\n", ecran.getText().length());
+                ecran.insert(" Mode mémoire actif.\n", ecran.getText().length());
                 
             } else if (fonctionok == 2) {       // commande affectation
                 
                 double resultat = CommandesMemoire.affectation(commande);
                 // on insère le résultat à l'écran
-                ecran.insert(" = " + resultat + "\n", ecran.getText().length());
-                
+                // si le résultat se termine par .0, on l'enlève à l'affichage
+                if (Double.toString(resultat).endsWith(".0")) {
+                    String strresult = Double.toString(resultat);
+                    strresult = strresult.substring(0, strresult.length() - 2); 
+
+                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                } else {
+                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                }
+
             } else if (fonctionok == 3) {       // commande calcul
                 
                 double resultat = Utilitaires.calculIntermediaire(commande);
                 // on insère le résultat à l'écran
-                ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                // si le résultat se termine par .0, on l'enlève à l'affichage
+                if (Double.toString(resultat).endsWith(".0")) {
+                    String strresult = Double.toString(resultat);
+                    strresult = strresult.substring(0, strresult.length() - 2); 
+
+                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                } else {
+                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                }
                 
+            } else {
+                ecran.insert(" Erreur, appuyez sur aide pour consulter les"
+                        + " commandes disponibles\n", ecran.getText().length());
             }
             
         } else {
@@ -94,7 +113,21 @@ public class ActionCalculer implements ActionListener {
                             + "\n", ecran.getText().length());
             } else if (fonctionok == 3) {       // commande QUIT
                 // on informe l'utilisateur que la commande a été effectuée
-                ecran.insert("Mode mémoire inactif.\n", ecran.getText().length());
+                ecran.insert(" Mode mémoire inactif.\n", ecran.getText().length());
+            } else if (fonctionok == 4) {
+                CommandesMemoire.aide(commande);// commande AIDE
+            } else if (fonctionok == 5) {
+                CommandesMemoire.incr(commande);// commande INCR
+                ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 6) {
+                CommandesMemoire.car(commande);// commande CAR
+                ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 7) {
+                CommandesMemoire.sqrt(commande);// commande SQRT
+                ecran.insert(" OK\n", ecran.getText().length());
+            } else {
+                ecran.insert(" Erreur, appuyez sur aide pour consulter les"
+                        + " commandes disponibles\n", ecran.getText().length());
             }
         }
         // On vide le textfield executeur de commandes
@@ -155,6 +188,18 @@ public class ActionCalculer implements ActionListener {
         Pattern patQuit = Pattern.compile("\\s*QUIT\\s*");
         Matcher quitok = patQuit.matcher(commande);
         
+        Pattern patAide = Pattern.compile("\\s*AIDE\\s*");
+        Matcher aideok = patAide.matcher(commande);
+        
+        Pattern patIncr = Pattern.compile("\\s*INCR.*");
+        Matcher incrok = patIncr.matcher(commande);
+        
+        Pattern patCar = Pattern.compile("\\s*CAR.*");
+        Matcher carok = patCar.matcher(commande);
+        
+        Pattern patSqrt = Pattern.compile("\\s*SQRT.*");
+        Matcher sqrtok = patSqrt.matcher(commande);
+        
         if (razok.matches()) {
             fonctionok = 1;     // RAZ
         } else if (voirok.matches()) {
@@ -162,6 +207,14 @@ public class ActionCalculer implements ActionListener {
         } else if (quitok.matches()) {
             fonctionok = 3;     // QUIT
             modeMem = false;
+        } else if (aideok.matches()) {
+            fonctionok = 4;     // AIDE
+        } else if (incrok.matches()) {
+            fonctionok = 5;     // INCR
+        } else if (carok.matches()) {
+            fonctionok = 6;     // CAR
+        } else if (sqrtok.matches()) {
+            fonctionok = 7;     // SQRT
         }
         return fonctionok;
     }

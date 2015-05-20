@@ -32,6 +32,7 @@ public class CommandesMemoire {
         double resultat;        // son résultat
         char nomvar;            // le nom de la variable à affecter
         
+        
         // TODO : moyen de prendre en compte les espaces
         calculARealiser = commande.substring(0, commande.length() - 4);
 
@@ -82,7 +83,7 @@ public class CommandesMemoire {
                     casesMem[nomvar - 65] = new Variable(nomvar, 0);
                 }              
             } else {
-                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
                     casesMem[nomvar - 65] = new Variable(nomvar, 0);
                 } 
             }
@@ -105,7 +106,7 @@ public class CommandesMemoire {
         if (voirok.matches()) {
             char nomvar;    
             
-            // on récupère le nom de la variable à initialiser
+            // on récupère le nom de la variable à afficher
             nomvar = commande.charAt(commande.length() - 1);
             // on l'initialise
             if (casesMem[nomvar - 65] != null) {
@@ -128,17 +129,17 @@ public class CommandesMemoire {
                         (casesMem[nomvar - 65].toString() + "\n");
                     } else {
                         aRetourner = aRetourner.concat
-                        ("Variable " + nomvar + " non déclarée");
+                        ("Variable " + nomvar + " non déclarée\n");
                     }
                 }              
             } else {
-                for(char nomvar = nomvar2 ; nomvar >= nomvar1 ; nomvar--) {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
                     if (casesMem[nomvar - 65] != null) {
                         aRetourner = aRetourner.concat
                         (casesMem[nomvar - 65].toString() + "\n");
                     } else {
                         aRetourner = aRetourner.concat
-                        ("Variable " + nomvar + " non déclarée");
+                        ("Variable " + nomvar + " non déclarée\n");
                     }
                 } 
             }
@@ -160,7 +161,7 @@ public class CommandesMemoire {
         if (incrok.matches()) {
             char nomvar;    
             
-            // on récupère le nom de la variable à initialiser
+            // on récupère le nom de la variable à incrémenter
             nomvar = commande.charAt(commande.length() - 1);
             // on y ajoute 1 si la variable a été initialisée
             if (casesMem[nomvar - 65] != null) {
@@ -170,7 +171,7 @@ public class CommandesMemoire {
         }
         
         incrok = patIncrMultiple.matcher(commande);
-        // lorsqu'on a plusieurs cases en paramètres, on les remet toutes à zéro
+        // lorsqu'on a plusieurs cases en paramètres, on les incr toutes
         if (incrok.matches()) {
             char nomvar1 = commande.charAt(commande.length() - 4);
             char nomvar2 = commande.charAt(commande.length() - 1);
@@ -183,7 +184,7 @@ public class CommandesMemoire {
                     }
                 }              
             } else {
-                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
                     if (casesMem[nomvar - 65] != null) {
                         casesMem[nomvar - 65].setValeur
                                         (casesMem[nomvar - 65].getValeur() + 1);
@@ -201,9 +202,107 @@ public class CommandesMemoire {
         // on regarde si le pattern convient
         Pattern patAide = Pattern.compile("\\s*AIDE\\s*");
         Matcher aideok = patAide.matcher(commande);
-        
+        // on affiche la fenêtre d'aide si c'est le cas
         if (aideok.matches()) {
             new Aide();
+        }
+    }
+    
+    /**
+     * fonction CAR : modifie la valeur des variables spécifiées pour leur 
+     * affecter leur valeur carré
+     * @param commande la commande entrée par l'utilisateur
+     */
+    public static void car(String commande) {
+        // on regarde si le pattern convient
+        Pattern patCarSimple = Pattern.compile("\\s*CAR\\s*[A-Z]");
+        Pattern patCarMultiple = Pattern.compile("\\s*CAR\\s*[A-Z]..[A-Z]");
+        Matcher carok = patCarSimple.matcher(commande);
+        
+        if (carok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable à traiter
+            nomvar = commande.charAt(commande.length() - 1);
+            // on la met au carré si la variable a été initialisée
+            if (casesMem[nomvar - 65] != null) {
+                casesMem[nomvar - 65].setValeur
+                                (casesMem[nomvar - 65].getValeur()
+                                 * casesMem[nomvar - 65].getValeur());
+            }
+        }
+        
+        carok = patCarMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on les met toutes au carré
+        if (carok.matches()) {
+            char nomvar1 = commande.charAt(commande.length() - 4);
+            char nomvar2 = commande.charAt(commande.length() - 1);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    if (casesMem[nomvar - 65] != null) {
+                        casesMem[nomvar - 65].setValeur
+                                        (casesMem[nomvar - 65].getValeur()
+                                         * casesMem[nomvar - 65].getValeur());
+                    }
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    if (casesMem[nomvar - 65] != null) {
+                        casesMem[nomvar - 65].setValeur
+                                        (casesMem[nomvar - 65].getValeur()
+                                         * casesMem[nomvar - 65].getValeur());
+                    }
+                } 
+            }
+        }
+    }
+    
+    /**
+     * fonction SQRT : modifie la valeur des variables spécifiées pour leur 
+     * affecter leur racine carrée
+     * @param commande la commande entrée par l'utilisateur
+     */
+    public static void sqrt(String commande) {
+        // on regarde si le pattern convient
+        Pattern patSqrtSimple = Pattern.compile("\\s*SQRT\\s*[A-Z]");
+        Pattern patSqrtMultiple = Pattern.compile("\\s*SQRT\\s*[A-Z]..[A-Z]");
+        Matcher sqrtok = patSqrtSimple.matcher(commande);
+        
+        if (sqrtok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable à traiter
+            nomvar = commande.charAt(commande.length() - 1);
+            // on la met à la racine carrée si la variable a été initialisée
+            if (casesMem[nomvar - 65] != null) {
+                casesMem[nomvar - 65].setValeur
+                                (Math.sqrt(casesMem[nomvar - 65].getValeur()));
+            }
+        }
+        
+        sqrtok = patSqrtMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on les met toutes 
+        // à la racine carrée
+        if (sqrtok.matches()) {
+            char nomvar1 = commande.charAt(commande.length() - 4);
+            char nomvar2 = commande.charAt(commande.length() - 1);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    if (casesMem[nomvar - 65] != null) {
+                        casesMem[nomvar - 65].setValeur
+                        (Math.sqrt(casesMem[nomvar - 65].getValeur()));
+                    }
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    if (casesMem[nomvar - 65] != null) {
+                        casesMem[nomvar - 65].setValeur
+                        (Math.sqrt(casesMem[nomvar - 65].getValeur()));
+                    }
+                } 
+            }
         }
     }
 }
