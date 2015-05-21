@@ -9,9 +9,13 @@ import iut.info1.projetS2.tableur.OutilsFichier;
 import iut.info1.projetS2.tableur.Tableur;
 
 import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 /** 
  * Permet de charger un fichier tableur lors de l'activation de 
@@ -45,30 +49,55 @@ public class ChargerAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
         
-        // On boucle tant que le nom du fichier est incorrect
-        do {
-            
-            // Ouvre une fenetre demandant le nom du fichier à charger
-            OutilsFichier.nomFichier = JOptionPane.showInputDialog(fenetre,
-                             "Veuillez entrer le nom du fichier à charger");
-        } while (OutilsFichier.nomFichier.length() == 0);
+        Scanner delimiteur = null;
+        String extension = null;
+
+        FileFilter tabix = new FiltreSimple("Fichiers Tableur",".tabix");
         
-        // On ouvre une fenetre qui demande à l'utilisateur s'il veut oui ou
-        // non ouvrir un nouveau tableur, tout en l'avertissant que les 
-        // travaux non sauvegardés seront perdus
-        int choix = JOptionPane.showConfirmDialog(fenetre, "Voulez vous"
-                    + " vraiment charger un nouveau tableur ?\n Attention, "
-                    + " les données non sauvegardées seront perdues.", "Accueil",
-                    JOptionPane.YES_NO_OPTION); 
+        JFileChooser dialogue = new JFileChooser();
         
-        // Si on veut ouvrir une nouveau tableur
-        if (choix == JOptionPane.YES_NO_OPTION) {
+        dialogue.addChoosableFileFilter(tabix);
+
+        // affichage
+        dialogue.showOpenDialog(null);
+        
+        // Permet de ne pouvoir choisir seulement des fichiers
+        dialogue.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        // récupération du fichier sélectionné
+        OutilsFichier.nomFichier = dialogue.getSelectedFile();
+
+        if (OutilsFichier.nomFichier.exists()) {
+            try {
+                delimiteur = new Scanner(OutilsFichier.nomFichier);
+                delimiteur.useDelimiter("\\056");
+                delimiteur.next();
+                extension = delimiteur.next();
+                
+            } catch (FileNotFoundException e1) { // branche morte
+               
+            }
+
+            if (extension == "tabix") {
+                // On remplace notre tableau par celui à l'intérieur
+                // de notre fichier
+                ModeleDeTable.setDonnees(
+                         OutilsFichier.restaurerPaireLignTableur());
+
+                // Et on raffraichie notre tableur pour voir la mise à jour
+                Tableur.refresh(fenetre);
+            } else {
+                
+                // On affiche un message d'erreur
+                JOptionPane.showMessageDialog(fenetre,
+                        "Erreur, type de fichier incorrect.");
+            }
+        } else {
             
-            // On remplace notre tableau par celui à l'intérieur de notre fichier
-            ModeleDeTable.setDonnees(OutilsFichier.restaurerPaireLignTableur());
-            
-            // Et on raffraichie notre tableur pour voir la mise à jour
-            Tableur.refresh(fenetre);
+            // Sinon on affiche un message d'erreur
+            JOptionPane.showMessageDialog(fenetre,
+                    "Erreur, fichier introuvable !");
         }
+
     }
 }

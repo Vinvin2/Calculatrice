@@ -5,6 +5,7 @@
 
 package iut.info1.projetS2.tableur;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class OutilsFichier {
      * Nom du fichier dans lequel est enregistré le tableau à 2 dimensions
      * contenant les paires "arrêt/ligne".
      */
-    public static String nomFichier;
+    public static File nomFichier;
       
 
     /**
@@ -43,7 +44,7 @@ public class OutilsFichier {
         
         // création et ouverture du fichier NOM_FICHIER_PAIRE
         try(ObjectOutputStream fichier = new ObjectOutputStream(
-                    new FileOutputStream(nomFichier + ".tabix"))) {
+                    new FileOutputStream(nomFichier))) {
                        
             // On écrit l'objet argument dans le fichier
             fichier.writeObject(table);  
@@ -71,7 +72,7 @@ public class OutilsFichier {
         
         // ouverture du fichier et lecture de l'objet qu'il contient
         try(ObjectInputStream fichier = new ObjectInputStream(
-                    new FileInputStream(nomFichier + ".tabix"))) {           
+                    new FileInputStream(nomFichier))) {           
             
             // lecture de l'objet contenu dans le fichier
             tampon = (Object[][]) fichier.readObject();

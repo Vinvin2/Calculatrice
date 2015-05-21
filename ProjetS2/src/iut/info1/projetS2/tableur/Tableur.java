@@ -33,10 +33,7 @@ import javax.swing.table.DefaultTableModel;
  */
 @SuppressWarnings("serial")
 public class Tableur extends JFrame{
-    
-    /** JFrame de notre classe */
-    private Tableur fenetre;
-    
+       
     /** Container principal de l'application */
     private Container container;
     
@@ -317,13 +314,6 @@ public class Tableur extends JFrame{
         // On peut écrire à l'intérieur
         console.setEditable(true);
 
-    }
-
-    /**
-     * @return the fenetre
-     */
-    public Tableur getFenetre() {
-        return fenetre;
     }
 
     /**

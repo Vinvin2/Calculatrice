@@ -11,6 +11,7 @@ import iut.info1.projetS2.tableur.Tableur;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,13 +44,14 @@ public class SauverAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
         
-        // On boucle tant que le nom du fichier est incorrect
-        do {
-            
-            // Ouvre une fenetre demandant le nom du fichier à sauvegarder
-            OutilsFichier.nomFichier = JOptionPane.showInputDialog(fenetre,
-                             "Veuillez entrer le nom du fichier à sauvegarder");
-        } while (OutilsFichier.nomFichier.length() == 0);
+        // création de la boîte de dialogue
+        JFileChooser dialogue = new JFileChooser();
+         
+        // affichage
+        dialogue.showOpenDialog(null);
+
+        // récupération du fichier sélectionné
+        OutilsFichier.nomFichier = dialogue.getSelectedFile();
         
         // Saugarde le tableau de données du tableur dans un fichier
         if (OutilsFichier.enregistrerTableur(ModeleDeTable.getDonnees())) {

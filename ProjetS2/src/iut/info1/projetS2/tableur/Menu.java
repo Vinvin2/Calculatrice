@@ -7,25 +7,31 @@ package iut.info1.projetS2.tableur;
 import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 /** 
  * Permet la création du menu de notre tableur
  * @author Mickaël
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class Menu extends JMenuBar{
     
+    /** Menu s'affichant lors du clic droit */
+    private JPopupMenu popup;
+
     /** Fenetre principale de notre application */
     private Tableur fenetre;
     
-    /** Barre de menu de notre application */
-    private JMenuBar menuBar;
     
     /** Menu fichier de notre application */
     private JMenu menuFichier;
@@ -49,15 +55,14 @@ public class Menu extends JMenuBar{
         this.fenetre = fenetre;
         
         buildMenu();
+        
+        actionSouris();
     }
     /** 
      * Permet d'initialiser la barre de menu et d'y ajouter tous les menus 
      * à l'intérieur
      */
     public void buildMenu()  {
-        
-        // Création de la barre de menu
-//        menuBar = new JMenuBar();
         
         // Initialisation du menu fichier
         buildMenuFichier();
@@ -67,6 +72,9 @@ public class Menu extends JMenuBar{
              
         // Initialisation du menu autre
         buildMenuAutre();                               
+        
+        // Initialisation du menu pop-up
+        buildMenuPopUp();
         
         // Ajout du menu fichier dans la barre de menu
         this.add(menuFichier);
@@ -79,6 +87,36 @@ public class Menu extends JMenuBar{
         
     }
 
+    /** 
+     * Permet d'initialiser le menu pop-up et ses sous-menu
+     */
+    private void buildMenuPopUp() {
+        
+        // Création du menu pop-up
+        popup = new JPopupMenu();
+        
+        // Ajout du sous-menu copier
+        item = new JMenuItem(new CopierAction(fenetre,"Copier"));
+        item.setIcon(new ImageIcon("copy.gif"));
+        item.setAccelerator(KeyStroke.getKeyStroke('C',
+                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
+        popup.add(item);
+        
+        // Ajout du sous-menu couper
+        item = new JMenuItem(new CouperAction(fenetre,"Couper"));
+        item.setIcon(new ImageIcon("cut.jpg"));
+        item.setAccelerator(KeyStroke.getKeyStroke('X',
+                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
+        popup.add(item);
+        
+        // Ajout du sous-menu coller
+        item = new JMenuItem(new CollerAction(fenetre,"Coller"));
+        item.setIcon(new ImageIcon("coller.gif"));
+        item.setAccelerator(KeyStroke.getKeyStroke('V',
+                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));       
+        popup.add(item);
+        
+    }
     /** 
      * Permet d'initialiser le menu autre et tout ses sous-menus
      */
@@ -109,21 +147,21 @@ public class Menu extends JMenuBar{
         // Ajout du sous-menu copier
         item = new JMenuItem(new CopierAction(fenetre,"Copier"));
         item.setIcon(new ImageIcon("copy.gif"));
-        item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
+        item.setAccelerator(KeyStroke.getKeyStroke('C',
                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);
-        
+
         // Ajout du sous-menu couper
         item = new JMenuItem(new CouperAction(fenetre,"Couper"));
         item.setIcon(new ImageIcon("cut.jpg"));
-        item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X,
+        item.setAccelerator(KeyStroke.getKeyStroke('X',
                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);
-        
+
         // Ajout du sous-menu coller
         item = new JMenuItem(new CollerAction(fenetre,"Coller"));
         item.setIcon(new ImageIcon("coller.gif"));
-        item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V,
+        item.setAccelerator(KeyStroke.getKeyStroke('V',
                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);       
     }
@@ -161,10 +199,25 @@ public class Menu extends JMenuBar{
     }
     
     /**
-     * @return the menuBar
+     * Permet de récupérer les actions de notre périphérique souris
      */
-    public JMenuBar getMenuBar() {
-        return menuBar;
+    public void actionSouris() {
+        fenetre.getConsole().addMouseListener(new MouseAdapter() {
+
+            /**
+             * Gère les actions de la souris
+             */
+            public void mouseClicked(MouseEvent e) {
+
+                // si on appui sur le clic droit
+                if (SwingUtilities.isRightMouseButton(e)) {
+
+                    // On affiche le pop-up là où est notre pointeur
+                    popup.show(fenetre.getConsole(), e.getX(), e.getY());
+                }
+
+            }
+        });
     }
     
     /**

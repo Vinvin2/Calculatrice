@@ -20,7 +20,6 @@ import javax.swing.AbstractAction;
 public class CopierAction extends AbstractAction {
 
     /** Fenetre de notre application */
-    @SuppressWarnings("unused")
     private Tableur fenetre;
 
     /**
@@ -39,6 +38,6 @@ public class CopierAction extends AbstractAction {
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
-        
+        fenetre.getConsole().copy();
     }
 }
