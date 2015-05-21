@@ -56,8 +56,9 @@ public class CommandesMemoire {
     /**
      * Remet à zéro les cases mémoires spécifiées
      * @param commande la commande entrée par l'utilisateur
+     * @return OK si raz s'est bien passé, une erreur sinon
      */
-    public static void raz(String commande) {
+    public static String raz(String commande) {
         // on regarde si le pattern convient
         Pattern patRazSimple = Pattern.compile("(\\s*RAZ\\s*)([A-Z])\\s*");
         Pattern patRazMultiple = 
@@ -71,22 +72,25 @@ public class CommandesMemoire {
             nomvar = razok.group(2).charAt(0);
             // on l'initialise
             casesMem[nomvar - 65] = new Variable(nomvar, 0);
-        }
-        
-        razok = patRazMultiple.matcher(commande);
+            return "OK\n";
+        } else {
+
+            razok = patRazMultiple.matcher(commande);
         // lorsqu'on a plusieurs cases en paramètres, on les remet toutes à zéro
-        if (razok.matches()) {
-            char nomvar1 = razok.group(2).charAt(0);
-            char nomvar2 = razok.group(2).charAt(3);
-            
-            if (nomvar1 <= nomvar2) {
-                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
-                    casesMem[nomvar - 65] = new Variable(nomvar, 0);
-                }              
+            if (razok.matches()) {
+                char nomvar1 = razok.group(2).charAt(0);
+                char nomvar2 = razok.group(2).charAt(3);
+
+                if (nomvar1 <= nomvar2) {
+                    for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                        casesMem[nomvar - 65] = new Variable(nomvar, 0);
+                    }              
+                } else {
+                    return "Erreur, entrez une commande du type RAZ A..B\n";
+                }
+                return "OK\n";
             } else {
-                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
-                    casesMem[nomvar - 65] = new Variable(nomvar, 0);
-                } 
+                return "Erreur, entrez une commande du type RAZ A..B\n";
             }
         }
     }
@@ -94,20 +98,21 @@ public class CommandesMemoire {
     /**
      * Affiche les noms et valeurs des variables spécifiées
      * @param commande la commande entrée par l'utilisateur
-     * @return les variables à afficher et leur valeur
+     * @return les variables à afficher et leur valeur, ou une erreur si la 
+     * commande n'a pas été entrée correctement
      */
     public static String voir(String commande) {
-        
+
         String aRetourner = "";
         // on regarde si le pattern convient
         Pattern patVoirSimple = Pattern.compile("(\\s*VOIR\\s*)([A-Z])\\s*");
         Pattern patVoirMultiple = 
                 Pattern.compile("(\\s*VOIR\\s)*([A-Z]..[A-Z])\\s*");
         Matcher voirok = patVoirSimple.matcher(commande);
-        
+
         if (voirok.matches()) {
             char nomvar;    
-            
+
             // on récupère le nom de la variable à afficher
             nomvar = voirok.group(2).charAt(0);
             // on l'initialise
@@ -116,83 +121,83 @@ public class CommandesMemoire {
             } else {
                 aRetourner = "Variable " + nomvar + " non déclarée";
             }
-        }
+            return aRetourner;
+        } else {
+            voirok = patVoirMultiple.matcher(commande);
+            // lorsqu'on a plusieurs cases en paramètres, on les affiches toutes
+            if (voirok.matches()) {
+                char nomvar1 = voirok.group(2).charAt(0);
+                char nomvar2 = voirok.group(2).charAt(3);
 
-        voirok = patVoirMultiple.matcher(commande);
-        // lorsqu'on a plusieurs cases en paramètres, on les affiches toutes
-        if (voirok.matches()) {
-            char nomvar1 = voirok.group(2).charAt(0);
-            char nomvar2 = voirok.group(2).charAt(3);
-            
-            if (nomvar1 <= nomvar2) {
-                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
-                    if (casesMem[nomvar - 65] != null) {
-                        aRetourner = aRetourner.concat
-                        (casesMem[nomvar - 65].toString() + "\n");
-                    } else {
-                        aRetourner = aRetourner.concat
-                        ("Variable " + nomvar + " non déclarée\n");
-                    }
-                }              
+                if (nomvar1 <= nomvar2) {
+                    for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                        if (casesMem[nomvar - 65] != null) {
+                            aRetourner = aRetourner.concat
+                                    (casesMem[nomvar - 65].toString() + "\n");
+                        } else {
+                            aRetourner = aRetourner.concat
+                                    ("Variable " + nomvar + " non déclarée\n");
+                        }
+                    }  
+                    return aRetourner;
+                } else {
+                    return "Erreur, entrez une commande du type \"VOIR A..G\"\n";
+                }
             } else {
-                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
-                    if (casesMem[nomvar - 65] != null) {
-                        aRetourner = aRetourner.concat
-                        (casesMem[nomvar - 65].toString() + "\n");
-                    } else {
-                        aRetourner = aRetourner.concat
-                        ("Variable " + nomvar + " non déclarée\n");
-                    }
-                } 
+                return "Erreur, entrez une commande du type \"VOIR A..G\"\n";
             }
         }
         
-        return aRetourner;
     }
     
     /**
      * Ajoute 1 aux variables spécifiées
      * @param commande la commande entrée par l'utilisateur
+     * @return OK si la commande a été entrée correctement, une erreur sinon
      */
-    public static void incr(String commande) {
+    public static String incr(String commande) {
         // on regarde si le pattern convient
         Pattern patIncrSimple = Pattern.compile("(\\s*INCR\\s*)([A-Z])\\s*");
         Pattern patIncrMultiple = 
                 Pattern.compile("(\\s*INCR\\s*)([A-Z]..[A-Z])\\s*");
         Matcher incrok = patIncrSimple.matcher(commande);
-        
+
         if (incrok.matches()) {
             char nomvar;    
-            
+
             // on récupère le nom de la variable à incrémenter
             nomvar = incrok.group(2).charAt(0);
             // on y ajoute 1 si la variable a été initialisée
             if (casesMem[nomvar - 65] != null) {
                 casesMem[nomvar - 65].setValeur
-                                (casesMem[nomvar - 65].getValeur() + 1);
+                (casesMem[nomvar - 65].getValeur() + 1);
             }
-        }
-        
-        incrok = patIncrMultiple.matcher(commande);
-        // lorsqu'on a plusieurs cases en paramètres, on les incr toutes
-        if (incrok.matches()) {
-            char nomvar1 = incrok.group(2).charAt(0);
-            char nomvar2 = incrok.group(2).charAt(3);
-            
-            if (nomvar1 <= nomvar2) {
-                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
-                    if (casesMem[nomvar - 65] != null) {
-                        casesMem[nomvar - 65].setValeur
-                                        (casesMem[nomvar - 65].getValeur() + 1);
+            return "OK\n";
+        } else {
+            incrok = patIncrMultiple.matcher(commande);
+            // lorsqu'on a plusieurs cases en paramètres, on les incr toutes
+            if (incrok.matches()) {
+                char nomvar1 = incrok.group(2).charAt(0);
+                char nomvar2 = incrok.group(2).charAt(3);
+
+                if (nomvar1 <= nomvar2) {
+                    for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                        if (casesMem[nomvar - 65] != null) {
+                            casesMem[nomvar - 65].setValeur
+                            (casesMem[nomvar - 65].getValeur() + 1);
+                        } else {
+                            nomvar = nomvar2;
+                            return "Attention, des variables n'ont pas pu être"
+                                    + "incrémentées car elles n'étaient pas "
+                                    + "déclarées\n";
+                        }
                     }
-                }              
+                    return "OK\n";
+                } else {
+                    return "Erreur, entrez une commande du type \"INCR A..G\"\n";
+                }
             } else {
-                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
-                    if (casesMem[nomvar - 65] != null) {
-                        casesMem[nomvar - 65].setValeur
-                                        (casesMem[nomvar - 65].getValeur() + 1);
-                    }
-                } 
+                return "Erreur, entrez une commande du type \"INCR A..G\"\n";
             }
         }
     }
