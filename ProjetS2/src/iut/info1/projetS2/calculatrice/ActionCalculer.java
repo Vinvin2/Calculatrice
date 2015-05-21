@@ -174,6 +174,14 @@ public class ActionCalculer implements ActionListener {
                 // on informe l'utilisateur que la commande a été effectuée
                 CommandesMemoire.add(commande);
                 ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 13) {      // commande MUL
+                // on informe l'utilisateur que la commande a été effectuée
+                CommandesMemoire.mul(commande);
+                ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 14) {      // commande EXP
+                // on informe l'utilisateur que la commande a été effectuée
+                CommandesMemoire.exp(commande);
+                ecran.insert(" OK\n", ecran.getText().length());
             } else {
                 ecran.insert(" Erreur, appuyez sur aide pour consulter les"
                         + " commandes disponibles\n", ecran.getText().length());
@@ -264,6 +272,12 @@ public class ActionCalculer implements ActionListener {
         Pattern patAdd = Pattern.compile("(\\s*)ADD.*");
         Matcher addok = patAdd.matcher(commande);
         
+        Pattern patMul = Pattern.compile("(\\s*)MUL.*");
+        Matcher mulok = patMul.matcher(commande);
+        
+        Pattern patExp = Pattern.compile("(\\s*)EXP.*");
+        Matcher expok = patExp.matcher(commande);
+        
         if (razok.matches()) {
             fonctionok = 1;     // RAZ
         } else if (voirok.matches()) {
@@ -289,6 +303,10 @@ public class ActionCalculer implements ActionListener {
             fonctionok = 11;    // INIT
         } else if (addok.matches()) {
             fonctionok = 12;    // ADD
+        } else if (mulok.matches()) {
+            fonctionok = 13;    // MUL
+        } else if (expok.matches()) {
+            fonctionok = 14;    // EXP
         }
         return fonctionok;
     }

@@ -60,7 +60,8 @@ public class CommandesMemoire {
     public static void raz(String commande) {
         // on regarde si le pattern convient
         Pattern patRazSimple = Pattern.compile("(\\s*RAZ\\s*)([A-Z])\\s*");
-        Pattern patRazMultiple = Pattern.compile("(\\s*RAZ\\s*)([A-Z]..[A-Z])\\s*");
+        Pattern patRazMultiple = 
+                Pattern.compile("(\\s*RAZ\\s*)([A-Z]..[A-Z])\\s*");
         Matcher razok = patRazSimple.matcher(commande);
         
         if (razok.matches()) {
@@ -100,7 +101,8 @@ public class CommandesMemoire {
         String aRetourner = "";
         // on regarde si le pattern convient
         Pattern patVoirSimple = Pattern.compile("(\\s*VOIR\\s*)([A-Z])\\s*");
-        Pattern patVoirMultiple = Pattern.compile("(\\s*VOIR\\s)*([A-Z]..[A-Z])\\s*");
+        Pattern patVoirMultiple = 
+                Pattern.compile("(\\s*VOIR\\s)*([A-Z]..[A-Z])\\s*");
         Matcher voirok = patVoirSimple.matcher(commande);
         
         if (voirok.matches()) {
@@ -155,7 +157,8 @@ public class CommandesMemoire {
     public static void incr(String commande) {
         // on regarde si le pattern convient
         Pattern patIncrSimple = Pattern.compile("(\\s*INCR\\s*)([A-Z])\\s*");
-        Pattern patIncrMultiple = Pattern.compile("(\\s*INCR\\s*)([A-Z]..[A-Z])\\s*");
+        Pattern patIncrMultiple = 
+                Pattern.compile("(\\s*INCR\\s*)([A-Z]..[A-Z])\\s*");
         Matcher incrok = patIncrSimple.matcher(commande);
         
         if (incrok.matches()) {
@@ -216,7 +219,8 @@ public class CommandesMemoire {
     public static void car(String commande) {
         // on regarde si le pattern convient
         Pattern patCarSimple = Pattern.compile("(\\s*CAR\\s*)([A-Z])\\s*");
-        Pattern patCarMultiple = Pattern.compile("(\\s*CAR\\s*)([A-Z]..[A-Z])\\s*");
+        Pattern patCarMultiple = 
+                Pattern.compile("(\\s*CAR\\s*)([A-Z]..[A-Z])\\s*");
         Matcher carok = patCarSimple.matcher(commande);
         
         if (carok.matches()) {
@@ -266,7 +270,8 @@ public class CommandesMemoire {
     public static void sqrt(String commande) {
         // on regarde si le pattern convient
         Pattern patSqrtSimple = Pattern.compile("(\\s*SQRT\\s*)([A-Z])\\s*");
-        Pattern patSqrtMultiple = Pattern.compile("(\\s*SQRT\\s*)([A-Z]..[A-Z])\\s*");
+        Pattern patSqrtMultiple = 
+                Pattern.compile("(\\s*SQRT\\s*)([A-Z]..[A-Z])\\s*");
         Matcher sqrtok = patSqrtSimple.matcher(commande);
         
         if (sqrtok.matches()) {
@@ -434,8 +439,10 @@ public class CommandesMemoire {
      */
     public static void init(String commande) {
         // on regarde si le pattern convient
-        Pattern patInitSimple = Pattern.compile("(\\s*INIT\\s*)([A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");        
-        Pattern patInitMultiple = Pattern.compile("(\\s*INIT\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
+        Pattern patInitSimple = 
+       Pattern.compile("(\\s*INIT\\s*)([A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");        
+        Pattern patInitMultiple = 
+Pattern.compile("(\\s*INIT\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
         
         Matcher initok = patInitSimple.matcher(commande);
 
@@ -477,8 +484,10 @@ public class CommandesMemoire {
      */
     public static void add(String commande) {
         // on regarde si le pattern convient
-        Pattern patAddSimple = Pattern.compile("(\\s*ADD\\s*)([A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");        
-        Pattern patAddMultiple = Pattern.compile("(\\s*ADD\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
+        Pattern patAddSimple = 
+        Pattern.compile("(\\s*ADD\\s*)([A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");        
+        Pattern patAddMultiple = 
+ Pattern.compile("(\\s*ADD\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
         
         Matcher addok = patAddSimple.matcher(commande);
 
@@ -511,6 +520,103 @@ public class CommandesMemoire {
                     casesMem[nomvar - 65].setValeur
                     (casesMem[nomvar - 65].getValeur() +
                             Double.parseDouble(addok.group(3)));
+                } 
+            }
+        }
+    }
+    
+    /**
+     * fonction MUL : Multiplie les valeurs des variables spécifiées par le réel
+     * spécifié
+     * @param commande la commande entrée par l'utilisateur
+     */
+    public static void mul(String commande) {
+        // on regarde si le pattern convient
+        Pattern patMulSimple = 
+        Pattern.compile("(\\s*MUL\\s*)([A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");        
+        Pattern patMulMultiple = 
+ Pattern.compile("(\\s*MUL\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
+        
+        Matcher mulok = patMulSimple.matcher(commande);
+
+        
+        if (mulok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable dont on doit modifier la valeur
+            nomvar = mulok.group(2).charAt(0);
+            // on modifie sa valeur en ajoutant le réel spécifié
+            casesMem[nomvar - 65].setValeur(casesMem[nomvar - 65].getValeur() *
+                                        Double.parseDouble(mulok.group(3)));
+        }
+        
+        mulok = patMulMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on modifie chacune de leur
+        // valeur
+        if (mulok.matches()) {
+            char nomvar1 = mulok.group(2).charAt(0);
+            char nomvar2 = mulok.group(2).charAt(3);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    casesMem[nomvar - 65].setValeur
+                    (casesMem[nomvar - 65].getValeur() *
+                            Double.parseDouble(mulok.group(3)));
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    casesMem[nomvar - 65].setValeur
+                    (casesMem[nomvar - 65].getValeur() *
+                            Double.parseDouble(mulok.group(3)));
+                } 
+            }
+        }
+    }
+    
+    /**
+     * fonction MUL : Multiplie les valeurs des variables spécifiées par le réel
+     * spécifié
+     * @param commande la commande entrée par l'utilisateur
+     */
+    public static void exp(String commande) {
+        // on regarde si le pattern convient
+        Pattern patExpSimple = 
+        Pattern.compile("(\\s*EXP\\s*)([A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");        
+        Pattern patExpMultiple = 
+ Pattern.compile("(\\s*EXP\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
+        
+        Matcher expok = patExpSimple.matcher(commande);
+
+        
+        if (expok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable dont on doit modifier la valeur
+            nomvar = expok.group(2).charAt(0);
+            // on modifie sa valeur en ajoutant le réel spécifié
+            casesMem[nomvar - 65].setValeur
+            (Math.pow(casesMem[nomvar - 65].getValeur(),
+                                        Double.parseDouble(expok.group(3))));
+        }
+        
+        expok = patExpMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on modifie chacune de leur
+        // valeur
+        if (expok.matches()) {
+            char nomvar1 = expok.group(2).charAt(0);
+            char nomvar2 = expok.group(2).charAt(3);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    casesMem[nomvar - 65].setValeur
+                    (Math.pow(casesMem[nomvar - 65].getValeur(),
+                                           Double.parseDouble(expok.group(3))));
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    casesMem[nomvar - 65].setValeur
+                    (Math.pow(casesMem[nomvar - 65].getValeur(),
+                                           Double.parseDouble(expok.group(3))));
                 } 
             }
         }
