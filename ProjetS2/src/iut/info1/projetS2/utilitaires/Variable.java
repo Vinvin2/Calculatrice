@@ -62,7 +62,7 @@ public class Variable {
      */
     @Override
     public String toString() {
-        return "Variable [nom=" + nom + ", valeur=" + valeur + "]";
+        return nom + " = " + valeur;
     }
     
     

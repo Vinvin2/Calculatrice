@@ -305,4 +305,110 @@ public class CommandesMemoire {
             }
         }
     }
+    
+    /**
+     * fonction SOM : effectue la somme des variables spécifiées
+     * @param commande la commande entrée par l'utilisateur
+     * @return la somme obtenue
+     */
+    public static double som(String commande) {
+        // on regarde si le pattern convient
+        Pattern patSom = Pattern.compile("\\s*SOM\\s*[A-Z]..[A-Z]");
+        
+        Matcher somok = patSom.matcher(commande);
+        double resultat;        // resultat de la somme à renvoyer
+        resultat = 0;
+        
+        // si c'est le cas, on va effectuer la somme des variables concernées
+        if (somok.matches()) {
+            // noms des variables entrées en paramètre
+            char nomvar1 = commande.charAt(commande.length() - 4);
+            char nomvar2 = commande.charAt(commande.length() - 1);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    if (casesMem[nomvar - 65] != null) {
+                        resultat += casesMem[nomvar - 65].getValeur();
+                    }
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    if (casesMem[nomvar - 65] != null) {
+                        resultat += casesMem[nomvar - 65].getValeur();
+                    }
+                } 
+            }
+        }
+        
+        return resultat;
+    }
+    
+    /**
+     * fonction PROD : effectue le produit des variables spécifiées et le
+     * renvoie
+     * @param commande la commande entrée par l'utilisateur
+     * @return le produit obtenu
+     */
+    public static double prod(String commande) {
+        // on regarde si le pattern convient
+        Pattern patProd = Pattern.compile("\\s*PROD\\s*[A-Z]..[A-Z]");
+        
+        Matcher prodok = patProd.matcher(commande);
+        double resultat;        // resultat de la somme à renvoyer
+        resultat = 1;
+        
+        // si c'est le cas, on va effectuer la somme des variables concernées
+        if (prodok.matches()) {
+            // noms des variables entrées en paramètre
+            char nomvar1 = commande.charAt(commande.length() - 4);
+            char nomvar2 = commande.charAt(commande.length() - 1);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+
+                    if (casesMem[nomvar - 65] != null) {
+                        resultat *= casesMem[nomvar - 65].getValeur();
+                    }
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    if (casesMem[nomvar - 65] != null) {
+                        resultat *= casesMem[nomvar - 65].getValeur();
+                    }
+                } 
+            }
+        }
+        
+        return resultat;
+    }
+    
+    /**
+     * fonction MOY : effectue la moyenne des variables spécifiées et la
+     * renvoie
+     * @param commande la commande entrée par l'utilisateur
+     * @return le produit obtenu
+     */
+    public static double moy(String commande) {
+        // on regarde si le pattern convient
+        Pattern patMoy = Pattern.compile("\\s*MOY\\s*[A-Z]..[A-Z]");
+        
+        Matcher moyok = patMoy.matcher(commande);
+        double resultat;        // resultat de la somme à renvoyer
+        resultat = Double.NaN;
+
+        
+        // si c'est le cas, on va effectuer la somme des variables concernées
+        if (moyok.matches()) {
+            // noms des variables entrées en paramètre
+            char nomvar1 = commande.charAt(commande.length() - 4);
+            char nomvar2 = commande.charAt(commande.length() - 1);
+            if (nomvar1 <= nomvar2) {
+                resultat = som(commande)/ nomvar2-nomvar1;
+            } else {
+                resultat = som(commande)/ nomvar1-nomvar2;
+            }
+        }
+        
+        return resultat;
+    }
 }

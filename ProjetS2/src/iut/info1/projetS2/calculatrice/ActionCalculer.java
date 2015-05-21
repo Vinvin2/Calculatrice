@@ -125,10 +125,51 @@ public class ActionCalculer implements ActionListener {
             } else if (fonctionok == 7) {
                 CommandesMemoire.sqrt(commande);// commande SQRT
                 ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 8) {       // commande SOM
+                // on stocke le résultat de la somme
+                double resultat = CommandesMemoire.som(commande);
+                // on insère le résultat à l'écran
+                // si le résultat se termine par .0, on l'enlève à l'affichage
+                if (Double.toString(resultat).endsWith(".0")) {
+                    String strresult = Double.toString(resultat);
+                    strresult = strresult.substring(0, strresult.length() - 2); 
+
+                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                } else {
+                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                }
+                
+            } else if (fonctionok == 9) {       // commande PROD
+                // on stocke le résultat du produit
+                double resultat = CommandesMemoire.prod(commande);
+                // on insère le résultat à l'écran
+                // si le résultat se termine par .0, on l'enlève à l'affichage
+                if (Double.toString(resultat).endsWith(".0")) {
+                    String strresult = Double.toString(resultat);
+                    strresult = strresult.substring(0, strresult.length() - 2); 
+
+                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                } else {
+                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                }
+                
+            } else if (fonctionok == 10) {      // commande MOY
+                // on stocke le résultat de la moyenne
+                double resultat = CommandesMemoire.moy(commande);
+                // on insère le résultat à l'écran
+                // si le résultat se termine par .0, on l'enlève à l'affichage
+                if (Double.toString(resultat).endsWith(".0")) {
+                    String strresult = Double.toString(resultat);
+                    strresult = strresult.substring(0, strresult.length() - 2); 
+
+                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                } else {
+                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                }
             } else {
                 ecran.insert(" Erreur, appuyez sur aide pour consulter les"
                         + " commandes disponibles\n", ecran.getText().length());
-            }
+            } 
         }
         // On vide le textfield executeur de commandes
         executeurAssocie.setText("");
@@ -200,6 +241,15 @@ public class ActionCalculer implements ActionListener {
         Pattern patSqrt = Pattern.compile("\\s*SQRT.*");
         Matcher sqrtok = patSqrt.matcher(commande);
         
+        Pattern patSom = Pattern.compile("\\s*SOM.*");
+        Matcher somok = patSom.matcher(commande);
+        
+        Pattern patProd = Pattern.compile("\\s*PROD.*");
+        Matcher prodok = patProd.matcher(commande);
+        
+        Pattern patMoy = Pattern.compile("\\s*MOY\\s*[A-Z]..[A-Z]");
+        Matcher moyok = patMoy.matcher(commande);
+        
         if (razok.matches()) {
             fonctionok = 1;     // RAZ
         } else if (voirok.matches()) {
@@ -215,6 +265,12 @@ public class ActionCalculer implements ActionListener {
             fonctionok = 6;     // CAR
         } else if (sqrtok.matches()) {
             fonctionok = 7;     // SQRT
+        } else if (somok.matches()) {
+            fonctionok = 8;     // SOM
+        } else if (prodok.matches()) {
+            fonctionok = 9;     // PROD
+        } else if (moyok.matches()) {
+            fonctionok = 10;
         }
         return fonctionok;
     }
