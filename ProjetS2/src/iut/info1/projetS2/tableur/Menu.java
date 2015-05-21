@@ -4,8 +4,6 @@
  */
 package iut.info1.projetS2.tableur;
 
-import static iut.info1.projetS2.tableur.Tableur.*;
-
 import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.Toolkit;
@@ -20,30 +18,45 @@ import javax.swing.KeyStroke;
  * @author Mickaël
  * @version 0.1
  */
-public class Menu {
+public class Menu extends JMenuBar{
+    
+    /** Fenetre principale de notre application */
+    private Tableur fenetre;
     
     /** Barre de menu de notre application */
-    private static JMenuBar menuBar;
+    private JMenuBar menuBar;
     
     /** Menu fichier de notre application */
-    private static JMenu menuFichier;
+    private JMenu menuFichier;
     
     /** Menu editer de notre application */
-    private static JMenu menuEditer;
+    private JMenu menuEditer;
     
     /** Menu autre de notre application */
-    private static JMenu menuAutre;
+    private JMenu menuAutre;
     
     /** Sous-menu de notre application */
-    private static JMenuItem item;
+    private JMenuItem item;
+    
+    /**
+     * Constructeur de notre classe
+     * @param fenetre à récupérer
+     */
+    public Menu(Tableur fenetre) {
+        super();
+        
+        this.fenetre = fenetre;
+        
+        buildMenu();
+    }
     /** 
      * Permet d'initialiser la barre de menu et d'y ajouter tous les menus 
      * à l'intérieur
      */
-    public static void buildMenu() {
+    public void buildMenu()  {
         
         // Création de la barre de menu
-        menuBar = new JMenuBar();
+//        menuBar = new JMenuBar();
         
         // Initialisation du menu fichier
         buildMenuFichier();
@@ -55,120 +68,121 @@ public class Menu {
         buildMenuAutre();                               
         
         // Ajout du menu fichier dans la barre de menu
-        menuBar.add(menuFichier);
+        this.add(menuFichier);
         
         // Ajout du menu éditer dans la barre de menu
-        menuBar.add(menuEditer);
+        this.add(menuEditer);
         
         // Ajout du menu autre dans la barre de menu
-        menuBar.add(menuAutre);
+        this.add(menuAutre);
         
     }
 
     /** 
      * Permet d'initialiser le menu autre et tout ses sous-menus
      */
-    private static void buildMenuAutre() {
+    private void buildMenuAutre() {
         
         // Création du menu autre
         menuAutre = new JMenu("?");
         
         // Ajout du sous-menu aide
-        item = new JMenuItem(new AideAction(getFenetre(),"Aide"));
+        item = new JMenuItem(new AideAction(fenetre,"Aide"));
         menuAutre.add(item);
         
         // Ajout du sous-menu à propos
-        item = new JMenuItem(new AProposAction(getFenetre(),"A propos"));
+        item = new JMenuItem(new AProposAction(fenetre,"A propos"));
         menuAutre.add(item);
     }
 
     /** 
      * Permet d'initialiser le menu éditer et tout ses sous-menus
      */
-    private static void buildMenuEditer() {
+    private void buildMenuEditer() {
        
         // Création du menu Editer
         menuEditer = new JMenu("Editer");
         
         // Ajout du sous-menu copier
-        item = new JMenuItem(new CopierAction(getFenetre(),"Copier"));
-        item.setAccelerator(KeyStroke.getKeyStroke('C', Toolkit.getDefaultToolkit()
-        .getMenuShortcutKeyMask(), false));
+        item = new JMenuItem(new CopierAction(fenetre,"Copier"));
+        item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
+                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);
         
         // Ajout du sous-menu couper
-        item = new JMenuItem(new CouperAction(getFenetre(),"Couper"));
-        item.setAccelerator(KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit()
-        .getMenuShortcutKeyMask(), false));
+        item = new JMenuItem(new CouperAction(fenetre,"Couper"));
+        item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X,
+                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);
         
         // Ajout du sous-menu coller
-        item = new JMenuItem(new CollerAction(getFenetre(),"Coller"));
-        item.setAccelerator(KeyStroke.getKeyStroke('V', Toolkit.getDefaultToolkit()
-        .getMenuShortcutKeyMask(), false));
+        item = new JMenuItem(new CollerAction(fenetre,"Coller"));
+        item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V,
+                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);       
     }
 
     /** 
      * Permet d'initialiser le menu fichier et tout ses sous-menus
      */
-    private static void buildMenuFichier() {
+    private void buildMenuFichier() {
         
         // Création du menu fichier
         menuFichier = new JMenu("Fichier");
         
         // Ajout du sous-menu nouveau
-        item = new JMenuItem(new NouveauAction(getFenetre(),"Nouveau"));
+        item = new JMenuItem(new NouveauAction(fenetre,"Nouveau"));
         menuFichier.add(item);
         
         // Ajout d'une barre de séparation
         menuFichier.insertSeparator(1);
         
         // Ajout du sous-menu ouvrir
-        item = new JMenuItem(new ChargerAction(getFenetre(),"Charger"));
+        item = new JMenuItem(new ChargerAction(fenetre,"Charger"));
         menuFichier.add(item);
         
         // Ajout du sous-menu sauver
-        item = new JMenuItem(new SauverAction(getFenetre(),"Sauver"));
+        item = new JMenuItem(new SauverAction(fenetre,"Sauver"));
         menuFichier.add(item);
         
         // Ajout du sous-menu quitter
-        item = new JMenuItem(new AccueilAction(getFenetre(), "Accueil"));
+        item = new JMenuItem(new AccueilAction(fenetre, "Accueil"));
         menuFichier.add(item);       
     }
     
     /**
      * @return the menuBar
      */
-    public static JMenuBar getMenuBar() {
+    public JMenuBar getMenuBar() {
         return menuBar;
     }
     
     /**
      * @return the menuFichier
      */
-    public static JMenu getMenuFichier() {
+    public JMenu getMenuFichier() {
         return menuFichier;
     }
 
     /**
      * @return the menuEditer
      */
-    public static JMenu getMenuEditer() {
+    public JMenu getMenuEditer() {
         return menuEditer;
     }
 
     /**
      * @return the menuAutre
      */
-    public static JMenu getMenuAutre() {
+    public JMenu getMenuAutre() {
         return menuAutre;
     }
 
     /**
      * @return the item
      */
-    public static JMenuItem getItem() {
+    public JMenuItem getItem() {
         return item;
     }
+
 }

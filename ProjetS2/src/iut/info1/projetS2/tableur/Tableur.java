@@ -4,6 +4,7 @@
  */
 package iut.info1.projetS2.tableur;
 
+import iut.info1.projetS2.tableur.Menu;
 import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.BorderLayout;
@@ -34,7 +35,7 @@ import javax.swing.table.DefaultTableModel;
 public class Tableur extends JFrame{
     
     /** JFrame de notre classe */
-    private static Tableur fenetre;
+    private Tableur fenetre;
     
     /** Container principal de l'application */
     private Container container;
@@ -46,10 +47,10 @@ public class Tableur extends JFrame{
     private JTextField console;
     
     /** Modele de table par défaut */
-    private static AbstractTableModel modele;
+    private AbstractTableModel modele;
     
     /** Tableur de notre application */
-    private static JTable tableur;
+    private JTable tableur;
     
     /** Barre de scroll pour notre tableur */
     private JScrollPane scroll;
@@ -78,8 +79,7 @@ public class Tableur extends JFrame{
         
         // On initialise notre fenetre
         build();
-       
-        fenetre = this;
+        
     }
     
 
@@ -109,14 +109,12 @@ public class Tableur extends JFrame{
         // On initialise notre contentPane
         setContentPane(buildContentPane());
         
-        // On inititalise notre menu
-        Menu.buildMenu();
-        
         // On initialise notre talbeur
         buildTableur();
         
         // Affichage de la barre de menu
-        setJMenuBar(Menu.getMenuBar());
+        setJMenuBar(new Menu(this));
+       
         
         /*
          *  On lie le tableur avec une classe Commandes car l'execution de
@@ -125,13 +123,14 @@ public class Tableur extends JFrame{
          */
         actions = new Commandes(this);
     }
-    
+
     /**
      * Permet de raffraichir le tableur après une modification
+     * @param fenetre de notre application
      */
-    public static void refresh() {
-        tableur.setModel(modele);
-        modele.fireTableDataChanged();
+    public static void refresh(Tableur fenetre) {
+        fenetre.tableur.setModel(fenetre.modele);
+        fenetre.modele.fireTableDataChanged();
     }
     
     /**
@@ -322,7 +321,7 @@ public class Tableur extends JFrame{
     /**
      * @return the fenetre
      */
-    public static Tableur getFenetre() {
+    public Tableur getFenetre() {
         return fenetre;
     }
 
@@ -350,7 +349,7 @@ public class Tableur extends JFrame{
     /**
      * @return the tableur
      */
-    public static JTable getTableur() {
+    public JTable getTableur() {
         return tableur;
     }
 

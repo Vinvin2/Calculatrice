@@ -68,7 +68,7 @@ public class ChargerAction extends AbstractAction {
             ModeleDeTable.setDonnees(OutilsFichier.restaurerPaireLignTableur());
             
             // Et on raffraichie notre tableur pour voir la mise à jour
-            Tableur.refresh();
+            Tableur.refresh(fenetre);
         }
     }
 }

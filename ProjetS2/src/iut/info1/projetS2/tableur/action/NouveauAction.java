@@ -58,10 +58,10 @@ public class NouveauAction extends AbstractAction {
             ModeleDeTable.setDonnees(new Object[20][26]);
 
             // On réinitialise le texte à l'intérieur de la console
-//            fenetre.getConsole().setText("");
+            fenetre.getConsole().setText("");
             
             // Et on raffraichie notre tableur pour voir la mise à jour
-            Tableur.refresh();
+            Tableur.refresh(fenetre);
         }
     }
 }
