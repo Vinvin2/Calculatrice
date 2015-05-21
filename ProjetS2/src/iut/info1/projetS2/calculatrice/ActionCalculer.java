@@ -166,6 +166,14 @@ public class ActionCalculer implements ActionListener {
                 } else {
                     ecran.insert(" = " + resultat + "\n", ecran.getText().length());
                 }
+            } else if (fonctionok == 11) {      // commande INIT
+                // on informe l'utilisateur que la commande a été effectuée
+                CommandesMemoire.init(commande);
+                ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 12) {      // commande ADD
+                // on informe l'utilisateur que la commande a été effectuée
+                CommandesMemoire.add(commande);
+                ecran.insert(" OK\n", ecran.getText().length());
             } else {
                 ecran.insert(" Erreur, appuyez sur aide pour consulter les"
                         + " commandes disponibles\n", ecran.getText().length());
@@ -247,8 +255,14 @@ public class ActionCalculer implements ActionListener {
         Pattern patProd = Pattern.compile("\\s*PROD.*");
         Matcher prodok = patProd.matcher(commande);
         
-        Pattern patMoy = Pattern.compile("\\s*MOY\\s*[A-Z]..[A-Z]");
+        Pattern patMoy = Pattern.compile("\\s*MOY.*");
         Matcher moyok = patMoy.matcher(commande);
+        
+        Pattern patInit = Pattern.compile("(\\s*)INIT.*");
+        Matcher initok = patInit.matcher(commande);
+        
+        Pattern patAdd = Pattern.compile("(\\s*)ADD.*");
+        Matcher addok = patAdd.matcher(commande);
         
         if (razok.matches()) {
             fonctionok = 1;     // RAZ
@@ -271,6 +285,10 @@ public class ActionCalculer implements ActionListener {
             fonctionok = 9;     // PROD
         } else if (moyok.matches()) {
             fonctionok = 10;
+        } else if(initok.matches()) {
+            fonctionok = 11;    // INIT
+        } else if (addok.matches()) {
+            fonctionok = 12;    // ADD
         }
         return fonctionok;
     }

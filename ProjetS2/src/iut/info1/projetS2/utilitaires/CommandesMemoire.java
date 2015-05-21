@@ -59,15 +59,15 @@ public class CommandesMemoire {
      */
     public static void raz(String commande) {
         // on regarde si le pattern convient
-        Pattern patRazSimple = Pattern.compile("\\s*RAZ\\s*[A-Z]");
-        Pattern patRazMultiple = Pattern.compile("\\s*RAZ\\s*[A-Z]..[A-Z]");
+        Pattern patRazSimple = Pattern.compile("(\\s*RAZ\\s*)([A-Z])\\s*");
+        Pattern patRazMultiple = Pattern.compile("(\\s*RAZ\\s*)([A-Z]..[A-Z])\\s*");
         Matcher razok = patRazSimple.matcher(commande);
         
         if (razok.matches()) {
             char nomvar;    
             
             // on récupère le nom de la variable à initialiser
-            nomvar = commande.charAt(commande.length() - 1);
+            nomvar = razok.group(2).charAt(0);
             // on l'initialise
             casesMem[nomvar - 65] = new Variable(nomvar, 0);
         }
@@ -75,8 +75,8 @@ public class CommandesMemoire {
         razok = patRazMultiple.matcher(commande);
         // lorsqu'on a plusieurs cases en paramètres, on les remet toutes à zéro
         if (razok.matches()) {
-            char nomvar1 = commande.charAt(commande.length() - 4);
-            char nomvar2 = commande.charAt(commande.length() - 1);
+            char nomvar1 = razok.group(2).charAt(0);
+            char nomvar2 = razok.group(2).charAt(3);
             
             if (nomvar1 <= nomvar2) {
                 for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
@@ -99,15 +99,15 @@ public class CommandesMemoire {
         
         String aRetourner = "";
         // on regarde si le pattern convient
-        Pattern patVoirSimple = Pattern.compile("\\s*VOIR\\s*[A-Z]");
-        Pattern patVoirMultiple = Pattern.compile("\\s*VOIR\\s*[A-Z]..[A-Z]");
+        Pattern patVoirSimple = Pattern.compile("(\\s*VOIR\\s*)([A-Z])\\s*");
+        Pattern patVoirMultiple = Pattern.compile("(\\s*VOIR\\s)*([A-Z]..[A-Z])\\s*");
         Matcher voirok = patVoirSimple.matcher(commande);
         
         if (voirok.matches()) {
             char nomvar;    
             
             // on récupère le nom de la variable à afficher
-            nomvar = commande.charAt(commande.length() - 1);
+            nomvar = voirok.group(2).charAt(0);
             // on l'initialise
             if (casesMem[nomvar - 65] != null) {
                 aRetourner = casesMem[nomvar - 65].toString();
@@ -119,8 +119,8 @@ public class CommandesMemoire {
         voirok = patVoirMultiple.matcher(commande);
         // lorsqu'on a plusieurs cases en paramètres, on les affiches toutes
         if (voirok.matches()) {
-            char nomvar1 = commande.charAt(commande.length() - 4);
-            char nomvar2 = commande.charAt(commande.length() - 1);
+            char nomvar1 = voirok.group(2).charAt(0);
+            char nomvar2 = voirok.group(2).charAt(3);
             
             if (nomvar1 <= nomvar2) {
                 for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
@@ -154,15 +154,15 @@ public class CommandesMemoire {
      */
     public static void incr(String commande) {
         // on regarde si le pattern convient
-        Pattern patIncrSimple = Pattern.compile("\\s*INCR\\s*[A-Z]");
-        Pattern patIncrMultiple = Pattern.compile("\\s*INCR\\s*[A-Z]..[A-Z]");
+        Pattern patIncrSimple = Pattern.compile("(\\s*INCR\\s*)([A-Z])\\s*");
+        Pattern patIncrMultiple = Pattern.compile("(\\s*INCR\\s*)([A-Z]..[A-Z])\\s*");
         Matcher incrok = patIncrSimple.matcher(commande);
         
         if (incrok.matches()) {
             char nomvar;    
             
             // on récupère le nom de la variable à incrémenter
-            nomvar = commande.charAt(commande.length() - 1);
+            nomvar = incrok.group(2).charAt(0);
             // on y ajoute 1 si la variable a été initialisée
             if (casesMem[nomvar - 65] != null) {
                 casesMem[nomvar - 65].setValeur
@@ -173,8 +173,8 @@ public class CommandesMemoire {
         incrok = patIncrMultiple.matcher(commande);
         // lorsqu'on a plusieurs cases en paramètres, on les incr toutes
         if (incrok.matches()) {
-            char nomvar1 = commande.charAt(commande.length() - 4);
-            char nomvar2 = commande.charAt(commande.length() - 1);
+            char nomvar1 = incrok.group(2).charAt(0);
+            char nomvar2 = incrok.group(2).charAt(3);
             
             if (nomvar1 <= nomvar2) {
                 for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
@@ -215,15 +215,15 @@ public class CommandesMemoire {
      */
     public static void car(String commande) {
         // on regarde si le pattern convient
-        Pattern patCarSimple = Pattern.compile("\\s*CAR\\s*[A-Z]");
-        Pattern patCarMultiple = Pattern.compile("\\s*CAR\\s*[A-Z]..[A-Z]");
+        Pattern patCarSimple = Pattern.compile("(\\s*CAR\\s*)([A-Z])\\s*");
+        Pattern patCarMultiple = Pattern.compile("(\\s*CAR\\s*)([A-Z]..[A-Z])\\s*");
         Matcher carok = patCarSimple.matcher(commande);
         
         if (carok.matches()) {
             char nomvar;    
             
             // on récupère le nom de la variable à traiter
-            nomvar = commande.charAt(commande.length() - 1);
+            nomvar = carok.group(2).charAt(0);
             // on la met au carré si la variable a été initialisée
             if (casesMem[nomvar - 65] != null) {
                 casesMem[nomvar - 65].setValeur
@@ -235,8 +235,8 @@ public class CommandesMemoire {
         carok = patCarMultiple.matcher(commande);
         // lorsqu'on a plusieurs cases en paramètres, on les met toutes au carré
         if (carok.matches()) {
-            char nomvar1 = commande.charAt(commande.length() - 4);
-            char nomvar2 = commande.charAt(commande.length() - 1);
+            char nomvar1 = carok.group(2).charAt(0);
+            char nomvar2 = carok.group(2).charAt(3);
             
             if (nomvar1 <= nomvar2) {
                 for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
@@ -265,15 +265,15 @@ public class CommandesMemoire {
      */
     public static void sqrt(String commande) {
         // on regarde si le pattern convient
-        Pattern patSqrtSimple = Pattern.compile("\\s*SQRT\\s*[A-Z]");
-        Pattern patSqrtMultiple = Pattern.compile("\\s*SQRT\\s*[A-Z]..[A-Z]");
+        Pattern patSqrtSimple = Pattern.compile("(\\s*SQRT\\s*)([A-Z])\\s*");
+        Pattern patSqrtMultiple = Pattern.compile("(\\s*SQRT\\s*)([A-Z]..[A-Z])\\s*");
         Matcher sqrtok = patSqrtSimple.matcher(commande);
         
         if (sqrtok.matches()) {
             char nomvar;    
             
             // on récupère le nom de la variable à traiter
-            nomvar = commande.charAt(commande.length() - 1);
+            nomvar = sqrtok.group(2).charAt(0);
             // on la met à la racine carrée si la variable a été initialisée
             if (casesMem[nomvar - 65] != null) {
                 casesMem[nomvar - 65].setValeur
@@ -285,8 +285,8 @@ public class CommandesMemoire {
         // lorsqu'on a plusieurs cases en paramètres, on les met toutes 
         // à la racine carrée
         if (sqrtok.matches()) {
-            char nomvar1 = commande.charAt(commande.length() - 4);
-            char nomvar2 = commande.charAt(commande.length() - 1);
+            char nomvar1 = sqrtok.group(2).charAt(0);
+            char nomvar2 = sqrtok.group(2).charAt(3);
             
             if (nomvar1 <= nomvar2) {
                 for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
@@ -313,7 +313,7 @@ public class CommandesMemoire {
      */
     public static double som(String commande) {
         // on regarde si le pattern convient
-        Pattern patSom = Pattern.compile("\\s*SOM\\s*[A-Z]..[A-Z]");
+        Pattern patSom = Pattern.compile("(\\s*SOM\\s*)([A-Z]..[A-Z])\\s*");
         
         Matcher somok = patSom.matcher(commande);
         double resultat;        // resultat de la somme à renvoyer
@@ -322,8 +322,8 @@ public class CommandesMemoire {
         // si c'est le cas, on va effectuer la somme des variables concernées
         if (somok.matches()) {
             // noms des variables entrées en paramètre
-            char nomvar1 = commande.charAt(commande.length() - 4);
-            char nomvar2 = commande.charAt(commande.length() - 1);
+            char nomvar1 = somok.group(2).charAt(0);
+            char nomvar2 = somok.group(2).charAt(3);
             
             if (nomvar1 <= nomvar2) {
                 for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
@@ -351,7 +351,7 @@ public class CommandesMemoire {
      */
     public static double prod(String commande) {
         // on regarde si le pattern convient
-        Pattern patProd = Pattern.compile("\\s*PROD\\s*[A-Z]..[A-Z]");
+        Pattern patProd = Pattern.compile("(\\s*PROD\\s*)([A-Z]..[A-Z])\\s*");
         
         Matcher prodok = patProd.matcher(commande);
         double resultat;        // resultat de la somme à renvoyer
@@ -360,8 +360,8 @@ public class CommandesMemoire {
         // si c'est le cas, on va effectuer la somme des variables concernées
         if (prodok.matches()) {
             // noms des variables entrées en paramètre
-            char nomvar1 = commande.charAt(commande.length() - 4);
-            char nomvar2 = commande.charAt(commande.length() - 1);
+            char nomvar1 = prodok.group(2).charAt(0);
+            char nomvar2 = prodok.group(2).charAt(3);
             
             if (nomvar1 <= nomvar2) {
                 for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
@@ -390,25 +390,129 @@ public class CommandesMemoire {
      */
     public static double moy(String commande) {
         // on regarde si le pattern convient
-        Pattern patMoy = Pattern.compile("\\s*MOY\\s*[A-Z]..[A-Z]");
+        Pattern patMoy = Pattern.compile("(\\s*MOY\\s*)([A-Z]..[A-Z])\\s*");
         
         Matcher moyok = patMoy.matcher(commande);
         double resultat;        // resultat de la somme à renvoyer
-        resultat = Double.NaN;
+        resultat = 0;
 
         
-        // si c'est le cas, on va effectuer la somme des variables concernées
+        // si c'est le cas, on va effectuer la moyenne des variables concernées
         if (moyok.matches()) {
             // noms des variables entrées en paramètre
-            char nomvar1 = commande.charAt(commande.length() - 4);
-            char nomvar2 = commande.charAt(commande.length() - 1);
+            char nomvar1 = moyok.group(2).charAt(0);
+            char nomvar2 = moyok.group(2).charAt(3);
+
             if (nomvar1 <= nomvar2) {
-                resultat = som(commande)/ nomvar2-nomvar1;
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+
+                    if (casesMem[nomvar - 65] != null) {
+                        resultat += casesMem[nomvar - 65].getValeur();
+                    } else {
+                        resultat = Double.NaN;
+                    }
+                } 
+                resultat = resultat / (nomvar2 - nomvar1 + 1);
             } else {
-                resultat = som(commande)/ nomvar1-nomvar2;
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    if (casesMem[nomvar - 65] != null) {
+                        resultat += casesMem[nomvar - 65].getValeur();
+                    } else {
+                        resultat = Double.NaN;
+                    }
+                } 
+                resultat = resultat / (nomvar1 - nomvar2 + 1);
             }
         }
         
         return resultat;
+    }
+    
+    /**
+     * fonction INIT : initialise les variables spécifiées à la valeur spécifiée
+     * @param commande la commande entrée par l'utilisateur
+     */
+    public static void init(String commande) {
+        // on regarde si le pattern convient
+        Pattern patInitSimple = Pattern.compile("(\\s*INIT\\s*)([A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");        
+        Pattern patInitMultiple = Pattern.compile("(\\s*INIT\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
+        
+        Matcher initok = patInitSimple.matcher(commande);
+
+        
+        if (initok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable à initialiser
+            nomvar = initok.group(2).charAt(0);
+            // on l'initialise
+            casesMem[nomvar - 65] = new Variable(nomvar, 
+                                        Double.parseDouble(initok.group(3)));
+        }
+        
+        initok = patInitMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on les remet toutes à zéro
+        if (initok.matches()) {
+            char nomvar1 = initok.group(2).charAt(0);
+            char nomvar2 = initok.group(2).charAt(3);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    casesMem[nomvar - 65] = new Variable(nomvar, 
+                            Double.parseDouble(initok.group(3)));
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    casesMem[nomvar - 65] = new Variable(nomvar, 
+                            Double.parseDouble(initok.group(3)));
+                } 
+            }
+        }
+    }
+    
+    /**
+     * fonction ADD : Ajoute la somme spécifiée aux valeurs des 
+     * variables spécifiées
+     * @param commande la commande entrée par l'utilisateur
+     */
+    public static void add(String commande) {
+        // on regarde si le pattern convient
+        Pattern patAddSimple = Pattern.compile("(\\s*ADD\\s*)([A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");        
+        Pattern patAddMultiple = Pattern.compile("(\\s*ADD\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
+        
+        Matcher addok = patAddSimple.matcher(commande);
+
+        
+        if (addok.matches()) {
+            char nomvar;    
+            
+            // on récupère le nom de la variable dont on doit modifier la valeur
+            nomvar = addok.group(2).charAt(0);
+            // on modifie sa valeur en ajoutant le réel spécifié
+            casesMem[nomvar - 65].setValeur(casesMem[nomvar - 65].getValeur() +
+                                        Double.parseDouble(addok.group(3)));
+        }
+        
+        addok = patAddMultiple.matcher(commande);
+        // lorsqu'on a plusieurs cases en paramètres, on modifie chacune de leur
+        // valeur
+        if (addok.matches()) {
+            char nomvar1 = addok.group(2).charAt(0);
+            char nomvar2 = addok.group(2).charAt(3);
+            
+            if (nomvar1 <= nomvar2) {
+                for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
+                    casesMem[nomvar - 65].setValeur
+                    (casesMem[nomvar - 65].getValeur() +
+                            Double.parseDouble(addok.group(3)));
+                }              
+            } else {
+                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
+                    casesMem[nomvar - 65].setValeur
+                    (casesMem[nomvar - 65].getValeur() +
+                            Double.parseDouble(addok.group(3)));
+                } 
+            }
+        }
     }
 }
