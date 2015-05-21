@@ -8,6 +8,7 @@ import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -105,6 +106,7 @@ public class Menu extends JMenuBar{
         
         // Ajout du sous-menu copier
         item = new JMenuItem(new CopierAction(fenetre,"Copier"));
+        item.setIcon(new ImageIcon("cut.jpg"));
         item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);

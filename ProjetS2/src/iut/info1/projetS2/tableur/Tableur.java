@@ -163,6 +163,7 @@ public class Tableur extends JFrame{
         
         // Création d'un modèle de table
         modele = new ModeleDeTable();
+        
         // Création du tableur
         tableur = new JTable(modele);
         

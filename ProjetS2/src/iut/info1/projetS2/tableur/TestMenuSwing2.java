@@ -35,20 +35,22 @@ import javax.xml.soap.Text;
  */
 public class TestMenuSwing2 extends JMenuBar {
 
-    /** */
+    /** Menu s'affichant lors du clic droit */
     public static JPopupMenu popup;
 
-    /** */
-    private static JMenuItem copier,
-                      couper,
-                      coller;
+    /** Sous-menu de notre pop-up */
+    private static JMenuItem copier;
+
+    /** Sous-menu de notre pop-up */
+    private static JMenuItem couper;
+    
+    /** Sous-menu de notre pop-up */
+    private static JMenuItem coller;
+    
     /**
-     * TODO commenter l'état initial atteint
-     *
+     * Méthode principale
      */
     public TestMenuSwing2() {
-
-        JMenuItem item = null;
 
         // Listener générique qui affiche l'action du menu utilisé
         ActionListener afficherMenuListener = new ActionListener() {
@@ -57,6 +59,7 @@ public class TestMenuSwing2 extends JMenuBar {
                         + event.getActionCommand() + "] utilisé.");
             }
         };
+        
         
         ActionListener copierMenuListener = new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -73,6 +76,8 @@ public class TestMenuSwing2 extends JMenuBar {
             }
         };
 
+        // On ajoute tous les sous-menu à notre menu popup et on leur 
+        // assigne des actions
         popup = new JPopupMenu();
         copier = new JMenuItem("Copier");
         copier.addActionListener(copierMenuListener);
@@ -95,6 +100,7 @@ public class TestMenuSwing2 extends JMenuBar {
      */
     public static void main(String s[]) {
 
+        
         final JFrame frame = new JFrame("Test de menu divers");
 
         final JTextField texte = new JTextField();
@@ -143,7 +149,6 @@ public class TestMenuSwing2 extends JMenuBar {
 //                    }
 
                     popup.setLocation(e.getXOnScreen(), e.getYOnScreen());
-                    getCaret().setVisible(false);
                     popup.setVisible(true);
                 } else {
                     Object obj = e.getSource();
@@ -158,8 +163,7 @@ public class TestMenuSwing2 extends JMenuBar {
                         }
                     }
 
-                    getCaret().setVisible(true);
-                    popup.setVisible(false);
+                    afficherPopup(e);
                 }
             }
 
@@ -178,11 +182,6 @@ public class TestMenuSwing2 extends JMenuBar {
                 
             }
 
-            private Window getCaret() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
             private Object getText() {
                 // TODO Auto-generated method stub
                 return null;
@@ -193,26 +192,16 @@ public class TestMenuSwing2 extends JMenuBar {
                 return null;
             }
 
-            public void mousePressed(MouseEvent e) {
-
-                System.out.println("mouse pressed");
-
-                afficherPopup(e);
-
-            }
-
-            public void mouseReleased(MouseEvent e) {
-
-                System.out.println("mouse released");
-
-                afficherPopup(e);
-
-            }
-
+            /**
+             * On affiche notre menu pop-up
+             * @param e evenement
+             */
             private void afficherPopup(MouseEvent e) {
 
+                // Si on a bien l'action d'afficher un pop-up
                 if (e.isPopupTrigger()) {
 
+                    // On affiche le pop-up là où est notre pointeur
                     TestMenuSwing2.popup.show(texte, e.getX(), e.getY());
 
                 }

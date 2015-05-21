@@ -28,7 +28,7 @@ public class ModeleDeTable extends AbstractTableModel {
     @Override
     public int getColumnCount() {
         
-        return nomColonnes.length;
+        return nomColonnes.length+1;
     }
 
     /* (non-Javadoc)
@@ -87,11 +87,6 @@ public class ModeleDeTable extends AbstractTableModel {
      */
     public static void setDonnees(Object[][] donnees) {
         ModeleDeTable.donnees = donnees;
-/*        fireTableDataChanged();
-        for (int i = 0; i < donnees.length; i++) {
-            for (int j = 0; j < donnees[i].length; j++) {
-                setValueAt(donnees, i, j);
-            }
-        }*/
+
     }    
 }
