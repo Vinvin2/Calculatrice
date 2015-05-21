@@ -148,8 +148,8 @@ public class TestMenuSwing2 extends JMenuBar {
 //                        coller.setEnabled(false);
 //                    }
 
-                    popup.setLocation(e.getXOnScreen(), e.getYOnScreen());
-                    popup.setVisible(true);
+                    afficherPopup(e);
+                    
                 } else {
                     Object obj = e.getSource();
                     if (obj instanceof JMenuItem) {
@@ -163,7 +163,6 @@ public class TestMenuSwing2 extends JMenuBar {
                         }
                     }
 
-                    afficherPopup(e);
                 }
             }
 
@@ -203,8 +202,10 @@ public class TestMenuSwing2 extends JMenuBar {
 
                     // On affiche le pop-up là où est notre pointeur
                     TestMenuSwing2.popup.show(texte, e.getX(), e.getY());
+                    System.out.println("test");
 
                 }
+                System.out.println("false");
 
             }
 
