@@ -62,7 +62,8 @@ public class ActionCalculer implements ActionListener {
             if (fonctionok == 1){       // commande MEM
                 
                 // on informe l'utilisateur qu'il passe en mode mémoire
-                ecran.insert(" Mode mémoire actif.\n", ecran.getText().length());
+                ecran.insert(" Mode mémoire actif.\n", 
+                        ecran.getText().length());
                 
             } else if (fonctionok == 2) {       // commande affectation
                 
@@ -80,9 +81,11 @@ public class ActionCalculer implements ActionListener {
 
                     strresult = strresult.substring(0, strresult.length() - 2); 
 
-                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                    ecran.insert(" = " + strresult + "\n", 
+                            ecran.getText().length());
                 } else {
-                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                    ecran.insert(" = " + resultat + "\n", 
+                            ecran.getText().length());
                 }
 
             } else if (fonctionok == 3) {       // commande calcul
@@ -101,9 +104,11 @@ public class ActionCalculer implements ActionListener {
 
                     strresult = strresult.substring(0, strresult.length() - 2); 
 
-                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                    ecran.insert(" = " + strresult + "\n", 
+                            ecran.getText().length());
                 } else {
-                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                    ecran.insert(" = " + resultat + "\n", 
+                            ecran.getText().length());
                 }
                 
             } else {
@@ -127,75 +132,104 @@ public class ActionCalculer implements ActionListener {
                         ecran.getText().length());
             } else if (fonctionok == 3) {       // commande QUIT
                 // on informe l'utilisateur que la commande a été effectuée
-                ecran.insert(" Mode mémoire inactif.\n", ecran.getText().length());
+                ecran.insert(" Mode mémoire inactif.\n", 
+                        ecran.getText().length());
             } else if (fonctionok == 4) {
                 CommandesMemoire.aide(commande);// commande AIDE
             } else if (fonctionok == 5) { // commande INCR
                 ecran.insert(CommandesMemoire.incr(commande), 
                         ecran.getText().length());
-            } else if (fonctionok == 6) {
-                CommandesMemoire.car(commande);// commande CAR
-                ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 6) { // commande CAR
+                ecran.insert(CommandesMemoire.car(commande),
+                        ecran.getText().length());
             } else if (fonctionok == 7) {
                 CommandesMemoire.sqrt(commande);// commande SQRT
                 ecran.insert(" OK\n", ecran.getText().length());
             } else if (fonctionok == 8) {       // commande SOM
                 // on stocke le résultat de la somme
                 double resultat = CommandesMemoire.som(commande);
+                
+                // resultat sous forme de chaîne
+                String strresult = Double.toString(resultat);
                 // on insère le résultat à l'écran
                 // si le résultat se termine par .0, on l'enlève à l'affichage
-                if (Double.toString(resultat).endsWith(".0")) {
-                    String strresult = Double.toString(resultat);
+                if (strresult == "NaN") {
+                    ecran.insert(" Erreur de syntaxe de calcul"
+                            + ", entrez par exemple \"5.12 * 12.08\"\n", 
+                            ecran.getText().length());
+                } else if (strresult.endsWith(".0")) {
+
                     strresult = strresult.substring(0, strresult.length() - 2); 
 
-                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                    ecran.insert(" = " + strresult + "\n", 
+                            ecran.getText().length());
                 } else {
-                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                    ecran.insert(" = " + resultat + "\n", 
+                            ecran.getText().length());
                 }
                 
             } else if (fonctionok == 9) {       // commande PROD
                 // on stocke le résultat du produit
                 double resultat = CommandesMemoire.prod(commande);
+                
+                // resultat sous forme de chaîne
+                String strresult = Double.toString(resultat);
                 // on insère le résultat à l'écran
                 // si le résultat se termine par .0, on l'enlève à l'affichage
-                if (Double.toString(resultat).endsWith(".0")) {
-                    String strresult = Double.toString(resultat);
+                if (strresult == "NaN") {
+                    ecran.insert(" Erreur de syntaxe de calcul"
+                            + ", entrez par exemple \"5.12 * 12.08\"\n", 
+                            ecran.getText().length());
+                } else if (strresult.endsWith(".0")) {
+
                     strresult = strresult.substring(0, strresult.length() - 2); 
 
-                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                    ecran.insert(" = " + strresult + "\n", 
+                            ecran.getText().length());
                 } else {
-                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                    ecran.insert(" = " + resultat + "\n", 
+                            ecran.getText().length());
                 }
                 
             } else if (fonctionok == 10) {      // commande MOY
                 // on stocke le résultat de la moyenne
                 double resultat = CommandesMemoire.moy(commande);
+                
+                // resultat sous forme de chaîne
+                String strresult = Double.toString(resultat);
                 // on insère le résultat à l'écran
                 // si le résultat se termine par .0, on l'enlève à l'affichage
-                if (Double.toString(resultat).endsWith(".0")) {
-                    String strresult = Double.toString(resultat);
+                if (strresult == "NaN") {
+                    ecran.insert(" Erreur de syntaxe de calcul"
+                            + ", entrez par exemple \"5.12 * 12.08\"\n", 
+                            ecran.getText().length());
+                } else if (strresult.endsWith(".0")) {
+
                     strresult = strresult.substring(0, strresult.length() - 2); 
 
-                    ecran.insert(" = " + strresult + "\n", ecran.getText().length());
+                    ecran.insert(" = " + strresult + "\n", 
+                            ecran.getText().length());
                 } else {
-                    ecran.insert(" = " + resultat + "\n", ecran.getText().length());
+                    ecran.insert(" = " + resultat + "\n", 
+                            ecran.getText().length());
                 }
+                
             } else if (fonctionok == 11) {      // commande INIT
                 // on informe l'utilisateur que la commande a été effectuée
-                CommandesMemoire.init(commande);
-                ecran.insert(" OK\n", ecran.getText().length());
+                ecran.insert(CommandesMemoire.init(commande), 
+                        ecran.getText().length());
             } else if (fonctionok == 12) {      // commande ADD
                 // on informe l'utilisateur que la commande a été effectuée
-                CommandesMemoire.add(commande);
-                ecran.insert(" OK\n", ecran.getText().length());
+                ecran.insert(CommandesMemoire.add(commande), 
+                        ecran.getText().length());
             } else if (fonctionok == 13) {      // commande MUL
                 // on informe l'utilisateur que la commande a été effectuée
-                CommandesMemoire.mul(commande);
-                ecran.insert(" OK\n", ecran.getText().length());
+                ecran.insert(CommandesMemoire.mul(commande), 
+                        ecran.getText().length());
             } else if (fonctionok == 14) {      // commande EXP
                 // on informe l'utilisateur que la commande a été effectuée
-                CommandesMemoire.exp(commande);
-                ecran.insert(" OK\n", ecran.getText().length());
+                ecran.insert(CommandesMemoire.exp(commande), 
+                        ecran.getText().length());
             } else {
                 ecran.insert(" Erreur, appuyez sur aide pour consulter les"
                         + " commandes disponibles\n", ecran.getText().length());

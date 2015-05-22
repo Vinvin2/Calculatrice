@@ -89,10 +89,12 @@ public class Menu extends JMenuBar{
         
         // Ajout du sous-menu aide
         item = new JMenuItem(new AideAction(fenetre,"Aide"));
+        item.setIcon(new ImageIcon("aide.png"));
         menuAutre.add(item);
         
         // Ajout du sous-menu à propos
         item = new JMenuItem(new AProposAction(fenetre,"A propos"));
+        item.setIcon(new ImageIcon("aPropos.png"));
         menuAutre.add(item);
     }
 
@@ -106,19 +108,21 @@ public class Menu extends JMenuBar{
         
         // Ajout du sous-menu copier
         item = new JMenuItem(new CopierAction(fenetre,"Copier"));
-        item.setIcon(new ImageIcon("cut.jpg"));
+        item.setIcon(new ImageIcon("copy.gif"));
         item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);
         
         // Ajout du sous-menu couper
         item = new JMenuItem(new CouperAction(fenetre,"Couper"));
+        item.setIcon(new ImageIcon("cut.jpg"));
         item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X,
                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);
         
         // Ajout du sous-menu coller
         item = new JMenuItem(new CollerAction(fenetre,"Coller"));
+        item.setIcon(new ImageIcon("coller.gif"));
         item.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V,
                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
         menuEditer.add(item);       
@@ -134,6 +138,7 @@ public class Menu extends JMenuBar{
         
         // Ajout du sous-menu nouveau
         item = new JMenuItem(new NouveauAction(fenetre,"Nouveau"));
+        item.setIcon(new ImageIcon("nouveau.jpg"));
         menuFichier.add(item);
         
         // Ajout d'une barre de séparation
@@ -141,14 +146,17 @@ public class Menu extends JMenuBar{
         
         // Ajout du sous-menu ouvrir
         item = new JMenuItem(new ChargerAction(fenetre,"Charger"));
+        item.setIcon(new ImageIcon("charger.gif"));
         menuFichier.add(item);
         
         // Ajout du sous-menu sauver
         item = new JMenuItem(new SauverAction(fenetre,"Sauver"));
+        item.setIcon(new ImageIcon("sauvegarder.png"));
         menuFichier.add(item);
         
         // Ajout du sous-menu quitter
         item = new JMenuItem(new AccueilAction(fenetre, "Accueil"));
+        item.setIcon(new ImageIcon("accueil.png"));
         menuFichier.add(item);       
     }
     
