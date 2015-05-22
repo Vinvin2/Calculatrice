@@ -121,8 +121,8 @@ public class Commandes {
             if (matchSiCom.group(2) != null // cas du COPIER
                     && matchSiCom.group(2).equals("COPIER")) {
                 this.copier(matchSiCom.group(3), matchSiCom.group(4));
-            } else if (matchSiCom.group(4)!= null // cas du COPVAL
-                    && matchSiCom.group(4).equals("COPVAL")) {
+            } else if (matchSiCom.group(6)!= null // cas du COPVAL
+                    && matchSiCom.group(6).equals("COPVAL")) {
                 this.copval(matchSiCom.group(7), matchSiCom.group(8));  
             } else { //group(10).equals("RAZ")
                 this.raz(matchSiCom.group(11));                
@@ -178,6 +178,36 @@ public class Commandes {
 
 
     /**
+     * copie la valeur d'une case/plage vers une case/plage
+     * @param aCopier coordonnées de la valeur à copier
+     * @param ouCopier coordonnées de l'emplacement ou copier
+     */
+    private void copval(String aCopier, String ouCopier) {
+        int[] coordInitInit;  // début coordonées de la valeur à copier
+        int[] coordFinalInit; // début coordonnées de l'emplacement ou copier
+        //int[] coordFinalFinal; // fin coordonnées del'emplacement ou copier
+
+        if (aCopier.matches(REG_CASE) && ouCopier.matches(REG_CASE)) {
+            coordInitInit = recupCase(aCopier);
+            coordFinalInit = recupCase(ouCopier);
+            // les données sont correctement récupérées
+            this.fenetre.getModele().setValueAt(
+                    this.fenetre.getModele().getValueAt(
+                            coordInitInit[0], coordInitInit[1]),
+                            coordFinalInit[0], coordFinalInit[1]);
+            this.fenetre.getLabel().setText("Copie effectuée");
+            this.fenetre.getConsole().setText("");
+        } else if (aCopier.matches(REG_CASE) && ouCopier.matches(REG_PLAGE)) {
+            // TODO
+        } else if (aCopier.matches(REG_PLAGE) && ouCopier.matches(REG_PLAGE)) {
+            // TODO
+        } else { // erreur de syntaxe
+            this.fenetre.getLabel().setText("Erreur de syntaxe");
+        }
+    }
+
+
+    /**
      * Efface la cellule ou la plage spécifiée
      * @param aEffacer cellule ou plage du tableur
      */
@@ -204,8 +234,14 @@ public class Commandes {
                     for (j = coordInit[1]; j <= coordFinal[1]; j++) {
                         this.fenetre.getModele().setValueAt("", i, j);
                         this.entrees[i][j] = null;
-                        this.fenetre.getLabel().setText("Case effacées");
                     }
+                    this.fenetre.getLabel().setText("Case effacées");
+                    this.fenetre.getConsole().setText("");
+                }
+                // si les coordonnées initiales > coordonnées finales
+                if (coordFinal[0] < coordInit[0]
+                        || coordFinal[1] < coordInit[1]) {
+                    this.fenetre.getLabel().setText("Intervalle Inexistant");
                 }
             }
         } else { // l'user n'a pas entré de plage
@@ -220,17 +256,6 @@ public class Commandes {
             }
         }
     }
-
-
-    /**
-     * TODO commenter le rôle de la méthode
-     * @param group
-     * @param group2
-     */
-    private void copval(String group, String group2) {
-        // TODO Auto-generated method stub
-    }
-
 
     /**
      * TODO commenter le rôle de la méthode
