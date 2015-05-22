@@ -5,6 +5,7 @@
 
 package iut.info1.projetS2.tableur.action;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -185,7 +186,9 @@ public class Commandes {
     private void copval(String aCopier, String ouCopier) {
         int[] coordInitInit;  // début coordonées de la valeur à copier
         int[] coordFinalInit; // début coordonnées de l'emplacement ou copier
-        //int[] coordFinalFinal; // fin coordonnées del'emplacement ou copier
+        int[] coordFinalFinal; // fin coordonnées del'emplacement ou copier
+        Scanner donnees; // analyseur de plages
+
 
         if (aCopier.matches(REG_CASE) && ouCopier.matches(REG_CASE)) {
             coordInitInit = recupCase(aCopier);
@@ -198,9 +201,25 @@ public class Commandes {
             this.fenetre.getLabel().setText("Copie effectuée");
             this.fenetre.getConsole().setText("");
         } else if (aCopier.matches(REG_CASE) && ouCopier.matches(REG_PLAGE)) {
-            // TODO
+            coordInitInit = recupCase(aCopier);
+            // donnees analyse la plage ouCopier
+            donnees = new Scanner(ouCopier).useDelimiter("\\0056{2}");
+            coordFinalInit = recupCase(donnees.next());
+            coordFinalFinal = recupCase(donnees.next());
+            for (int i = coordFinalInit[0]; i <= coordFinalFinal[0]; i++) {
+                for (int j = coordFinalInit[1]; j <= coordFinalFinal[1]; j++) {
+                    this.fenetre.getModele().setValueAt(
+                            this.fenetre.getModele().getValueAt(
+                                    coordInitInit[0], coordInitInit[1]), i, j);            
+                }
+            }
+            this.fenetre.getLabel().setText("Copie effectuée");
+            this.fenetre.getConsole().setText("");
         } else if (aCopier.matches(REG_PLAGE) && ouCopier.matches(REG_PLAGE)) {
-            // TODO
+            /*
+             * initfinal doit etre
+             * finalfinal doit etre divisible par finalinit
+             */
         } else { // erreur de syntaxe
             this.fenetre.getLabel().setText("Erreur de syntaxe");
         }
@@ -236,13 +255,13 @@ public class Commandes {
                         this.entrees[i][j] = null;
                     }
                     this.fenetre.getLabel().setText("Case effacées");
-                    this.fenetre.getConsole().setText("");
                 }
                 // si les coordonnées initiales > coordonnées finales
                 if (coordFinal[0] < coordInit[0]
                         || coordFinal[1] < coordInit[1]) {
                     this.fenetre.getLabel().setText("Intervalle Inexistant");
                 }
+                this.fenetre.getConsole().setText("");
             }
         } else { // l'user n'a pas entré de plage
             coordInit = recupCase(aEffacer);
@@ -250,7 +269,8 @@ public class Commandes {
                 this.fenetre.getModele().setValueAt(
                         "", coordInit[0], coordInit[1]);
                 this.entrees[coordInit[0]][coordInit[1]] = null;
-                this.fenetre.getLabel().setText("Case effacées");            
+                this.fenetre.getLabel().setText("Case effacée"); 
+                this.fenetre.getConsole().setText("");           
             } else { // erreur de syntaxe
                 this.fenetre.getLabel().setText("Erreur de syntaxe"); 
             }

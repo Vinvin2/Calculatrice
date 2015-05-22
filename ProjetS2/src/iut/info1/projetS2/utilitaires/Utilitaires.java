@@ -159,7 +159,8 @@ public class Utilitaires {
                 break;
             default: // si le premier opérateur est * ou /
                 // listeOperande.get(i+1) est la première opérande
-                resultTmp = listeOperande.get(i);
+                resultTmp = debutNeg ? 0 - listeOperande.get(i)
+                        : listeOperande.get(i);
                 // si il y a un autre calcul à effectuer
                 if (i < listeOperateur.size()) {
                     // pour savoir si l'opération suivante est prioritaire (* /)
