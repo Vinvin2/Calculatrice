@@ -20,9 +20,11 @@ import iut.info1.projetS2.utilitaires.Utilitaires;
  * @version 0.1
  */
 public class Commandes {
-
     /** fenêtre à laquelle cette classe sera liée */
     private Tableur fenetre;
+
+    /** tableau contenant les entrées */
+    private String[][] entrees = new String[20][26];
 
     /** pattern d'une lettre de cellule */
     private static final String REG_LETTRE = "($?)([A-Z])";
@@ -30,21 +32,23 @@ public class Commandes {
     /** pattern d'un nombre de cellule */
     private static final String REG_NBRE = "[0]*((1?\\d)||(20))";
 
+    /** Pattern d'une case type nombreLettre */
+    private static final String REG_CASE1 = REG_NBRE + REG_LETTRE;
+
+    /** Pattern d'une case type lettreNombre */
+    private static final String REG_CASE2 = REG_LETTRE + REG_NBRE;
+
     /** REGEX de type 'simple affichage' type: nombreLettre aAfficher */
-    private static final String REG_affich1
-    = REG_NBRE + REG_LETTRE + "\\s+((.)*)";
+    private static final String REG_affich1 = REG_CASE1 + "\\s+((.)*)";
 
     /** REGEX de type 'simple affichage' type: lettreNombre aAfficher */
-    private static final String REG_affich2
-    = REG_LETTRE + REG_NBRE + "\\s+((.)*)";
+    private static final String REG_affich2 = REG_CASE2 + "\\s+((.)*)";
 
     /** REGEX pour définir s'il y a calcul, type: nombreLettre =aAfficher */
-    private static final String REG_needCalc
-    = REG_NBRE + REG_LETTRE + "\\s*=\\s*((.)*)";
+    private static final String REG_needCalc = REG_CASE1 + "\\s*=\\s*((.)*)";
 
     /** REGEX pour définir s'il y a calcul, type: lettreNombre =aAfficher */
-    private static final String REG_needCalc2
-    = REG_LETTRE + REG_NBRE + "\\s*=\\s*((.)*)";
+    private static final String REG_needCalc2 = REG_CASE2 + "\\s*=\\s*((.)*)";
 
     /** Identifie une demande de copie */
     private static final String REG_COPIER = "((COPIER)\\s+(.+)\\s+(.+)\\s*)";
@@ -53,7 +57,7 @@ public class Commandes {
     private static final String REG_COPVAL = "((COPVAL)\\s+(.+)\\s+(.+)\\s*)";
 
     /** Identifie une demande d'effaçage */
-    private static final String REG_RAZ = "((RAZ)\\s+(.+)\\s*)";
+    private static final String REG_RAZ = "((RAZ)\\s+((.)+)\\s*)";
 
     /** Détermine si une commande a été entrée */
     private static final String REG_needCommande
@@ -66,7 +70,7 @@ public class Commandes {
     public void actionValider() {
         // recupération du texte de la console
         String aRenvoyer = fenetre.getConsole().getText();
-        // TODO test via pattern si une commande est appelée
+        // test via pattern si une commande est appelée
         Pattern testSiCom = Pattern.compile(REG_needCommande);
         Matcher matchSiCom = testSiCom.matcher(aRenvoyer);
         // test via pattern si besoin de calcul ou pas
@@ -74,14 +78,25 @@ public class Commandes {
         Pattern testSiCalc2 = Pattern.compile(REG_needCalc2);
         Matcher matchSiCalc = testSiCalc.matcher(aRenvoyer);
         Matcher matchSiCalc2 = testSiCalc2.matcher(aRenvoyer);
+        // test si un simpleaffichage peut être réalisé
+        Pattern testSiAffich = Pattern.compile(REG_affich1);
+        Pattern testSiAffich2 = Pattern.compile(REG_affich2);
+        Matcher matchSiAffich = testSiAffich.matcher(aRenvoyer);
+        Matcher matchSiAffich2 = testSiAffich2.matcher(aRenvoyer);
+
 
         // on oriente selon l'entrée
         if (matchSiCom.matches()) {
-            // TODO on verra ce qu'on fait
+            System.out.println(matchSiCom.group());
+            for (int i = 0; i < matchSiCom.groupCount(); i++) {
+                System.out.println(i + " " + matchSiCom.group(i));
+            }
         } else if (matchSiCalc.matches() || matchSiCalc2.matches()) {
             this.affichageCalcule();
-        } else {
+        } else if (matchSiAffich.matches() || matchSiAffich2.matches()) {
             this.affichageSimple();
+        } else {
+            this.fenetre.getLabel().setText("Erreur de syntaxe");
         }
     }
 
@@ -91,7 +106,7 @@ public class Commandes {
      * depuis la ligne de commande
      * @param aAfficher String à afficher dans le tableur
      */
-    public void affichage(String aAfficher) {
+    private void affichage(String aAfficher) {
         int col = -1; // colonne de la case à modifier
         int lig = -1; // ligne de la case à modifier
 
@@ -108,7 +123,6 @@ public class Commandes {
 
         // orientation selon l'ordre nombre/lettre - lettre/nombre - calculs
         if (lul.matches()) { // nombre/lettre
-            this.fenetre.getLabel().setText("ok"); // simple confirmation
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~20)
@@ -118,8 +132,12 @@ public class Commandes {
             col = lul.group(2).charAt(0) - 65;
             aAfficherTraite = String.valueOf(
                     Utilitaires.calculIntermediaire(lul.group(6)));
+            if (!aAfficherTraite.equals("NaN")) {
+                this.fenetre.getLabel().setText("Calcul effectué");
+            } else {
+                this.fenetre.getLabel().setText("Calcul non effectué");  
+            }
         } else if (lil.matches()) { // lettre/nombre
-            this.fenetre.getLabel().setText("ok"); // simple confirmation
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~20)
@@ -129,8 +147,12 @@ public class Commandes {
             col = lil.group(5).charAt(0) - 65;
             aAfficherTraite = String.valueOf(
                     Utilitaires.calculIntermediaire(lil.group(6)));
+            if (!aAfficherTraite.equals("NaN")) {
+                this.fenetre.getLabel().setText("Calcul effectué");
+            } else {
+                this.fenetre.getLabel().setText("Calcul non effectué");
+            }
         } else if (lel.matches()) {
-            this.fenetre.getLabel().setText("ok"); // simple confirmation
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~20)
@@ -140,7 +162,6 @@ public class Commandes {
             col = lel.group(2).charAt(0) - 65;  
             aAfficherTraite = lel.group(6);
         } else if (lol.matches()) {
-            this.fenetre.getLabel().setText("ok"); // simple confirmation
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~20)
@@ -152,9 +173,12 @@ public class Commandes {
         }
         // else lig = -1 et col = -1
 
-        if (lig > -1 & col > -1) { // La syntaxe est ok on a pu tout récupérer
+        if (lig > -1 & col > -1) { // La syntaxe est ok et tout est récupéré
             this.fenetre.getModele().setValueAt(aAfficherTraite, lig, col);
-            this.fenetre.getConsole().setText("");
+            if (!aAfficherTraite.equals("NaN")) {
+                this.fenetre.getConsole().setText("");
+            }
+            this.entrees[lig][col] = aAfficherTraite;
         } else { // syntaxiquement faux
             this.fenetre.getLabel().setText("Erreur de syntaxe type: "
                     + "A1 texte ou 1A texte");
@@ -167,7 +191,7 @@ public class Commandes {
      * 'ligne de commande' de type nombreLettre aAfficher
      *                          ou lettreNombre aAfficher
      */
-    public void affichageSimple() {
+    private void affichageSimple() {
         String aAfficher = this.fenetre.getConsole().getText();
         this.affichage(aAfficher); // affichage du texte voulu
         this.fenetre.getLabel().setText("Texte affiché");
@@ -178,16 +202,15 @@ public class Commandes {
      * Permet d'afficher dans une case du tableur le résultat d'un calcul
      * entré dans la 'ligne de commande'
      */
-    public void affichageCalcule() {
+    private void affichageCalcule() {
         String aAfficher = this.fenetre.getConsole().getText();
         this.affichage(aAfficher); // affichage du texte (après calcul)
-        this.fenetre.getLabel().setText("Calcul effectué");
     }
 
 
     /**
      * Redéfinition du contructeur par défaut crée par java, il est rendu
-     * unitilisable pour éviter qu'une instance de Commandes soit sans
+     * unitilisable pour éviter qu'une instance de Commandes se retrouve sans
      * fenêtre.
      */
     private Commandes() {
@@ -201,5 +224,22 @@ public class Commandes {
     public Commandes(Tableur fenetre) {
         this();
         this.fenetre = fenetre;
+    }
+
+    //  private
+
+    /**
+     * @return the entrees
+     */
+    public String[][] getEntrees() {
+        return entrees;
+    }
+
+
+    /**
+     * @param entrees the entrees to set
+     */
+    public void setEntrees(String[][] entrees) {
+        this.entrees = entrees;
     }
 }
