@@ -24,24 +24,40 @@ public class Commandes {
     /** fenêtre à laquelle cette classe sera liée */
     private Tableur fenetre;
 
+    /** pattern d'une lettre de cellule */
+    private static final String REG_LETTRE = "($?)([A-Z])";
+
+    /** pattern d'un nombre de cellule */
+    private static final String REG_NBRE = "[0]*((1?\\d)||(20))";
+
     /** REGEX de type 'simple affichage' type: nombreLettre aAfficher */
-    public static final String REG_affich1
-    = "([0]*[1]{0,1}\\d||[0]*[2][0])\\s*([A-Z])\\s+(.*)";
+    private static final String REG_affich1
+    = REG_NBRE + REG_LETTRE + "\\s+((.)*)";
 
     /** REGEX de type 'simple affichage' type: lettreNombre aAfficher */
-    public static final String REG_affich2
-    = "([A-Z])\\s*([0]*[1]{0,1}\\d||[0]*[2][0])\\s+(.*)";
+    private static final String REG_affich2
+    = REG_LETTRE + REG_NBRE + "\\s+((.)*)";
 
     /** REGEX pour définir s'il y a calcul, type: nombreLettre =aAfficher */
     private static final String REG_needCalc
-    = "([A-Z])\\s*([0]*[1]{0,1}\\d||[0]*[2][0])\\s+[=]\\s*(.*)";
+    = REG_NBRE + REG_LETTRE + "\\s*=\\s*((.)*)";
 
-    /** REGEX pour définir s'il y a calcul, type: nombreLettre =aAfficher */
+    /** REGEX pour définir s'il y a calcul, type: lettreNombre =aAfficher */
     private static final String REG_needCalc2
-    = "([0]*[1]{0,1}\\d||[0]*[2][0])\\s*([A-Z])\\s+[=]\\s*(.*)";
+    = REG_LETTRE + REG_NBRE + "\\s*=\\s*((.)*)";
 
-    /** REGEX pour identifier les différentes méthodes de copie */
-    private static final String REG_COP = "COP\\s+(.+)\\s+(.+)\\s+";
+    /** Identifie une demande de copie */
+    private static final String REG_COPIER = "((COPIER)\\s+(.+)\\s+(.+)\\s*)";
+
+    /** Identifie une demande de copie de valeur */
+    private static final String REG_COPVAL = "((COPVAL)\\s+(.+)\\s+(.+)\\s*)";
+
+    /** Identifie une demande d'effaçage */
+    private static final String REG_RAZ = "((RAZ)\\s+(.+)\\s*)";
+
+    /** Détermine si une commande a été entrée */
+    private static final String REG_needCommande
+    = REG_COPIER + "||" + REG_COPVAL + "||" + REG_RAZ;
 
     /**
      * Appelé sur l'évènement 'click sur Valider', permet d'agir en fonction
@@ -51,7 +67,8 @@ public class Commandes {
         // recupération du texte de la console
         String aRenvoyer = fenetre.getConsole().getText();
         // TODO test via pattern si une commande est appelée
-        
+        Pattern testSiCom = Pattern.compile(REG_needCommande);
+        Matcher matchSiCom = testSiCom.matcher(aRenvoyer);
         // test via pattern si besoin de calcul ou pas
         Pattern testSiCalc = Pattern.compile(REG_needCalc);
         Pattern testSiCalc2 = Pattern.compile(REG_needCalc2);
@@ -59,7 +76,9 @@ public class Commandes {
         Matcher matchSiCalc2 = testSiCalc2.matcher(aRenvoyer);
 
         // on oriente selon l'entrée
-        if (matchSiCalc.matches() || matchSiCalc2.matches()) {
+        if (matchSiCom.matches()) {
+            // TODO on verra ce qu'on fait
+        } else if (matchSiCalc.matches() || matchSiCalc2.matches()) {
             this.affichageCalcule();
         } else {
             this.affichageSimple();
@@ -94,32 +113,32 @@ public class Commandes {
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~20)
              */             
-            lig = Integer.parseInt(lul.group(1)) - 1;
+            lig = Integer.parseInt(lul.group(4)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
             col = lul.group(2).charAt(0) - 65;
             aAfficherTraite = String.valueOf(
-                    Utilitaires.calculIntermediaire(lul.group(3)));
+                    Utilitaires.calculIntermediaire(lul.group(6)));
         } else if (lil.matches()) { // lettre/nombre
             this.fenetre.getLabel().setText("ok"); // simple confirmation
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~20)
              */
-            lig = Integer.parseInt(lil.group(2)) - 1;
+            lig = Integer.parseInt(lil.group(1)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
-            col = lil.group(1).charAt(0) - 65;
+            col = lil.group(5).charAt(0) - 65;
             aAfficherTraite = String.valueOf(
-                    Utilitaires.calculIntermediaire(lil.group(3)));
+                    Utilitaires.calculIntermediaire(lil.group(6)));
         } else if (lel.matches()) {
             this.fenetre.getLabel().setText("ok"); // simple confirmation
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~20)
              */
-            lig = Integer.parseInt(lel.group(2)) - 1;
+            lig = Integer.parseInt(lel.group(3)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
-            col = lel.group(1).charAt(0) - 65;  
-            aAfficherTraite = lel.group(3);
+            col = lel.group(2).charAt(0) - 65;  
+            aAfficherTraite = lel.group(6);
         } else if (lol.matches()) {
             this.fenetre.getLabel().setText("ok"); // simple confirmation
             /* 
@@ -128,8 +147,8 @@ public class Commandes {
              */             
             lig = Integer.parseInt(lol.group(1)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
-            col = lol.group(2).charAt(0) - 65; 
-            aAfficherTraite = lol.group(3);
+            col = lol.group(5).charAt(0) - 65; 
+            aAfficherTraite = lol.group(6);
         }
         // else lig = -1 et col = -1
 
@@ -141,8 +160,8 @@ public class Commandes {
                     + "A1 texte ou 1A texte");
         }
     }
-    
-    
+
+
     /**
      * Permet un simple affichage de ce que l'utilisateur a entré dans la
      * 'ligne de commande' de type nombreLettre aAfficher

@@ -26,17 +26,22 @@ public class Utilitaires {
      *             <li>Double.NaN si erreur dans le calcul</li></ul>
      */
     public static double calculIntermediaire(String aCalculer) {
-        // teste si calcul bon format via regex et retourne un NaN si err
-        Pattern testCalc = Pattern.compile("\\s*\\d+(\\0056\\d+)?\\s*"
+        /*
+         *  teste si calcul bon format via regex et retourne un NaN si err
+         *  la première opérande peut être négative
+         */
+        Pattern testCalc = Pattern.compile("-?\\s*\\d+(\\0056\\d+)?\\s*"
                 + "(\\s*[/*+-]\\s*\\d+(\\0056\\d+)?\\s*)*");
         Matcher estCalc = testCalc.matcher(aCalculer);
         if (!estCalc.matches()) {
             return Double.NaN; // le calcul n'est pas réalisable
         }
 
-        double resultat = 0; // resultat du calcul
-        char signeSuiv = '\0'; // opérateur suivant à prendre en compte
-        double resultTmp; // resutalt d'un sous calcul de * et /
+        double resultat = 0;      // resultat du calcul
+        char signeSuiv = '\0';    // opérateur suivant à prendre en compte
+        double resultTmp;         // resutalt d'un sous calcul de * et /
+        boolean debutNeg = false; // true si le cacul commance par un '-'
+        String aCalculerVerif = aCalculer;
 
         /*
          *  contiendra toutes les opérandes stockées dans l'ordre entré par
@@ -53,7 +58,14 @@ public class Utilitaires {
          * analyse le calcul entré par l'user pour récupérer facilement
          * et uniquement tous les opérandes
          */
-        Scanner testeurOperande = new Scanner(aCalculer);
+
+        // vérifie si la première opérande est négative
+        if (aCalculer.charAt(0) == '-') {
+            debutNeg = true;
+            aCalculerVerif = aCalculer.substring(1);
+        }
+
+        Scanner testeurOperande = new Scanner(aCalculerVerif);
         // pattern d'analyse d'opérandes supposées OK
         Pattern operandeV1 = Pattern.compile("\\s*[/+*-]\\s*");
         // testeurOperande est prêt à analyser la calcul grâce à ce pattern
@@ -63,7 +75,7 @@ public class Utilitaires {
          * analyse le calcul entré par l'user pour récupérer uniquement les
          * opérateurs
          */
-        Scanner testeurOperateur = new Scanner(aCalculer);
+        Scanner testeurOperateur = new Scanner(aCalculerVerif);
         // pattern d'analyse d'opérateurs supposés OK
         Pattern operateurV1 = Pattern.compile("\\s*\\d+(\\0056\\d+){0,1}\\s*");
         // testeurOperateur est prêt à analyser le calcul grâce à ce pattern
@@ -83,7 +95,11 @@ public class Utilitaires {
          * préparation pour les calculs, devra évoluer pour prendre en compte
          * tous les calculs
          */
-        resultat = listeOperande.get(0);
+        if (debutNeg) {
+            resultat = 0 - listeOperande.get(0);
+        } else {
+            resultat = listeOperande.get(0);
+        }
 
         // pour chaques opérateur on effectue les calculs associés
         for (int i=0; i < listeOperateur.size(); i++) {
