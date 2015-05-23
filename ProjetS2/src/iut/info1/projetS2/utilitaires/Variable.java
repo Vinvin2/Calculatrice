@@ -62,7 +62,7 @@ public class Variable {
      */
     @Override
     public String toString() {
-        return nom + " = " + valeur;
+        return nom + " = " + valeur + "\n";
     }
     
     

@@ -51,14 +51,23 @@ public class ActionCalculer implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // on récupère le texte du textfield exécuteur de commandes
         String commande = executeurAssocie.getText();
-
+        
+        // fonction qui pourra être utilisée pour la commande
+        int fonctionok;
         // on insère la commande à l'écran
         ecran.insert(" " + commande + "\n", ecran.getText().length());
+        
+
+
         if (!modeMem) {
             // on cherche une fonction non liée au mode mémoire et correspondant
             // à la commande
-            int fonctionok = fonctionAUtiliserNonMem(commande);
+            fonctionok = fonctionAUtiliserNonMem(commande);
 
+            // on vérifie si la commande ne dépasse pas les 80 caracteres
+            if (commande.length() > 80) {
+                fonctionok = 0;
+            }          
             if (fonctionok == 1){       // commande MEM
                 
                 // on informe l'utilisateur qu'il passe en mode mémoire
@@ -111,7 +120,34 @@ public class ActionCalculer implements ActionListener {
                             ecran.getText().length());
                 }
                 
-            } else {
+            } else if (fonctionok == 4) {       // commande calcul
+                
+                double resultat = CommandesMemoire.calculVariable(commande);
+                
+                // resultat sous forme de chaîne
+                String strresult = Double.toString(resultat);
+                // on insère le résultat à l'écran
+                // si le résultat se termine par .0, on l'enlève à l'affichage
+                if (strresult == "NaN") {
+                    ecran.insert(" Erreur de calcul, une variable n'a pas été "
+                            + "initialisée, ou\n une erreur de syntaxe a été "
+                            + "commise. Entrez un calcul du type \"A+12\"\n", 
+                            ecran.getText().length());
+                } else if (strresult.endsWith(".0")) {
+
+                    strresult = strresult.substring(0, strresult.length() - 2); 
+
+                    ecran.insert(" = " + strresult + "\n", 
+                            ecran.getText().length());
+                } else {
+                    ecran.insert(" = " + resultat + "\n", 
+                            ecran.getText().length());
+                }
+                
+            } else if (fonctionok == 0) {       // commande trop longue
+                ecran.insert(" Erreur, la commande entrée ne doit pas dépasser"
+                        + " les 80 caractères\n", ecran.getText().length());                
+            } else {                            // commande inexistante
                 ecran.insert(" Erreur, vous n'avez pas entré une commande "
                         + "correcte,\nappuyez sur Aide pour consulter les"
                         + " commandes disponibles\n", ecran.getText().length());
@@ -121,7 +157,12 @@ public class ActionCalculer implements ActionListener {
             
             // on cherche une fonction liée au mode mémoire et correspondant
             // à la commande
-            int fonctionok = fonctionAUtiliserMem(commande);
+            fonctionok = fonctionAUtiliserMem(commande);
+            
+            // on vérifie si la commande ne dépasse pas les 80 caracteres
+            if (commande.length() > 80) {
+                fonctionok = 0;
+            }  
             
             if (fonctionok == 1) {      // commande RAZ
                 ecran.insert(CommandesMemoire.raz(commande), 
@@ -249,23 +290,28 @@ public class ActionCalculer implements ActionListener {
      */
     public static int fonctionAUtiliserNonMem (String commande) {
         
-        int fonctionok = 0;
+        int fonctionok = -1;
         // on créé des patterns permettant de détecter chaque fonction 
         // utilisable
         Pattern patMem = Pattern.compile("(\\s*)MEM(\\s*)");
         Matcher memok = patMem.matcher(commande);
         
-        Pattern patAffect = Pattern.compile(".*( = [A-Z])");
+        Pattern patAffect = Pattern.compile(".*(=\\s*[A-Z]\\s*)");
         Matcher affectok = patAffect.matcher(commande);
         
-        Pattern patCalcul = Pattern.compile(".*(\\d)");
+        Pattern patCalcul = Pattern.compile("-?(\\d).*(\\d)*");
         Matcher calculok = patCalcul.matcher(commande);
+        
+        Pattern PatCalcVar = Pattern.compile(".*[A-Z].*");
+        Matcher calcvarok = PatCalcVar.matcher(commande);
         
         if (memok.matches()) {
             fonctionok = 1;     // MEM
             modeMem = true;
         } else if (affectok.matches()) {
             fonctionok = 2;     // affectation (15+15 = A)
+        } else if (calcvarok.matches()) {
+            fonctionok = 4;     // calcul avec variables
         } else if (calculok.matches()){
             fonctionok = 3;     // calcul normal
         }

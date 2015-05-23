@@ -29,18 +29,35 @@ public class CommandesMemoire {
      */
     public static double affectation (String commande) {
         String calculARealiser; // le calcul que l'on devra effectuer
-        double resultat;        // son résultat
-        char nomvar;            // le nom de la variable à affecter
+        double resultat = Double.NaN;        // son résultat
+        char nomvar = '\0';            // le nom de la variable à affecter
 
+        // on regarde si une variable est utilisée dans le calcul ou pas
+        Pattern patAffectVar = Pattern.compile(".*[A-Z].*=\\s*([A-Z])\\s*");
+        Matcher affectvarok = patAffectVar.matcher(commande);
 
-        // TODO : moyen de prendre en compte les espaces
-        calculARealiser = commande.substring(0, commande.length() - 4);
-
+        Pattern patAffect = Pattern.compile(".*=\\s*([A-Z])\\s*");
+        Matcher affectok = patAffect.matcher(commande);
         // on fait le calcul
-        resultat = Utilitaires.calculIntermediaire(calculARealiser);
+        if (affectvarok.matches()) {
+
+            calculARealiser = commande.substring(0, commande.indexOf('='));
+            
+            resultat = calculVariable(calculARealiser);
+            nomvar = affectvarok.group(1).charAt(0);
+
+        } else if (affectok.matches()){            
+            calculARealiser = commande.substring(0,commande.indexOf('='));
+
+            resultat = Utilitaires.calculIntermediaire(calculARealiser);  
+
+            nomvar = affectok.group(1).charAt(0);
+        }
+
+
 
         // on prend le nom de la variable
-        nomvar = commande.charAt(commande.length()-1);
+
 
         // on vérifie si la variable n'a jamais été initialisée
         if (casesMem[nomvar - 65] == null) {
@@ -51,6 +68,38 @@ public class CommandesMemoire {
             casesMem[nomvar - 65].setValeur(resultat);
         }
         return resultat;
+    }
+    
+    /**
+     * Si une variable est utilisée pour faire le calcul (ex : A + 5), cette
+     * fonction va remplacer la ou les variables par leur valeur, puis fera
+     * exécuter le calcul qui convient
+     * @param commande la commande à traiter
+     * @return le résultat de la commande
+     */
+    public static double calculVariable (String commande) {
+
+        Pattern PatCalcVar = Pattern.compile(".*[A-Z].*");
+        Matcher calcvarok = PatCalcVar.matcher(commande);
+        
+        String aCalculer = commande;
+        if (calcvarok.matches()) {
+            for (int i = 0; i < commande.length() ; i++) {
+                for (char variable = 'A' ; variable < 'Z' ; variable++) {
+                    if (commande.charAt(i) == variable) {
+                        if (casesMem[variable - 65] != null) {
+                            // on créé alors cette variable
+                            aCalculer = aCalculer.replace
+                                    (Character.toString(commande.charAt(i)), 
+                          Double.toString(casesMem[variable - 65].getValeur()));
+                        }
+                    }
+                }
+            }
+            return Utilitaires.calculIntermediaire(aCalculer);
+        } else {
+            return Double.NaN;
+        }
     }
 
     /**
@@ -508,7 +557,7 @@ Pattern.compile("(\\s*INIT\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
                 }
             } else {
                 return "Erreur, veuillez entrer une commande du type "
-                        + "\"INIT A..D 2\"\n";
+                        + "\"INIT A..D 2\"";
             }
         }
     }
