@@ -184,9 +184,10 @@ public class Commandes {
      * @param ouCopier coordonnées de l'emplacement ou copier
      */
     private void copval(String aCopier, String ouCopier) {
-        int[] coordInitInit;  // début coordonées de la valeur à copier
+        int[] coordInitInit;  // début coordonnées de l'emplacement à copier
+        int[] coordInitFinal; // fin coordonnées de l'emplacement à copier
         int[] coordFinalInit; // début coordonnées de l'emplacement ou copier
-        int[] coordFinalFinal; // fin coordonnées del'emplacement ou copier
+        int[] coordFinalFinal;// fin coordonnées del'emplacement ou copier
         Scanner donnees; // analyseur de plages
 
 
@@ -204,22 +205,78 @@ public class Commandes {
             coordInitInit = recupCase(aCopier);
             // donnees analyse la plage ouCopier
             donnees = new Scanner(ouCopier).useDelimiter("\\0056{2}");
+            // la syntaxe est déjà vérifiée, la récupération marchera
             coordFinalInit = recupCase(donnees.next());
             coordFinalFinal = recupCase(donnees.next());
+            // copie i*j fois la case coordInitInit
             for (int i = coordFinalInit[0]; i <= coordFinalFinal[0]; i++) {
                 for (int j = coordFinalInit[1]; j <= coordFinalFinal[1]; j++) {
                     this.fenetre.getModele().setValueAt(
                             this.fenetre.getModele().getValueAt(
-                                    coordInitInit[0], coordInitInit[1]), i, j);            
+                                    coordInitInit[0], coordInitInit[1]), i, j);
                 }
             }
             this.fenetre.getLabel().setText("Copie effectuée");
             this.fenetre.getConsole().setText("");
         } else if (aCopier.matches(REG_PLAGE) && ouCopier.matches(REG_PLAGE)) {
+
+            int xPattern; //nombre de colonnes du pattern à copier
+            int yPattern; //nombre de lignes du pattern à copier
+            boolean copieOk; // true si la copie est possible false sinon
+            // donnees analyse la plage ouCopier
+            donnees = new Scanner(aCopier).useDelimiter("\\0056{2}");
+            coordInitInit = recupCase(donnees.next());
+            coordInitFinal = recupCase(donnees.next());
+            // donnees analyse la plage ouCopier
+            donnees = new Scanner(ouCopier).useDelimiter("\\0056{2}");
+            coordFinalInit = recupCase(donnees.next());
+            coordFinalFinal = recupCase(donnees.next());
             /*
-             * initfinal doit etre
-             * finalfinal doit etre divisible par finalinit
+             * testsi la copie est possible
+             * pour une copie valide il faut :
+             * finalfinal[0] - finalinit[0]
+             * doit etre divisible par 
+             * initfinal[0] - initfinal[0]
+             *  
+             * finalfinal[1] - finalinit[1]
+             * doit etre divisible par
+             * initfinal[1] - initfinal[1] 
              */
+            try { // gère le cas de la division par 0
+                copieOk = ((coordFinalFinal[0]-coordFinalInit[0]+1)
+                        /(coordInitFinal[0]-coordInitInit[0]+1))
+                        %((coordFinalFinal[0]-coordFinalInit[0]+1)
+                                /(coordInitFinal[0]-coordInitInit[0]+1))==0
+                                && ((coordFinalFinal[1]-coordFinalInit[1]+1)
+                                        /(coordInitFinal[1]-coordInitInit[1]+1))
+                                        %((coordFinalFinal[1]-coordFinalInit[1]+1)
+                                                /(coordInitFinal[1]
+                                                        -coordInitInit[1]+1))==0;
+            } catch (ArithmeticException e) {
+                copieOk = false;
+            }
+
+            if (copieOk) {
+                xPattern = coordInitFinal[0] - coordInitInit[0] + 1;
+                yPattern = coordInitFinal[1] - coordInitInit[1] + 1;
+                // copie
+                for (int i = coordFinalInit[0]; i<=coordFinalFinal[0];i++) {
+                    for (int j = coordFinalInit[1]; j<=coordFinalFinal[1];j++) {
+                        this.fenetre.getModele().setValueAt(
+                                this.fenetre.getModele().getValueAt(
+                                        coordInitInit[0] + i % xPattern, 
+                                        coordInitInit[1] + j % yPattern),
+                                        i, j); 
+                    }
+                }
+                this.fenetre.getLabel().setText("Copie effectuée");
+                this.fenetre.getConsole().setText("");
+            } else { // copie impossible
+                xPattern = 0;
+                yPattern = 0;
+                this.fenetre.getLabel().setText("Copie impossible pour "
+                        + "les plages entrées");
+            }
         } else { // erreur de syntaxe
             this.fenetre.getLabel().setText("Erreur de syntaxe");
         }

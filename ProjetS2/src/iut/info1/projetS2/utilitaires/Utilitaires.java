@@ -169,12 +169,16 @@ public class Utilitaires {
                     while (signeSuiv == '*' || signeSuiv == '/') {
                         i++;
                         if (signeSuiv == '*') {
+                            // System.out.println(resultTmp);
                             resultTmp *= listeOperande.get(i);
-                        } else { // signeSuiv == /
+                            // System.out.println(resultTmp);
+                        } else { // signeSuiv == '/'
+                            // System.out.println(resultTmp);
                             resultTmp /= listeOperande.get(i);
+                            // System.out.println(resultTmp);
                         }
                         try { // essai de récupérerl'opérateur suivant
-                            signeSuiv = listeOperateur.get(i+1);
+                            signeSuiv = listeOperateur.get(i);
                         } catch (IndexOutOfBoundsException e) {
                             // il n'y a pas d'opérateur suivant
                             signeSuiv = '\0';
