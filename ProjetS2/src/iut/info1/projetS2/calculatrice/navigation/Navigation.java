@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import iut.info1.projetS2.calculatrice.Calculatrice;
+import iut.info1.projetS2.tableur.Tableur;
 import iut.info1.projetS2.tableur.action.AProposAction;
 import iut.info1.projetS2.tableur.action.AideAction;
 
@@ -55,6 +56,12 @@ public class Navigation extends JMenuBar{
 		super();
 
 		buildMenu();
+		
+		/**
+		 * Tu as oublié de récupérer l'instance de la JFrame de ta calculatrice
+	     * et de même dans tes classes couper/copier/coller
+		 */
+		this.fenetre = fenetre;
 
 		//actionSouris();
 	}

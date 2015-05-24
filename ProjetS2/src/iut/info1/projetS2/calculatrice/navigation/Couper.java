@@ -5,6 +5,7 @@
 package iut.info1.projetS2.calculatrice.navigation;
 
 import iut.info1.projetS2.calculatrice.Calculatrice;
+import iut.info1.projetS2.tableur.Tableur;
 
 import java.awt.event.ActionEvent;
 
@@ -19,6 +20,8 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class Couper extends AbstractAction {
 
+	/** Fenetre de notre application */
+    private Calculatrice fenetre;
 
     /**
      * Récupération des informations essentielles comme l'instance de la 
@@ -29,12 +32,13 @@ public class Couper extends AbstractAction {
     public Couper(Calculatrice fenetre, String texte) {
         super(texte);
         
+        this.fenetre = fenetre;
     }
 
     /**
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
-    	//fenetre.executeur().cut();
+    	fenetre.getExecuteur().cut();
     }
 }

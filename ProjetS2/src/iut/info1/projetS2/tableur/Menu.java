@@ -30,8 +30,7 @@ public class Menu extends JMenuBar{
     private JPopupMenu popup;
 
     /** Fenetre principale de notre application */
-    private Tableur fenetre;
-    
+    private Tableur fenetre;   
     
     /** Menu fichier de notre application */
     private JMenu menuFichier;

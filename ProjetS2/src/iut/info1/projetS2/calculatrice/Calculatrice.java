@@ -39,7 +39,13 @@ public class Calculatrice extends JFrame {
     /** Barre de défilement pour l'écran */
     private JScrollPane scroll = new JScrollPane(ecran);
     
-    /** Champ de texte pour les exécutions de commandes */
+
+	public void setExecuteur(ExecuteurCommandes executeur) {
+		this.executeur = executeur;
+	}
+
+
+	/** Champ de texte pour les exécutions de commandes */
     private ExecuteurCommandes executeur = new ExecuteurCommandes();
 
 
@@ -101,5 +107,16 @@ public class Calculatrice extends JFrame {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/**
+	 * Ne pas oublier que private veut dire seulement récupérable depuis cette
+	 * classe donc on met un getters pour pouvoir récupérer l'instance de
+	 * l'éxécuteur dans une autre classe.
+	 * Exemple : fenetre.getExecuteur.cut()
+	 */
+    public ExecuteurCommandes getExecuteur() {
+		return executeur;
+	}
+
 
 }

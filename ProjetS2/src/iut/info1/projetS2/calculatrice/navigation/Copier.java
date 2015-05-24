@@ -19,6 +19,9 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class Copier extends AbstractAction {
 
+	/** Fenetre de notre application */
+    private Calculatrice fenetre;
+    
     /**
      * Récupération des informations essentielles comme l'instance de la 
      * JFrame et le nom de notre sous-menu.
@@ -28,13 +31,14 @@ public class Copier extends AbstractAction {
     public Copier(Calculatrice fenetre, String texte) {
         super(texte);
         
+        this.fenetre = fenetre;
     }
     
     /**
      * Permet d'affecter une tache lors du déclenchement de l'évennement
      */
     public void actionPerformed(ActionEvent e) {
-        //fenetre.executeur().copy();
+        fenetre.getExecuteur().copy();
     }
     
 }
