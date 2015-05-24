@@ -5,8 +5,6 @@
 package iut.info1.projetS2.calculatrice;
 
 import java.awt.Dimension;
-import java.awt.Font;
-
 import javax.swing.JTextField;
 
 /**

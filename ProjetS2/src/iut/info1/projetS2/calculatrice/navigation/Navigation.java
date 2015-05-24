@@ -9,11 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import iut.info1.projetS2.calculatrice.Calculatrice;
-import iut.info1.projetS2.tableur.Tableur;
-import iut.info1.projetS2.tableur.action.AProposAction;
-import iut.info1.projetS2.tableur.action.AideAction;
-
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -189,7 +184,7 @@ public class Navigation extends JMenuBar{
         menuFichier.add(item);   
         
         // Ajout du sous-menu quitter
-        item = new JMenuItem(new Accueil(fenetre, "Quitter"));
+        item = new JMenuItem(new QuitterAction(fenetre, "Quitter"));
         item.setIcon(new ImageIcon("quitter.gif"));
         menuFichier.add(item);
     }
