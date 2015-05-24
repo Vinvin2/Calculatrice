@@ -40,10 +40,10 @@ public class Ecran extends JTextArea {
         setFont(PoliceEcran);
 
         // Texte initial
-        setText("Entrez votre calcul, puis cliquez sur \"Calculer\".\n");
+        setText(" Entrez votre calcul, puis cliquez sur \"Calculer\".\n");
 
         // Couleur de fond
-        setBackground(new Color(253,245,230));
+        setBackground(new Color(255,250,250));
         
         // On empêche l'écran d'être éditable 
         setEditable(false);

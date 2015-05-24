@@ -1,11 +1,11 @@
 /*
- * QuitterAction.java               2 mai 2015
+ * Accueil.java               22 mai 2015
  * IUT INFO1 2014-2015 
  */
-package iut.info1.projetS2.tableur.action;
+package iut.info1.projetS2.calculatrice.navigation;
 
+import iut.info1.projetS2.calculatrice.Calculatrice;
 import iut.info1.projetS2.calculatrice.Menu;
-import iut.info1.projetS2.tableur.Tableur;
 
 import java.awt.event.ActionEvent;
 
@@ -13,24 +13,23 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 /** 
- * Permet de fermer le tableur et de revenir au menu lors de l'activation de 
- * cet évènement
- * @author Mickaël
+ * Permet de revenir au Menu de l'application
+ * @author 20-20
  * @version 0.1
  */
 @SuppressWarnings("serial")
-public class AccueilAction extends AbstractAction {
+public class Accueil extends AbstractAction {
     
     /** Fenetre de notre application */
-    private Tableur fenetre;
+    private Calculatrice fenetre;
 
     /**
      * Récupération des informations essentielles comme l'instance de la 
      * JFrame et le nom de notre sous-menu.
-     * @param fenetre de notre tableur
+     * @param fenetre de notre calculatrice
      * @param texte nom du menu
      */
-    public AccueilAction(Tableur fenetre, String texte) {
+    public Accueil(Calculatrice fenetre, String texte) {
         super(texte);
         
         this.fenetre = fenetre;
@@ -38,9 +37,9 @@ public class AccueilAction extends AbstractAction {
 
     /**
      * Affiche une fenetre contenant un message pour savoir si l'utilisateur
-     * veut vraiment quitter, si la fenetre du tableur sera fermée et la fenetre
+     * veut vraiment quitter, si la fenetre de la calculatrice sera fermée et la fenetre
      * du menu ouverte.
-     * Si non on revient au tableur sans rien faire.
+     * Si non on revient à la calculatrice sans rien faire.
      */
     public void actionPerformed(ActionEvent e) {
         
@@ -54,16 +53,15 @@ public class AccueilAction extends AbstractAction {
         
         // si on veut revenir au menu principal
         if (choix == JOptionPane.YES_NO_OPTION) {
-            
-            // On ouvre le menu
+           
+        	// On ouvre le menu
             new Menu();
             
-            // On ferme notre tableur
+            // On ferme notre calculatrice
             fenetre.dispose();
             
             
         }
-
         
     }
 }

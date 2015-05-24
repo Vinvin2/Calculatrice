@@ -5,6 +5,8 @@
 
 package iut.info1.projetS2.calculatrice;
 
+import iut.info1.projetS2.calculatrice.navigation.Quitter;
+
 import javax.swing.JFrame;
 
 /**
@@ -78,9 +80,8 @@ public class Menu extends JFrame {
 		containerNavigation.add(espace2);
         containerNavigation.add(boutonQuit2);
         
-		
 		// On affecte une action pour chaque bouton
-		boutonQuit2.addActionListener(new ActionQuitter());
+		boutonQuit2.addActionListener(new Quitter(this));
 		boutonCalculatrice.addActionListener(new ActionCalculatrice(this));
 		boutonTab.addActionListener(new ActionTableur(this));
 

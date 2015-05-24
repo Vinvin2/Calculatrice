@@ -26,7 +26,7 @@ public class Container extends JPanel {
         super();
 
         // On définit la couleur de fond du panel
-        setBackground(new Color(255,228,196));
+        setBackground(new Color(175,238,238));
 
         // dimensions du panel
         Dimension dimContainer = new Dimension(largeur, longueur);

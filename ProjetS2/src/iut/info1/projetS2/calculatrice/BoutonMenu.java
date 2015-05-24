@@ -29,7 +29,7 @@ public class BoutonMenu extends JButton {
         setPreferredSize(new Dimension(500, 150));
 
         // On définit la couleur des boutons
-        setBackground(new Color(255,160,122));
+        setBackground(new Color(126,192,238));
         
        // Déclaration d'une police et d'une taille
         Font f = new Font("Calibri", Font.PLAIN, 32);

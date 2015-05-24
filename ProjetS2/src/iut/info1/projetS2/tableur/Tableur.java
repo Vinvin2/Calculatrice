@@ -223,8 +223,8 @@ public class Tableur extends JFrame{
         // On utilise le layout par défaut
         container.setLayout(new FlowLayout());
         
-        // On met le fond en vert
-        container.setBackground(new Color(255,228,196));
+        // On définit la couleur du fond
+        container.setBackground(new Color(175,238,238));
         
         // On initialise notre JTextField
         buildJTextField();
@@ -288,7 +288,7 @@ public class Tableur extends JFrame{
         valider.setFont(f);
         
         // On définit la couleur des boutons
-        valider.setBackground(new Color(250,128,114));
+        valider.setBackground(new Color(126,192,238));
         
         // valider devient le bouton par défaut (c-à-d : activation avec entrée)
         this.getRootPane().setDefaultButton(valider);

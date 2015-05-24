@@ -4,6 +4,9 @@
  */
 package iut.info1.projetS2.calculatrice;
 
+import iut.info1.projetS2.calculatrice.navigation.Navigation;
+import iut.info1.projetS2.tableur.Menu;
+
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -27,15 +30,6 @@ public class Calculatrice extends JFrame {
     /** panel contenant les boutons de navigation */
     private Container containerExecution = new Container(700, 700);
 
-    /** Bouton accueil */
-    private Bouton boutonAcc = new Bouton("ACCUEIL");
-
-    /** Bouton aide */
-    private Bouton boutonAide = new Bouton("AIDE");
-
-    /** Bouton quitter */
-    private Bouton boutonQuit = new Bouton("QUITTER");
-
     /** Bouton calculer */
     private Bouton boutonCalc = new Bouton("CALCULER");
 
@@ -47,6 +41,7 @@ public class Calculatrice extends JFrame {
     
     /** Champ de texte pour les exécutions de commandes */
     private ExecuteurCommandes executeur = new ExecuteurCommandes();
+
 
     /**
      * Créé la fenêtre qui contiendra la mini-calculatrice
@@ -75,11 +70,6 @@ public class Calculatrice extends JFrame {
 
         // Ajout des boutons à notre content pane
         this.setContentPane(containerPrincipal);
-        
-        // Ces boutons sont placés sur la partie gauche de la fenêtre
-        containerNavigation.add(boutonAcc);
-        containerNavigation.add(boutonAide);
-        containerNavigation.add(boutonQuit);
 
         // Les autres champs seront à droite
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -98,12 +88,18 @@ public class Calculatrice extends JFrame {
         this.setVisible(true);
 
         // on ajoute les actions qu'auront les différents boutons
-        boutonAcc.addActionListener(new ActionAccueil(this));
-        boutonAide.addActionListener(new ActionAide());
         boutonCalc.addActionListener(new ActionCalculer(this.executeur, this.ecran));
-        boutonQuit.addActionListener(new ActionQuitter());
         getRootPane().setDefaultButton(boutonCalc);
+        
+        // Affichage de la barre de menu
+        setJMenuBar(new Navigation(this));
 
     }
+
+
+	public Object executeur() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -28,7 +28,7 @@ public class Bouton extends JButton {
         setPreferredSize(new Dimension(100, 60));
 
         // On définit la couleur des boutons
-        setBackground(new Color(255,160,122));
+        setBackground(new Color(126,192,238));
         
      
    

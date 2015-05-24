@@ -1,10 +1,10 @@
 /*
- * AProposAction.java				2 mai 2015
+ * APropos.java				24 mai 2015
  * IUT INFO1 2014-2015 
  */
-package iut.info1.projetS2.tableur.action;
+package iut.info1.projetS2.calculatrice.navigation;
 
-import iut.info1.projetS2.tableur.Tableur;
+import iut.info1.projetS2.calculatrice.Calculatrice;
 
 import java.awt.event.ActionEvent;
 
@@ -12,15 +12,15 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 /** 
- * Permet d'afficher des informations lors de l'activation de l'évènement
- * @author Mickaël
+ * Affiche des informations à propos du projet
+ * @author 20-20
  * @version 0.1
  */
 @SuppressWarnings("serial")
-public class AProposAction extends AbstractAction {
+public class APropos extends AbstractAction {
   
-    /** fenetre de notre tableur */
-    private Tableur fenetre;
+    /** fenetre de notre calculatrice */
+    private Calculatrice fenetre;
     
     /**
      * Récupération des informations essentielles comme l'instance de la 
@@ -28,7 +28,7 @@ public class AProposAction extends AbstractAction {
      * @param fenetre fenetre dans laquelle on affiche le message
      * @param texte nom du sous-menu
      */
-    public AProposAction(Tableur fenetre, String texte) {
+    public APropos(Calculatrice fenetre, String texte) {
         super(texte);
         
         this.fenetre = fenetre;
@@ -42,6 +42,6 @@ public class AProposAction extends AbstractAction {
         
         // Ouverture d'une fenetre avec un message
         JOptionPane.showMessageDialog(fenetre, "Ce programme a été développé "
-                                     + "par PERIES Mickaël et MIQUEL Jonathan");
+                                     + "par SANCHEZ Sebastien et GRANIER Vincent");
     }
 }
