@@ -5,8 +5,6 @@
 package iut.info1.projetS2.calculatrice;
 
 import iut.info1.projetS2.calculatrice.navigation.Navigation;
-import iut.info1.projetS2.tableur.Menu;
-
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -38,12 +36,6 @@ public class Calculatrice extends JFrame {
     
     /** Barre de défilement pour l'écran */
     private JScrollPane scroll = new JScrollPane(ecran);
-    
-
-	public void setExecuteur(ExecuteurCommandes executeur) {
-		this.executeur = executeur;
-	}
-
 
 	/** Champ de texte pour les exécutions de commandes */
     private ExecuteurCommandes executeur = new ExecuteurCommandes();
@@ -101,12 +93,6 @@ public class Calculatrice extends JFrame {
         setJMenuBar(new Navigation(this));
 
     }
-
-
-	public Object executeur() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	/**
 	 * Ne pas oublier que private veut dire seulement récupérable depuis cette
@@ -117,6 +103,4 @@ public class Calculatrice extends JFrame {
     public ExecuteurCommandes getExecuteur() {
 		return executeur;
 	}
-
-
 }
