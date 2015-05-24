@@ -52,18 +52,18 @@ public class Navigation extends JMenuBar{
     /**
     * Constructeur de notre classe
     */
-	public Navigation(Calculatrice calculatrice) {
+	public Navigation(Calculatrice fenetre) {
 		super();
 
-		buildMenu();
-		
 		/**
 		 * Tu as oublié de récupérer l'instance de la JFrame de ta calculatrice
 	     * et de même dans tes classes couper/copier/coller
 		 */
 		this.fenetre = fenetre;
+		
+		buildMenu();
 
-		//actionSouris();
+		actionSouris();
 	}
 	
 	 /** 
@@ -135,9 +135,9 @@ public class Navigation extends JMenuBar{
         menuAutre = new JMenu("?");
         
 //        // Ajout du sous-menu aide
-//        item = new JMenuItem(new ActionAide(fenetre,"Aide"));
-//        item.setIcon(new ImageIcon("aide.png"));
-//        menuAutre.add(item);
+        item = new JMenuItem(new ActionAide(fenetre,"Aide"));
+        item.setIcon(new ImageIcon("aide.png"));
+        menuAutre.add(item);
         
         // Ajout du sous-menu à propos
         item = new JMenuItem(new APropos(fenetre,"A propos"));
@@ -194,27 +194,27 @@ public class Navigation extends JMenuBar{
         menuFichier.add(item);
     }
     
-//    /**
-//     * Permet de récupérer les actions de notre périphérique souris
-//     */
-//    public void actionSouris() {
-//    	fenetre.get().addMouseListener(new MouseAdapter() {
-//
-//    		/**
-//    		 * Gère les actions de la souris
-//    		 */
-//    		public void mouseClicked(MouseEvent e) {
-//
-//    			// si on appui sur le clic droit
-//    			if (SwingUtilities.isRightMouseButton(e)) {
-//
-//    				// On affiche le pop-up là où est notre pointeur
-//    					//popup.show(fenetre.getContainer(), e.getX(), e.getY());
-//    			}
-//
-//    		}
-//    	});
-//    }
+    /**
+     * Permet de récupérer les actions de notre périphérique souris
+     */
+    public void actionSouris() {
+    	fenetre.getExecuteur().addMouseListener(new MouseAdapter() {
+
+    		/**
+    		 * Gère les actions de la souris
+    		 */
+    		public void mouseClicked(MouseEvent e) {
+
+    			// si on appui sur le clic droit
+    			if (SwingUtilities.isRightMouseButton(e)) {
+
+    				// On affiche le pop-up là où est notre pointeur
+    					popup.show(fenetre.getExecuteur(), e.getX(), e.getY());
+    			}
+
+    		}
+    	});
+    }
 
     /**
      * @return the menuFichier

@@ -5,6 +5,7 @@
 package iut.info1.projetS2.calculatrice;
 
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JTextField;
 
@@ -27,5 +28,8 @@ public class ExecuteurCommandes extends JTextField {
 
         // taille
         setPreferredSize(dimensionExecuteur);
+        
+        // On peut écrire à l'intérieur
+        setEditable(true);
     }
 }
