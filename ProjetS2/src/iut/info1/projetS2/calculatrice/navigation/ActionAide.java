@@ -4,10 +4,7 @@
  */
 package iut.info1.projetS2.calculatrice.navigation;
 
-import iut.info1.projetS2.calculatrice.Aide;
 import iut.info1.projetS2.calculatrice.Calculatrice;
-import iut.info1.projetS2.tableur.Tableur;
-
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
