@@ -1,5 +1,5 @@
 /*
- * Accueil.java               22 mai 2015
+ * Accueil.java               24 mai 2015
  * IUT INFO1 2014-2015 
  */
 package iut.info1.projetS2.calculatrice.navigation;
@@ -13,7 +13,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 /** 
- * Permet de revenir au Menu de l'application
+ * Permet de fermer la calculatrice et de revenir au menu
  * @author 20-20
  * @version 0.1
  */
@@ -26,7 +26,7 @@ public class Accueil extends AbstractAction {
     /**
      * Récupération des informations essentielles comme l'instance de la 
      * JFrame et le nom de notre sous-menu.
-     * @param fenetre de notre calculatrice
+     * @param fenetre de notre tableur
      * @param texte nom du menu
      */
     public Accueil(Calculatrice fenetre, String texte) {
@@ -37,7 +37,7 @@ public class Accueil extends AbstractAction {
 
     /**
      * Affiche une fenetre contenant un message pour savoir si l'utilisateur
-     * veut vraiment quitter, si la fenetre de la calculatrice sera fermée et la fenetre
+     * veut vraiment quitter, si la fenetre du tableur sera fermée et la fenetre
      * du menu ouverte.
      * Si non on revient à la calculatrice sans rien faire.
      */
@@ -53,15 +53,15 @@ public class Accueil extends AbstractAction {
         
         // si on veut revenir au menu principal
         if (choix == JOptionPane.YES_NO_OPTION) {
-           
-        	// On ouvre le menu
+            
+            // On ouvre le menu
             new Menu();
             
-            // On ferme notre calculatrice
+            // On ferme notre tableur
             fenetre.dispose();
             
-            
         }
+
         
     }
 }

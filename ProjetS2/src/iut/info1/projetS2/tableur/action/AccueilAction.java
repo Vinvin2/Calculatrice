@@ -61,7 +61,7 @@ public class AccueilAction extends AbstractAction {
             // On ferme notre tableur
             fenetre.dispose();
             
-            
+         
         }
 
         

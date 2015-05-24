@@ -185,7 +185,7 @@ public class Navigation extends JMenuBar{
         
         // Ajout du sous-menu quitter
         item = new JMenuItem(new QuitterAction(fenetre, "Quitter"));
-        item.setIcon(new ImageIcon("quitter.gif"));
+        item.setIcon(new ImageIcon("quitter.png"));
         menuFichier.add(item);
     }
     
