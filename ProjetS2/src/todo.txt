@@ -1,0 +1,8 @@
+- implementer les cases dans les calcs
+méthode qui remplace toutes les occs de REG_MODIF
+"(((\\0044)?)([0]*((1?\\d)||(20)))((\\0044)?)([A-Z])||((\\0044)?)([A-Z])((\\0044)?)([0]*((1?\\d)||(20))))"
+
+- coder copier
+
+
+- implementer les parenthèses dans les calcs

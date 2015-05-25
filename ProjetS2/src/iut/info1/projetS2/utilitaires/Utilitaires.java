@@ -15,7 +15,17 @@ import java.util.regex.Pattern;
  * @author Sébi & jo
  * @version 1.0
  */
-public class Utilitaires {
+public class Utilitaires {    
+    /** regex identifiant les opérateurs d'un calcul */
+    public final static String REG_OPERATEUR = "\\s*[/+*-]\\s*";
+
+    /** regex permettant d'identifier les opérandes d'un calcul */
+    public final static String REG_OPERANDE = "\\s*\\d+(\\0056\\d+)?\\s*";
+
+    /** regex vérifiant le format d'un calcul */
+    private final static String REG_CALCUL = 
+            "-?" + REG_OPERANDE + "(" + REG_OPERATEUR + REG_OPERANDE + ")*";
+
     /**
      * Le calcul intermidiaire permet d'effectuer un nombre inconnu à l'avance
      * d'opérations,les parenthèses ne sont pas prises en compte
@@ -30,8 +40,7 @@ public class Utilitaires {
          *  teste si calcul bon format via regex et retourne un NaN si err
          *  la première opérande peut être négative
          */
-        Pattern testCalc = Pattern.compile("-?\\s*\\d+(\\0056\\d+)?\\s*"
-                + "(\\s*[/*+-]\\s*\\d+(\\0056\\d+)?\\s*)*");
+        Pattern testCalc = Pattern.compile(REG_CALCUL);
         Matcher estCalc = testCalc.matcher(aCalculer);
         if (!estCalc.matches()) {
             return Double.NaN; // le calcul n'est pas réalisable
@@ -41,7 +50,7 @@ public class Utilitaires {
         char signeSuiv = '\0';    // opérateur suivant à prendre en compte
         double resultTmp;         // resutalt d'un sous calcul de * et /
         boolean debutNeg = false; // true si le cacul commance par un '-'
-        String aCalculerVerif = aCalculer;
+        String aCalculerVerif = aCalculer; // chaine utilisée pour le calcul
 
         /*
          *  contiendra toutes les opérandes stockées dans l'ordre entré par
@@ -67,7 +76,7 @@ public class Utilitaires {
 
         Scanner testeurOperande = new Scanner(aCalculerVerif);
         // pattern d'analyse d'opérandes supposées OK
-        Pattern operandeV1 = Pattern.compile("\\s*[/+*-]\\s*");
+        Pattern operandeV1 = Pattern.compile(REG_OPERATEUR);
         // testeurOperande est prêt à analyser la calcul grâce à ce pattern
         testeurOperande.useDelimiter(operandeV1);
 
@@ -77,7 +86,7 @@ public class Utilitaires {
          */
         Scanner testeurOperateur = new Scanner(aCalculerVerif);
         // pattern d'analyse d'opérateurs supposés OK
-        Pattern operateurV1 = Pattern.compile("\\s*\\d+(\\0056\\d+){0,1}\\s*");
+        Pattern operateurV1 = Pattern.compile(REG_OPERANDE );
         // testeurOperateur est prêt à analyser le calcul grâce à ce pattern
         testeurOperateur.useDelimiter(operateurV1);
 

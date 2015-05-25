@@ -5,6 +5,7 @@
 
 package iut.info1.projetS2.tableur.action;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,28 +32,29 @@ public class Commandes {
     private static final String REG_LETTRE = "([A-Z])";
 
     /** pattern d'une lettre de cellule */
-    private static final String REG_LETTRE2 = "((\\0044)?)([A-Z])";
+    private static final String REG_LETTRE2 = "(((\\0044)?)([A-Z]))";
+    // note: \\0044 est l'octal value de '$'
 
     /** pattern d'un nombre de cellule */
-    private static final String REG_NBRE = "[0]*((1?\\d)||(20))";
+    private static final String REG_NBRE = "([0]*((1?\\d)||(20)))";
 
     /** pattern d'un nombre de cellule */
     private static final String REG_NBRE2 = "((\\0044)?)([0]*((1?\\d)||(20)))";
 
     /** Pattern d'une case type nombreLettre */
-    private static final String REG_CASE1 = REG_NBRE + REG_LETTRE;
+    private static final String REG_CASE1 = "("+REG_NBRE+REG_LETTRE+")";
 
     /** Pattern d'une case type lettreNombre */
-    private static final String REG_CASE2 = REG_LETTRE + REG_NBRE;
+    private static final String REG_CASE2 = "("+REG_LETTRE+REG_NBRE+")";
 
     /** Pattern des cases  */
-    private static final String REG_CASE = "("+REG_CASE1+"||"+REG_CASE2 + ")";
+    private static final String REG_CASE = "("+REG_CASE1+"||"+REG_CASE2+")";
 
     /** Pattern d'une case qui réutilisé dans les commandes/calculs */
-    private static final String REG_MODIF1 = REG_NBRE2 + REG_LETTRE2;
+    private static final String REG_MODIF1 = "("+REG_NBRE2+REG_LETTRE2+")";
 
     /** Pattern d'une case qui réutilisé dans les commandes/calculs */
-    private static final String REG_MODIF2 = REG_LETTRE2 + REG_NBRE2;
+    private static final String REG_MODIF2 = "("+REG_LETTRE2+REG_NBRE2+")";
 
     /** Pattern d'une case qui réutilisé dans les commandes/calculs */
     private static final String REG_MODIF
@@ -60,6 +62,7 @@ public class Commandes {
 
     /** pattern d'une plage */
     private static final String REG_PLAGE = REG_CASE + "\\0056{2}" + REG_CASE;
+    // note: \\0056 est l'octal value de '.'
 
     /** REGEX de type 'simple affichage' type: nombreLettre aAfficher */
     private static final String REG_affich1 = REG_CASE1 + "\\s+((.)*)";
@@ -154,23 +157,19 @@ public class Commandes {
             //            }
             /*
              * cas chiffre / lettre
-             * premier $ (chiffre) -> group(2)
-             * chiffre -> group(4)
-             * second $ (lettre) -> grou(8)
-             * lettre -> group(10)
+             * chiffre -> group(5)
+             * lettre -> group(9)
              * 
              * cas lettre / chiffre
-             * premier $ (lettre) -> group(11)
-             * lettre -> group(13)
-             * second $ (chiffre) -> group(14)
-             * chiffre -> group(16)
+             * lettre -> group(14)
+             * chiffre -> group(20)
              */
             if (siCase.group(2) == null) { // cas lettre/chiffre
-                coord[0] = Integer.parseInt(siCase.group(16)) - 1;
-                coord[1] = siCase.group(13).charAt(0) - 65;
+                coord[0] = Integer.parseInt(siCase.group(20)) - 1;
+                coord[1] = siCase.group(17).charAt(0) - 65;
             } else { // cas chiffre/lettre
-                coord[0] = Integer.parseInt(siCase.group(2)) - 1;
-                coord[1] = siCase.group(10).charAt(0) - 65;
+                coord[0] = Integer.parseInt(siCase.group(5)) - 1;
+                coord[1] = siCase.group(12).charAt(0) - 65;
             }
             return coord;
         } // else
@@ -180,6 +179,7 @@ public class Commandes {
 
     /**
      * copie la valeur d'une case/plage vers une case/plage
+     * la copie prends en compte les commandes entrées
      * @param aCopier coordonnées de la valeur à copier
      * @param ouCopier coordonnées de l'emplacement ou copier
      */
@@ -199,6 +199,8 @@ public class Commandes {
                     this.fenetre.getModele().getValueAt(
                             coordInitInit[0], coordInitInit[1]),
                             coordFinalInit[0], coordFinalInit[1]);
+            this.entrees[coordInitInit[0]][coordInitInit[1]]
+                    = this.entrees[coordFinalInit[0]][coordFinalInit[1]];
             this.fenetre.getLabel().setText("Copie effectuée");
             this.fenetre.getConsole().setText("");
         } else if (aCopier.matches(REG_CASE) && ouCopier.matches(REG_PLAGE)) {
@@ -214,6 +216,8 @@ public class Commandes {
                     this.fenetre.getModele().setValueAt(
                             this.fenetre.getModele().getValueAt(
                                     coordInitInit[0], coordInitInit[1]), i, j);
+                    this.entrees[i][j] = 
+                            this.entrees[coordInitInit[0]][coordInitInit[1]];
                 }
             }
             this.fenetre.getLabel().setText("Copie effectuée");
@@ -224,13 +228,17 @@ public class Commandes {
             int yPattern; //nombre de lignes du pattern à copier
             boolean copieOk; // true si la copie est possible false sinon
             // donnees analyse la plage ouCopier
-            donnees = new Scanner(aCopier).useDelimiter("\\0056{2}");
+            donnees = new Scanner(aCopier);
+            donnees.useDelimiter("\\0056{2}");
             coordInitInit = recupCase(donnees.next());
             coordInitFinal = recupCase(donnees.next());
+            donnees.close();
             // donnees analyse la plage ouCopier
-            donnees = new Scanner(ouCopier).useDelimiter("\\0056{2}");
+            donnees = new Scanner(ouCopier);
+            donnees.useDelimiter("\\0056{2}");
             coordFinalInit = recupCase(donnees.next());
             coordFinalFinal = recupCase(donnees.next());
+            donnees.close();
             /*
              * testsi la copie est possible
              * pour une copie valide il faut :
@@ -249,10 +257,13 @@ public class Commandes {
                                 /(coordInitFinal[0]-coordInitInit[0]+1))==0
                                 && ((coordFinalFinal[1]-coordFinalInit[1]+1)
                                         /(coordInitFinal[1]-coordInitInit[1]+1))
-                                        %((coordFinalFinal[1]-coordFinalInit[1]+1)
+                                        %((coordFinalFinal[1]
+                                                -coordFinalInit[1]+1)
                                                 /(coordInitFinal[1]
-                                                        -coordInitInit[1]+1))==0;
+                                                        -coordInitInit[1]
+                                                                +1))==0;
             } catch (ArithmeticException e) {
+                // division par 0 => intervalle mauvais
                 copieOk = false;
             }
 
@@ -266,7 +277,11 @@ public class Commandes {
                                 this.fenetre.getModele().getValueAt(
                                         coordInitInit[0] + i % xPattern, 
                                         coordInitInit[1] + j % yPattern),
-                                        i, j); 
+                                        i, j);
+                        // copie également les commandes enregistrées
+                        this.entrees[i][j] =
+                                this.entrees[coordInitInit[0] + i % xPattern]
+                                        [coordInitInit[1] + j % yPattern];
                     }
                 }
                 this.fenetre.getLabel().setText("Copie effectuée");
@@ -284,7 +299,8 @@ public class Commandes {
 
 
     /**
-     * Efface la cellule ou la plage spécifiée
+     * Efface la cellule ou la plage spécifiée ainsi que la commande
+     * enregistrée correspondante
      * @param aEffacer cellule ou plage du tableur
      */
     private void raz(String aEffacer) {
@@ -309,7 +325,7 @@ public class Commandes {
                 for (i = coordInit[0]; i <= coordFinal[0]; i++) {
                     for (j = coordInit[1]; j <= coordFinal[1]; j++) {
                         this.fenetre.getModele().setValueAt("", i, j);
-                        this.entrees[i][j] = null;
+                        this.entrees[i][j] = "";
                     }
                     this.fenetre.getLabel().setText("Case effacées");
                 }
@@ -325,7 +341,7 @@ public class Commandes {
             if (coordInit != null) {
                 this.fenetre.getModele().setValueAt(
                         "", coordInit[0], coordInit[1]);
-                this.entrees[coordInit[0]][coordInit[1]] = null;
+                this.entrees[coordInit[0]][coordInit[1]] = "";
                 this.fenetre.getLabel().setText("Case effacée"); 
                 this.fenetre.getConsole().setText("");           
             } else { // erreur de syntaxe
@@ -369,33 +385,36 @@ public class Commandes {
             //            for (int i = 0; i < lul.groupCount(); i++) {
             //                System.out.println(i + " lul " + lul.group(i));
             //            }
-            /* 
+            /*
              * on enleve pour simplifier l'utilisation du tableur (1~20)
-             * au lieu de (0~20)
+             * au lieu de (0~19)
              */             
-            lig = Integer.parseInt(lul.group(2)) - 1;
+            lig = Integer.parseInt(lul.group(3)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
-            col = lul.group(1).charAt(0) - 65;
+            col = lul.group(2).charAt(0) - 65;
+            aAfficherTraite = remplaceCases(lul.group(7));
             aAfficherTraite = String.valueOf(
-                    Utilitaires.calculIntermediaire(lul.group(5)));
+                    Utilitaires.calculIntermediaire(aAfficherTraite));
+            this.entrees[lig][col] = "=" + lul.group(7);
             if (!aAfficherTraite.equals("NaN")) {
                 this.fenetre.getLabel().setText("Calcul effectué");
             } else {
                 this.fenetre.getLabel().setText("Calcul non effectué");  
             }
         } else if (lil.matches()) { // lettre/nombre
-            for (int i = 0; i < lil.groupCount(); i++) {
-                System.out.println(i + " lil " + lil.group(i));
-            }
+            //            for (int i = 0; i < lil.groupCount(); i++) {
+            //                System.out.println(i + " lil " + lil.group(i));
+            //            }
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
-             * au lieu de (0~20)
+             * au lieu de (0~19)
              */
-            lig = Integer.parseInt(lil.group(1)) - 1;
+            lig = Integer.parseInt(lil.group(2)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
-            col = lil.group(4).charAt(0) - 65;
+            col = lil.group(6).charAt(0) - 65;
             aAfficherTraite = String.valueOf(
-                    Utilitaires.calculIntermediaire(lil.group(5)));
+                    Utilitaires.calculIntermediaire(lil.group(7)));
+            this.entrees[lig][col] = "=" + lil.group(7);
             if (!aAfficherTraite.equals("NaN")) {
                 this.fenetre.getLabel().setText("Calcul effectué");
             } else {
@@ -407,26 +426,28 @@ public class Commandes {
             //            }
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
-             * au lieu de (0~20)
+             * au lieu de (0~19)
              */
-            lig = Integer.parseInt(lel.group(2)) - 1;
+            lig = Integer.parseInt(lel.group(3)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
-            col = lel.group(1).charAt(0) - 65;  
-            aAfficherTraite = lel.group(5);
+            col = lel.group(2).charAt(0) - 65;  
+            aAfficherTraite = lel.group(7);
+            this.entrees[lig][col] = lel.group(7);
         } else if (lol.matches()) {
             //            for (int i = 0; i < lol.groupCount(); i++) {
             //                System.out.println(i + " lol " + lol.group(i));
             //            }
             /* 
              * on enleve pour simplifier l'utilisation du tableur (1~20)
-             * au lieu de (0~20)
-             */             
-            lig = Integer.parseInt(lol.group(1)) - 1;
+             * au lieu de (0~19)
+             */
+            lig = Integer.parseInt(lol.group(2)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
-            col = lol.group(4).charAt(0) - 65; 
-            aAfficherTraite = lol.group(5);
+            col = lol.group(6).charAt(0) - 65;
+            aAfficherTraite = lol.group(7);
+            this.entrees[lig][col] = lol.group(7);
         }
-        // else lig = -1 et col = -1
+        // else => lig = -1 et col = -1 => prochaine condition false
 
         if (lig > -1 & col > -1) { // La syntaxe est ok et tout est récupéré
             this.fenetre.getModele().setValueAt(aAfficherTraite, lig, col);
@@ -440,6 +461,83 @@ public class Commandes {
         }
     }
 
+
+    /**
+     * Remplace chaque occurences de coordonnées de cases par leur valeur
+     * correspondante
+     * @param aRemplacer chaine qu'il faut modifier
+     * @return une chaine de caractères utilisable pour les calculs
+     */
+    private String remplaceCases(String aRemplacer) {
+        String chaineModifiee;      // chaine après modification
+        String operandeTmp;         // dernière opérande récupérée à analyser
+        int[] coordonnees; // coordonnées d'une opérande identifiée comme case
+        String aRemplacerVerif;
+        if (aRemplacer.charAt(0) == '-') {
+            aRemplacerVerif = aRemplacer.substring(1);
+            chaineModifiee = "-";
+        } else {
+            aRemplacerVerif = aRemplacer;
+            chaineModifiee = "";
+        }
+
+        /*
+         *  préparation d'un Scanner récupérant les opérandes
+         *  note: si une opérande n'est pas valide elle ne sera pas gérée ici
+         *  elle sera tout simplement ignorée, la vérification s'effectuera
+         *  au moment du calcul
+         */
+        Scanner recupOperande = new Scanner(aRemplacerVerif);
+        recupOperande.useDelimiter(Utilitaires.REG_OPERATEUR);
+        /*
+         * préparation d'un Scanner récupérant les opérateur
+         * note: si une opérande est manquante aucune erreur ne sera renvoyée
+         * l'erreur sera détectée au moment du calcul
+         */
+        Scanner recupOperateur = new Scanner(aRemplacerVerif);
+        recupOperateur.useDelimiter("[^+/*-]+");
+
+        try {
+            // inititialisation de chaineModifiee
+            operandeTmp = recupOperande.next();
+            if (operandeTmp.matches(REG_MODIF)) { // si case détectée
+                coordonnees = recupCase(operandeTmp);
+                operandeTmp = String.valueOf(this.fenetre.getModele()
+                        .getValueAt(coordonnees[0], coordonnees[1]));
+                if (Double.parseDouble(operandeTmp) < 0) {
+                    operandeTmp = String.valueOf(
+                            Double.parseDouble(operandeTmp) * (-1.0));
+                    chaineModifiee = ""; // reset du '-'
+                }
+            }
+            chaineModifiee = chaineModifiee.concat(operandeTmp);
+        } catch (NoSuchElementException e) { // chaine vide
+        } catch (NullPointerException e) {   // chaine vide
+        } catch (NumberFormatException e) {  // contient pas un double
+        }
+        while (recupOperande.hasNext()) {
+            // ajout du prochain opérateur
+            try {
+                operandeTmp = recupOperateur.next();
+                chaineModifiee = chaineModifiee.concat(operandeTmp);
+            } catch (NoSuchElementException e) { // rien n'est géré ici
+            }
+            // ajout de la prochaine opérande
+            try {
+                operandeTmp = recupOperande.next();
+                if (operandeTmp.matches(REG_MODIF)) { // si case détectée
+                    coordonnees = recupCase(operandeTmp);
+                    operandeTmp = String.valueOf(this.fenetre.getModele()
+                            .getValueAt(coordonnees[0], coordonnees[1]));
+                }
+                chaineModifiee = chaineModifiee.concat(operandeTmp);
+            } catch (NoSuchElementException e) { // rien n'est géré ici
+            }
+        }
+        recupOperande.close();
+        recupOperateur.close();
+        return chaineModifiee;
+    }
 
     /**
      * Permet un simple affichage de ce que l'utilisateur a entré dans la
@@ -480,9 +578,13 @@ public class Commandes {
         this();
         this.fenetre = fenetre;
         this.fenetre.getLabel().setText(" ");
+        // initialisation de entrees
+        for (int i = 0; i < entrees.length; i++) {
+            for (int j = 0; j < entrees[i].length; j++) {
+                entrees[i][j] = "";
+            }
+        }
     }
-
-    //  private
 
     /**
      * @return the entrees
@@ -490,6 +592,7 @@ public class Commandes {
     public String[][] getEntrees() {
         return entrees;
     }
+
 
 
     /**
