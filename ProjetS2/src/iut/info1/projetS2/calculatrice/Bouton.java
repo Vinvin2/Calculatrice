@@ -5,7 +5,9 @@
 package iut.info1.projetS2.calculatrice;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
@@ -29,9 +31,10 @@ public class Bouton extends JButton {
 
         // On définit la couleur des boutons
         setBackground(new Color(126,192,238));
+         
+        // Le curseur devient une main quandon survole un bouton
+        setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));
         
-     
-   
     }
 
 }

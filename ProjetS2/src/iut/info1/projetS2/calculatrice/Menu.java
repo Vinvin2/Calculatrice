@@ -5,6 +5,9 @@
 
 package iut.info1.projetS2.calculatrice;
 
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+
 import iut.info1.projetS2.calculatrice.navigation.Quitter;
 
 import javax.swing.JFrame;
@@ -90,6 +93,7 @@ public class Menu extends JFrame {
 		
 		containerPrincipal.add(vide);
 		containerPrincipal.add(containerNavigation);
-		
+	
 	}
+
 }

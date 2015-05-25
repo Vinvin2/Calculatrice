@@ -7,6 +7,10 @@ package iut.info1.projetS2.calculatrice;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -31,6 +35,11 @@ public class Container extends JPanel {
         // dimensions du panel
         Dimension dimContainer = new Dimension(largeur, longueur);
         setPreferredSize(dimContainer);
+        
+        Image icone = Toolkit.getDefaultToolkit().getImage("calculette.jpg");
+        //setIcon(new ImageIcon(icone));
+      
+       
     }
 
 }

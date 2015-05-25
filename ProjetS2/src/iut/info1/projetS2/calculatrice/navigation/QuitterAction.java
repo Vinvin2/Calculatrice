@@ -47,8 +47,7 @@ public class QuitterAction extends AbstractAction {
         // fermer l'application, tout en l'avertissant que les 
         // travaux non sauvegardés seront perdus
         int choix = JOptionPane.showConfirmDialog(fenetre, "Voulez vous"
-                    + " vraiment quitter l'application ?\n Attention, "
-                    + " les données non sauvegardées seront perdues.", "Quitter",
+                    + " vraiment quitter l'application ?", "Quitter",
                     JOptionPane.YES_NO_OPTION); 
         
         // si on veut revenir au menu principal

@@ -9,9 +9,11 @@ import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -289,6 +291,9 @@ public class Tableur extends JFrame{
         
         // On définit la couleur des boutons
         valider.setBackground(new Color(126,192,238));
+        
+        // Le curseur devient une main quandon survole un bouton
+        valider.setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));
         
         // valider devient le bouton par défaut (c-à-d : activation avec entrée)
         this.getRootPane().setDefaultButton(valider);

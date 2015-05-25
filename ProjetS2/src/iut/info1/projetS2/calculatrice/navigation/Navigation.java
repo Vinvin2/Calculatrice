@@ -50,10 +50,6 @@ public class Navigation extends JMenuBar{
 	public Navigation(Calculatrice fenetre) {
 		super();
 
-		/**
-		 * Tu as oublié de récupérer l'instance de la JFrame de ta calculatrice
-	     * et de même dans tes classes couper/copier/coller
-		 */
 		this.fenetre = fenetre;
 		
 		buildMenu();

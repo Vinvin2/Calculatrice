@@ -20,11 +20,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>net.sourceforge.metrics.nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>quitter.png</name>
-			<type>1</type>
-			<location>C:/Users/Vincent/Downloads/quitter.png</location>
-		</link>
-	</linkedResources>
 </projectDescription>

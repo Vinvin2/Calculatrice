@@ -47,8 +47,7 @@ public class Accueil extends AbstractAction {
         // non revenir au menu principal, tout en l'avertissant que les 
         // travaux non sauvegardés seront perdus
         int choix = JOptionPane.showConfirmDialog(fenetre, "Voulez vous"
-                    + " vraiment revenir au menu principal ?\n Attention, "
-                    + " les données non sauvegardées seront perdues.", "Accueil",
+                    + " vraiment revenir au menu principal ?", "Accueil",
                     JOptionPane.YES_NO_OPTION); 
         
         // si on veut revenir au menu principal

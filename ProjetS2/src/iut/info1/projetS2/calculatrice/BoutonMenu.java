@@ -5,10 +5,13 @@
 package iut.info1.projetS2.calculatrice;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 /**
  * Classe qui permet de construire un bouton personnalisé
@@ -37,7 +40,9 @@ public class BoutonMenu extends JButton {
         // Ajout de la police à notre console
         setFont(f);
         
-
+        // Le curseur devient une main quandon survole un bouton
+        setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));    
+        
     }
-
+    
 }
