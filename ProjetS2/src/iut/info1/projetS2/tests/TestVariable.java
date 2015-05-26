@@ -43,6 +43,7 @@ public class TestVariable {
         
         varOk[0].setNom('G');
         System.out.println(varOk[0].toString());
+        // tamere
         
         
     }
