@@ -35,7 +35,7 @@ public class Menu extends JFrame {
 	private Container vide = new Container(900,80);
 	
 	/** panel contenant un espace */
-	private Container espace1 = new Container(900,10);
+	private Container espace = new Container(900,10);
 	
 	/** panel contenant un second espace */
 	private Container espace2 = new Container(900,10);
@@ -43,8 +43,12 @@ public class Menu extends JFrame {
 	/** panel contenant un troisième espace */
 	private Container espace3 = new Container(900,10);
 	
+	/** panel contenant un quatrième espace */
+	private Container espace4 = new Container(900,10);
+	
 	/** Bouton Calculatrice */
-	private BoutonMenu boutonCalculatrice = new BoutonMenu(this, "MINI CALCULATRICE");
+	private BoutonMenu boutonCalculatrice = 
+			new BoutonMenu(this, "MINI CALCULATRICE");
 
 	/** Bouton Tableur */
 	private BoutonMenu boutonTab = new BoutonMenu(this, "MINI TABLEUR");
@@ -81,14 +85,15 @@ public class Menu extends JFrame {
 		
 		// On ajoute une image au dessus des boutons du menu
 		JLabel image = new JLabel( new ImageIcon("logo.png"));
+		containerPrincipal.add(espace);
 		containerPrincipal.add(image);
-		containerPrincipal.add(espace1);
+		containerPrincipal.add(espace2);
 		
 		// On place les boutons au centre de l'écran sur une ligne verticale
 		containerPrincipal.add(boutonCalculatrice);
-		containerPrincipal.add(espace2);
-		containerPrincipal.add(boutonTab);
 		containerPrincipal.add(espace3);
+		containerPrincipal.add(boutonTab);
+		containerPrincipal.add(espace4);
 		containerPrincipal.add(boutonQuit2);
         
 		// On affecte une action pour chaque bouton

@@ -89,7 +89,8 @@ public class Calculatrice extends JFrame {
         this.setVisible(true);
 
         // on ajoute les actions qu'auront les différents boutons
-        boutonCalc.addActionListener(new ActionCalculer(this.executeur, this.ecran));
+        boutonCalc.addActionListener(new ActionCalculer(this.executeur, 
+        												this.ecran));
         getRootPane().setDefaultButton(boutonCalc);
         
         // Affichage de la barre de menu

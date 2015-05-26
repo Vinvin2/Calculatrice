@@ -24,7 +24,8 @@ public class BoutonMenu extends JButton {
     private Menu fenetre;
 
     /**
-     * Créé un type de bouton que l'on utilisera pour la partie mini-calculatrice
+     * Créé un type de bouton que l'on utilisera pour la partie 
+     * mini-calculatrice
      * @param fenetre de notre menu
      * @param texte le texte du bouton
      */
@@ -32,7 +33,7 @@ public class BoutonMenu extends JButton {
         super(texte);
 
         // On gère la taille des boutons
-        setPreferredSize(new Dimension(500, 110));
+        setPreferredSize(new Dimension(523, 110));
 
         // On définit la couleur des boutons
         setBackground(new Color(255,160,122));

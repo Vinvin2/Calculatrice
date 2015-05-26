@@ -42,6 +42,8 @@ public class APropos extends AbstractAction {
         
         // Ouverture d'une fenetre avec un message
         JOptionPane.showMessageDialog(fenetre, "Ce programme a été développé "
-                                     + "par SANCHEZ Sebastien et GRANIER Vincent");
+        						 + "par BAUBE Maxime, GRANIER Vincent, MIQUEL "
+        						 + "Jonathan, PERIES Mickaël et "
+        						 + "SANCHEZ Sebastien");
     }
 }

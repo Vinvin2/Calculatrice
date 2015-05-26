@@ -27,7 +27,8 @@ public class FiltreSimple extends FileFilter{
      */
     public FiltreSimple(String description, String extension){
         if(description == null || extension ==null){
-            throw new NullPointerException("La description (ou extension) ne peut être null."); 
+            throw new NullPointerException("La description (ou extension) "
+            							 + "ne peut être null."); 
         }
         this.description = description;
         this.extension = extension;

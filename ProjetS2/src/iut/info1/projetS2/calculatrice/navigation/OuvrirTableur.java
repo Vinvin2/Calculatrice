@@ -41,8 +41,8 @@ public class OuvrirTableur extends AbstractAction {
     	// On ouvre une fenetre qui demande à l'utilisateur s'il veut oui ou non
     	// fermer la calculatrice afin d'ouvrir le tableur
     	int choix = JOptionPane.showConfirmDialog(fenetre, "Voulez vous"
-    			+ " ouvrir le tableur et fermer la calculatrice ?", "Vers le Tableur",
-    			JOptionPane.YES_NO_OPTION); 
+    			+ " ouvrir le tableur et fermer la calculatrice ?",
+    			  "Vers le Tableur",JOptionPane.YES_NO_OPTION); 
 
     	// si on veut aller sur le tableur
     	if (choix == JOptionPane.YES_NO_OPTION) {

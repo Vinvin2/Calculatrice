@@ -20,7 +20,9 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class OuvrirCalculatrice extends AbstractAction {
 
-	/** Fenêtre que l'on fermera aprés avoir ouvert la fenêtre de la calculatrice */
+	/** Fenêtre que l'on fermera aprés avoir ouvert la fenêtre de la 
+	 * calculatrice 
+	 */
 	private JFrame fenetre;
 	
     /**
@@ -41,8 +43,8 @@ public class OuvrirCalculatrice extends AbstractAction {
     	// fermer le tableur afin d'ouvrir la calculatrice
     	int choix = JOptionPane.showConfirmDialog(fenetre, "Voulez vous"
     			+ " ouvrir la calculatrice et fermer le tableur ?\n Attention, "
-    			+ "les données non sauvegardées seront perdues !", "Vers la Calculatrice",
-    			JOptionPane.YES_NO_OPTION); 
+    			+ "les données non sauvegardées seront perdues !", 
+    			  "Vers la Calculatrice",JOptionPane.YES_NO_OPTION); 
 
     	// si on veut aller sur la calculatrice
     	if (choix == JOptionPane.YES_NO_OPTION) {

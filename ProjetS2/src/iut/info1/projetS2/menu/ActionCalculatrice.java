@@ -19,7 +19,9 @@ import javax.swing.JFrame;
  */
 public class ActionCalculatrice implements ActionListener {
 
-	/** Fenêtre que l'on fermera aprés avoir ouvert la fenêtre de la calculatrice */
+	/** Fenêtre que l'on fermera aprés avoir ouvert la fenêtre de la 
+	 * calculatrice 
+	 */
 	private JFrame fenetre;
 	
     /**

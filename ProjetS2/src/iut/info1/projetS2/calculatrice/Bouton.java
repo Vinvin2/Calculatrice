@@ -19,7 +19,8 @@ import javax.swing.JButton;
 public class Bouton extends JButton {
 
     /**
-     * Créé un type de bouton que l'on utilisera pour la partie mini-calculatrice
+     * Créé un type de bouton que l'on utilisera pour la partie 
+     * mini-calculatrice
      * @param texte le texte du bouton
      */
     public Bouton(String texte) {

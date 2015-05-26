@@ -48,8 +48,8 @@ public class NouveauAction extends AbstractAction {
         // travaux non sauvegardés seront perdus
         int choix = JOptionPane.showConfirmDialog(fenetre, "Voulez vous"
                     + " vraiment ouvrir un nouveau tableur ?\n Attention, "
-                    + " les données non sauvegardées seront perdues.", "Accueil",
-                    JOptionPane.YES_NO_OPTION); 
+                    + " les données non sauvegardées seront perdues.", 
+                    "Accueil", JOptionPane.YES_NO_OPTION); 
         
         // Si on veut ouvrir une nouveau tableur
         if (choix == JOptionPane.YES_NO_OPTION) {
