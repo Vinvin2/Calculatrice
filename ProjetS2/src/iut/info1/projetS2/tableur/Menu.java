@@ -4,8 +4,7 @@
  */
 package iut.info1.projetS2.tableur;
 
-import iut.info1.projetS2.menu.ActionCalculatrice;
-import iut.info1.projetS2.menu.ActionTableur;
+import iut.info1.projetS2.calculatrice.navigation.OuvrirCalculatrice;
 import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.Toolkit;
@@ -180,18 +179,6 @@ public class Menu extends JMenuBar{
         item.setIcon(new ImageIcon("nouveau.jpg"));
         menuFichier.add(item);
         
-        // Ajout d'une barre de séparation
-        menuFichier.insertSeparator(1);
-        
-          // TODO
-//        // Ajout du sous-menu ouvrir la calculatrice
-//        item = new JMenuItem(new ActionCalculatrice(fenetre,"Calculatrice"));
-//        item.setIcon(new ImageIcon("calculette-menu.png"));
-//        menuFichier.add(item);
-        
-        // Ajout d'une barre de séparation
-        menuFichier.insertSeparator(1);
-        
         // Ajout du sous-menu ouvrir
         item = new JMenuItem(new ChargerAction(fenetre,"Charger"));
         item.setIcon(new ImageIcon("charger.gif"));
@@ -202,10 +189,19 @@ public class Menu extends JMenuBar{
         item.setIcon(new ImageIcon("sauvegarder.png"));
         menuFichier.add(item);
         
+        // Ajout d'une barre de séparation
+        menuFichier.insertSeparator(4);
+        
         // Ajout du sous-menu quitter
         item = new JMenuItem(new AccueilAction(fenetre, "Accueil"));
         item.setIcon(new ImageIcon("accueil.png"));
-        menuFichier.add(item);       
+        menuFichier.add(item); 
+        
+        // Ajout du sous-menu ouvrir la calculatrice
+        item = new JMenuItem(new OuvrirCalculatrice(fenetre,"Calculatrice"));
+        item.setIcon(new ImageIcon("calculette.jpg"));
+        menuFichier.add(item);
+      
     }
     
     /**

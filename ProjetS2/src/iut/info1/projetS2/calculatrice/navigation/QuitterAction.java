@@ -1,5 +1,5 @@
 /*
- * Quitter.java					24 mai 2015
+ * QuitterAction.java					24 mai 2015
  * IUT Info 1 2014/2015 groupe projet
  */
 
@@ -13,7 +13,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 /**
- * Permet d'ouvrir le tableur et de fermer le menu de l'appli
+ * Permet d'ouvrir la calculatrice et de fermer le menu de l'appli
  * @author 20-20
  * @version 0.1
  */

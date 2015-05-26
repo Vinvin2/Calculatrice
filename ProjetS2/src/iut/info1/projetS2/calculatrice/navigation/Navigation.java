@@ -1,5 +1,5 @@
 /*
- * Menu.java				22 mai 2015
+ * Navigation.java				22 mai 2015
  * IUT INFO1 2014-2015 
  */
 package iut.info1.projetS2.calculatrice.navigation;
@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import iut.info1.projetS2.calculatrice.Calculatrice;
-import iut.info1.projetS2.menu.ActionTableur;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
@@ -181,11 +180,10 @@ public class Navigation extends JMenuBar{
         item.setIcon(new ImageIcon("accueil.png"));
         menuFichier.add(item);   
         
-        // TODO
-//        // Ajout du sous-menu ouvrir tableur 
-//        item = new JMenuItem(new ActionTableur(fenetre,"Tableur"));
-//        item.setIcon(new ImageIcon("tableur.png"));
-//        menuFichier.add(item);
+        // Ajout du sous-menu ouvrir tableur 
+        item = new JMenuItem(new OuvrirTableur(fenetre,"Tableur"));
+        item.setIcon(new ImageIcon("tableur.png"));
+        menuFichier.add(item);
         
         // Ajout du sous-menu quitter
         item = new JMenuItem(new QuitterAction(fenetre, "Quitter"));

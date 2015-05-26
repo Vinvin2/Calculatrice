@@ -13,6 +13,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
@@ -88,7 +90,7 @@ public class Tableur extends JFrame{
     private void build() {
         
         //On donne un titre à l'application
-        setTitle("Tableur projet S2"); 
+        setTitle("Mini - Tableur"); 
         
         //On donne une taille à notre fenêtre
         setSize(900,700);             
@@ -113,12 +115,15 @@ public class Tableur extends JFrame{
         
         // Affichage de la barre de menu
         setJMenuBar(new Menu(this));
+        
+        // On change l'icone de la fenêtre
+        Image icone = Toolkit.getDefaultToolkit().getImage("tableur.png");
+        setIconImage(icone);
        
         
         /*
          *  On lie le tableur avec une classe Commandes car l'execution de
          *  commandes est liée à un tableur précis
-         *  commandes est liee a un tableur precis
          */
         actions = new Commandes(this);
     }

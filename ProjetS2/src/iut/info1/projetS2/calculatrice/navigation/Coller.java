@@ -1,5 +1,5 @@
 /*
- * CollerAction.java				22 mai 2015
+ * Coller.java				22 mai 2015
  * IUT INFO1 2014-2015 
  */
 package iut.info1.projetS2.calculatrice.navigation;

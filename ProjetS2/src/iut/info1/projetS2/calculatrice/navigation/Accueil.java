@@ -37,9 +37,9 @@ public class Accueil extends AbstractAction {
 
     /**
      * Affiche une fenetre contenant un message pour savoir si l'utilisateur
-     * veut vraiment quitter, si la fenetre du tableur sera fermée et la fenetre
+     * veut vraiment quitter, si la fenetre sera fermée et la fenetre
      * du menu ouverte.
-     * Si non on revient à la calculatrice sans rien faire.
+     * Si non on revient à la fenêtre sans rien faire.
      */
     public void actionPerformed(ActionEvent e) {
         

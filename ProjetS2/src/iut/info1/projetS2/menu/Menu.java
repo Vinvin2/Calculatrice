@@ -5,7 +5,9 @@
 
 package iut.info1.projetS2.menu;
 
-import iut.info1.projetS2.calculatrice.BoutonMenu;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import iut.info1.projetS2.calculatrice.Container;
 import iut.info1.projetS2.calculatrice.navigation.Quitter;
 
@@ -92,6 +94,10 @@ public class Menu extends JFrame {
 		
 		containerPrincipal.add(vide);
 		containerPrincipal.add(containerNavigation);
+		
+		// On change l'icone de la fenêtre
+        Image icone = Toolkit.getDefaultToolkit().getImage("projetS2.png");
+        setIconImage(icone);
 	
 	}
 

@@ -7,6 +7,8 @@ package iut.info1.projetS2.calculatrice;
 import iut.info1.projetS2.calculatrice.navigation.Navigation;
 
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -50,7 +52,7 @@ public class Calculatrice extends JFrame {
         super();
 
         // On définit un titre pour la fenêtre
-        this.setTitle("Calculatrice");
+        this.setTitle("Mini - Calculatrice");
 
         // On définit la taille de la fenêtre
         this.setSize(900, 700);
@@ -92,6 +94,10 @@ public class Calculatrice extends JFrame {
         
         // Affichage de la barre de menu
         setJMenuBar(new Navigation(this));
+        
+        // On change l'icone de la fenêtre
+        Image icone = Toolkit.getDefaultToolkit().getImage("calculette.jpg");
+        setIconImage(icone);
         
     }
 

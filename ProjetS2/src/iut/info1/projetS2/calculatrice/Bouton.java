@@ -33,6 +33,7 @@ public class Bouton extends JButton {
          
         // Le curseur devient une main quandon survole un bouton
         setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));
+
         
     }
 
