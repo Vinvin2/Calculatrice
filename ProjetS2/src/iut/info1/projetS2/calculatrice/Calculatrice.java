@@ -107,6 +107,7 @@ public class Calculatrice extends JFrame {
 	 * classe donc on met un getters pour pouvoir récupérer l'instance de
 	 * l'éxécuteur dans une autre classe.
 	 * Exemple : fenetre.getExecuteur.cut()
+	 * @return l'exécuteur
 	 */
     public ExecuteurCommandes getExecuteur() {
 		return executeur;

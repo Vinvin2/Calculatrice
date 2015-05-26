@@ -47,6 +47,7 @@ public class Navigation extends JMenuBar{
     
     /**
     * Constructeur de notre classe
+    * @param fenetre la fenêtre concernée
     */
 	public Navigation(Calculatrice fenetre) {
 		super();

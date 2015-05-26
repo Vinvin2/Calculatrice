@@ -25,7 +25,8 @@ public class OuvrirCalculatrice extends AbstractAction {
 	
     /**
      * Récupère la fenêtre que l'on devra fermer
-     * @param fenetre
+     * @param fenetre la fenêtre à récupérer
+     * @param texte message de confirmation
      */
     public OuvrirCalculatrice(JFrame fenetre, String texte) {
         super(texte);
