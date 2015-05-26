@@ -39,12 +39,12 @@ public class TestVariable {
         // test des getters et setters
         char A = varOk[0].getNom();
         double valA = varOk[0].getValeur();
-        System.out.println(varOk[0].toString());
+        System.out.println(A + " " + valA);
         
         varOk[0].setNom('G');
         System.out.println(varOk[0].toString());
         
-        varOk[0].setNom('a');
+     //   varOk[0].setNom('a');      renvoie une erreur IllegalArgumentException
         System.out.println(varOk[0].toString());
         
         

@@ -50,7 +50,7 @@ public class Utilitaires {
         Pattern testCalcEvo = Pattern.compile(REG_CALC_EVO);
         Matcher estCalcEvo = testCalcEvo.matcher(aCalculer);
         if (!estCalcEvo.matches()) {
-            return Double.NaN; // le calcul n'est pas réalisable
+           // return Double.NaN; // le calcul n'est pas réalisable
         }
         // else, calcul potentiellement réalisable
         String resultat = "";

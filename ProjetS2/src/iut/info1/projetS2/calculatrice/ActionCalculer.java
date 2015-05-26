@@ -99,7 +99,7 @@ public class ActionCalculer implements ActionListener {
 
             } else if (fonctionok == 3) {       // commande calcul
                 
-                double resultat = Utilitaires.calculIntermediaire(commande);
+                double resultat = Utilitaires.calculEvolue(commande);
                 
                 // resultat sous forme de chaîne
                 String strresult = Double.toString(resultat);
@@ -299,7 +299,8 @@ public class ActionCalculer implements ActionListener {
         Pattern patAffect = Pattern.compile(".*(=\\s*[A-Z]\\s*)");
         Matcher affectok = patAffect.matcher(commande);
         
-        Pattern patCalcul = Pattern.compile("\\s*-?(\\d).*(\\d)*");
+        Pattern patCalcul = 
+           Pattern.compile("(\\s*-?(\\d).*(\\d)*)||(.*[(].*[)].*)");
         Matcher calculok = patCalcul.matcher(commande);
         
         Pattern PatCalcVar = Pattern.compile(".*[A-Z].*");

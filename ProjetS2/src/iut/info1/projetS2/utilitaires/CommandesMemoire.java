@@ -49,7 +49,7 @@ public class CommandesMemoire {
         } else if (affectok.matches()){            
             calculARealiser = commande.substring(0,commande.indexOf('='));
 
-            resultat = Utilitaires.calculIntermediaire(calculARealiser);  
+            resultat = Utilitaires.calculEvolue(calculARealiser);  
 
             nomvar = affectok.group(1).charAt(0);
         }
@@ -96,7 +96,7 @@ public class CommandesMemoire {
                     }
                 }
             }
-            return Utilitaires.calculIntermediaire(aCalculer);
+            return Utilitaires.calculEvolue(aCalculer);
         } else {
             return Double.NaN;
         }
