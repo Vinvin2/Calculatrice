@@ -26,6 +26,8 @@ public class Variable {
         if (nom >= 65 && nom <= 90) {   // si le nom est un caractère majuscule
             this.nom = nom;
             this.valeur = valeur;
+        } else {
+            throw new IllegalArgumentException();
         }
     }
 

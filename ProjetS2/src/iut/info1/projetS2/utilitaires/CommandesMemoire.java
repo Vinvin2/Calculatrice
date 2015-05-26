@@ -120,7 +120,11 @@ public class CommandesMemoire {
             // on récupère le nom de la variable à initialiser
             nomvar = razok.group(2).charAt(0);
             // on l'initialise
-            casesMem[nomvar - 65] = new Variable(nomvar, 0);
+            if (casesMem[nomvar - 65] == null) {
+                casesMem[nomvar - 65] = new Variable(nomvar, 0);
+            } else {
+                casesMem[nomvar - 65].setValeur(0.0);
+            }
             return "OK\n";
         } else {
 
@@ -132,7 +136,11 @@ public class CommandesMemoire {
 
                 if (nomvar1 <= nomvar2) {
                     for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
-                        casesMem[nomvar - 65] = new Variable(nomvar, 0);
+                        if (casesMem[nomvar - 65] == null) {
+                            casesMem[nomvar - 65] = new Variable(nomvar, 0);
+                        } else {
+                            casesMem[nomvar - 65].setValeur(0.0);
+                        }
                     }              
                 } else {
                     return "Erreur, entrez une commande du type RAZ A..B\n";
@@ -661,7 +669,8 @@ Pattern.compile("(\\s*INIT\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
         } else {
 
             mulok = patMulMultiple.matcher(commande);
-            // lorsqu'on a plusieurs cases en paramètres, on modifie chacune de leur
+            // lorsqu'on a plusieurs cases en paramètres, on modifie chacune de 
+            // leur
             // valeur
             if (mulok.matches()) {
                 char nomvar1 = mulok.group(2).charAt(0);
