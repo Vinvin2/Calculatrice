@@ -25,7 +25,8 @@ public class OuvrirTableur extends AbstractAction {
 	
     /**
      * On récupère la fenêtre à fermer
-     * @param fenetre
+     * @param fenetre fenêtre concernée
+     * @param texte message à afficher
      */
     public OuvrirTableur(JFrame fenetre, String texte) {
         super(texte);
