@@ -4,6 +4,7 @@
  */
 package iut.info1.projetS2.calculatrice.navigation;
 
+import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -57,6 +58,9 @@ public class Navigation extends JMenuBar{
 		buildMenu();
 
 		actionSouris();
+		
+		// Le curseur devient une main quand on survole le menu
+        this.setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));
 	}
 	
 	 /** 

@@ -33,10 +33,10 @@ public class BoutonMenu extends JButton {
         super(texte);
 
         // On gère la taille des boutons
-        setPreferredSize(new Dimension(500, 150));
+        setPreferredSize(new Dimension(500, 100));
 
         // On définit la couleur des boutons
-        setBackground(new Color(126,192,238));
+        setBackground(new Color(255,160,122));
         
        // Déclaration d'une police et d'une taille
         Font f = new Font("Calibri", Font.PLAIN, 32);
@@ -48,22 +48,22 @@ public class BoutonMenu extends JButton {
         setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));    
         
 		
-		actionSouris();
+		//actionSouris();
 	}
-	/**
-	 * Quand on effectue un clic sur le bouton sans relacher la souris,
-	 * la couleur de fond du bouton change
-	 * @param e
-	 */
-	public void actionSouris() {
-		fenetre.getContainerPrincipal().addMouseListener(new MouseAdapter() {
-			public void MousseClicked(ActionEvent e) {
-				
-				if (SwingUtilities.isLeftMouseButton(null)) {
-					// On définit la nouvelle couleur des boutons
-					setBackground(new Color(255,127,36));
-				}
-			}
-		});
-	}
+//	/**
+//	 * Quand on effectue un clic sur le bouton sans relacher la souris,
+//	 * la couleur de fond du bouton change
+//	 * @param e
+//	 */
+//	public void actionSouris() {
+//		fenetre.getContainerPrincipal().addMouseListener(new MouseAdapter() {
+//			public void MousseClicked(ActionEvent e) {
+//				
+//				if (SwingUtilities.isLeftMouseButton(null)) {
+//					// On définit la nouvelle couleur des boutons
+//					setBackground(new Color(255,127,36));
+//				}
+//			}
+//		});
+//	}
 }

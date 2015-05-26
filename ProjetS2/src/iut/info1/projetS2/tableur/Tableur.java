@@ -231,7 +231,7 @@ public class Tableur extends JFrame{
         container.setLayout(new FlowLayout());
         
         // On définit la couleur du fond
-        container.setBackground(new Color(175,238,238));
+        container.setBackground(new Color(255,228,196));
         
         // On initialise notre JTextField
         buildJTextField();
@@ -295,7 +295,7 @@ public class Tableur extends JFrame{
         valider.setFont(f);
         
         // On définit la couleur des boutons
-        valider.setBackground(new Color(126,192,238));
+        valider.setBackground(new Color(255,160,122));
         
         // Le curseur devient une main quandon survole un bouton
         valider.setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));

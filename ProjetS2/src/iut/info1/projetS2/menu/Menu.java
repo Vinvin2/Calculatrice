@@ -11,7 +11,9 @@ import java.awt.Toolkit;
 import iut.info1.projetS2.calculatrice.Container;
 import iut.info1.projetS2.calculatrice.navigation.Quitter;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * Création d'un menu qui offrira trois possibilités :
@@ -29,9 +31,6 @@ public class Menu extends JFrame {
 	/** Container principal de l'application */
 	private Container containerPrincipal = new Container(900, 700);
 
-	/** panel contenant les boutons de navigation */
-	private Container containerNavigation = new Container(700, 700);
-
 	/** panel contenant du vide */
 	private Container vide = new Container(900,80);
 	
@@ -40,6 +39,9 @@ public class Menu extends JFrame {
 	
 	/** panel contenant un second espace */
 	private Container espace2 = new Container(900,10);
+	
+	/** panel contenant un troisième espace */
+	private Container espace3 = new Container(900,10);
 	
 	/** Bouton Calculatrice */
 	private BoutonMenu boutonCalculatrice = new BoutonMenu(this, "MINI CALCULATRICE");
@@ -77,12 +79,17 @@ public class Menu extends JFrame {
 		// On ajoute les boutons
 		this.setContentPane(containerPrincipal);
 		
+		// On ajoute une image au dessus des boutons du menu
+		JLabel image = new JLabel( new ImageIcon("logo.png"));
+		containerPrincipal.add(image);
+		containerPrincipal.add(espace1);
+		
 		// On place les boutons au centre de l'écran sur une ligne verticale
-		containerNavigation.add(boutonCalculatrice);
-		containerNavigation.add(espace1);
-		containerNavigation.add(boutonTab);
-		containerNavigation.add(espace2);
-        containerNavigation.add(boutonQuit2);
+		containerPrincipal.add(boutonCalculatrice);
+		containerPrincipal.add(espace2);
+		containerPrincipal.add(boutonTab);
+		containerPrincipal.add(espace3);
+		containerPrincipal.add(boutonQuit2);
         
 		// On affecte une action pour chaque bouton
 		boutonQuit2.addActionListener(new Quitter(this));
@@ -93,14 +100,11 @@ public class Menu extends JFrame {
 		this.setVisible(true);
 		
 		containerPrincipal.add(vide);
-		containerPrincipal.add(containerNavigation);
 		
 		// On change l'icone de la fenêtre
         Image icone = Toolkit.getDefaultToolkit().getImage("projetS2.png");
         setIconImage(icone);
-	
-        
-        
+	    
 	}
 
 	public Container getContainerPrincipal() {

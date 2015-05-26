@@ -7,6 +7,7 @@ package iut.info1.projetS2.tableur;
 import iut.info1.projetS2.calculatrice.navigation.OuvrirCalculatrice;
 import iut.info1.projetS2.tableur.action.*;
 
+import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -57,6 +58,9 @@ public class Menu extends JMenuBar{
         buildMenu();
         
         actionSouris();
+        
+        // Le curseur devient une main quand on survole le menu
+        this.setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));
     }
     /** 
      * Permet d'initialiser la barre de menu et d'y ajouter tous les menus 

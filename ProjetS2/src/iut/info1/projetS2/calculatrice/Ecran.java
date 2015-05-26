@@ -43,7 +43,7 @@ public class Ecran extends JTextArea {
         setText(" Entrez votre calcul, puis cliquez sur \"Calculer\".\n");
 
         // Couleur de fond
-        setBackground(new Color(255,250,250));
+        setBackground(new Color(253,245,230));
         
         // On empêche l'écran d'être éditable 
         setEditable(false);

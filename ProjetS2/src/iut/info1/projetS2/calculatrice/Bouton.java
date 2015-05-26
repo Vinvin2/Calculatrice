@@ -29,9 +29,9 @@ public class Bouton extends JButton {
         setPreferredSize(new Dimension(100, 60));
 
         // On définit la couleur des boutons
-        setBackground(new Color(126,192,238));
+        setBackground(new Color(255,160,122));
          
-        // Le curseur devient une main quandon survole un bouton
+        // Le curseur devient une main quand on survole un bouton
         setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));
 
         
