@@ -331,7 +331,7 @@ public class CommandesMemoire {
                     return "OK\n";
                 } else {
                     return "Erreur, entrez les cases mémoires dans l'ordre "
-                            + "alphabétique : ex : \"INCR A..G\"\n";
+                            + "alphabétique : ex : \"CAR A..G\"\n";
                 }
             } else {
                 return "Erreur, entrez une commande du type : \"CAR A..G\"\n";
@@ -383,7 +383,7 @@ public class CommandesMemoire {
                         } else {
                             nomvar = nomvar2;
                             return "Attention, des variables n'ont pas pu être"
-                            + " incrémentées car elles\nn'étaient pas "
+                            + " traitées car elles\nn'étaient pas "
                             + "initialisées\n";
                         }
                     }
@@ -422,15 +422,15 @@ public class CommandesMemoire {
                 for(char nomvar = nomvar1 ; nomvar <= nomvar2 ; nomvar++) {
                     if (casesMem[nomvar - 65] != null) {
                         resultat += casesMem[nomvar - 65].getValeur();
+                    } else {
+                        return Double.NaN;
                     }
                 }              
             } else {
-                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
-                    if (casesMem[nomvar - 65] != null) {
-                        resultat += casesMem[nomvar - 65].getValeur();
-                    }
-                } 
+                resultat = Double.NaN;
             }
+        } else {
+            resultat = Double.NaN;
         }
 
         return resultat;
@@ -461,15 +461,15 @@ public class CommandesMemoire {
 
                     if (casesMem[nomvar - 65] != null) {
                         resultat *= casesMem[nomvar - 65].getValeur();
+                    }  else {
+                        return Double.NaN;
                     }
-                }              
+                }
             } else {
-                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
-                    if (casesMem[nomvar - 65] != null) {
-                        resultat *= casesMem[nomvar - 65].getValeur();
-                    }
-                } 
+                resultat = Double.NaN;
             }
+        } else {
+            resultat = Double.NaN;
         }
 
         return resultat;
@@ -502,20 +502,15 @@ public class CommandesMemoire {
                     if (casesMem[nomvar - 65] != null) {
                         resultat += casesMem[nomvar - 65].getValeur();
                     } else {
-                        resultat = Double.NaN;
+                        return Double.NaN;
                     }
                 } 
                 resultat = resultat / (nomvar2 - nomvar1 + 1);
             } else {
-                for(char nomvar = nomvar1 ; nomvar >= nomvar2 ; nomvar--) {
-                    if (casesMem[nomvar - 65] != null) {
-                        resultat += casesMem[nomvar - 65].getValeur();
-                    } else {
-                        resultat = Double.NaN;
-                    }
-                } 
-                resultat = resultat / (nomvar1 - nomvar2 + 1);
-            }
+                resultat = Double.NaN;
+            }     
+        } else {
+            resultat = Double.NaN;
         }
 
         return resultat;

@@ -196,7 +196,9 @@ public class ActionCalculer implements ActionListener {
                 // si le résultat se termine par .0, on l'enlève à l'affichage
                 if (strresult == "NaN") {
                     ecran.insert(" Erreur de syntaxe de calcul"
-                            + ", entrez par exemple \"5.12 * 12.08\"\n", 
+                            + ", entrez par exemple \"SOM A..C\"\n"
+                            + " (il se peut que des variables n'aient pas été"
+                            + " initialisées)\n", 
                             ecran.getText().length());
                 } else if (strresult.endsWith(".0")) {
 
@@ -219,7 +221,9 @@ public class ActionCalculer implements ActionListener {
                 // si le résultat se termine par .0, on l'enlève à l'affichage
                 if (strresult == "NaN") {
                     ecran.insert(" Erreur de syntaxe de calcul"
-                            + ", entrez par exemple \"5.12 * 12.08\"\n", 
+                            + ", entrez par exemple \"PROD A..C\"\n"
+                            + " (il se peut que des variables n'aient pas été"
+                            + " initialisées)\n", 
                             ecran.getText().length());
                 } else if (strresult.endsWith(".0")) {
 
@@ -242,7 +246,9 @@ public class ActionCalculer implements ActionListener {
                 // si le résultat se termine par .0, on l'enlève à l'affichage
                 if (strresult == "NaN") {
                     ecran.insert(" Erreur de syntaxe de calcul"
-                            + ", entrez par exemple \"5.12 * 12.08\"\n", 
+                            + ", entrez par exemple \"MOY A..C\"\n"
+                            + " (il se peut que des variables n'aient pas été"
+                            + " initialisées)\n", 
                             ecran.getText().length());
                 } else if (strresult.endsWith(".0")) {
 
