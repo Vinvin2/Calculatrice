@@ -477,7 +477,6 @@ public class Commandes {
         while (calcul.hasNext()) { // remplace toutes les occurences de cases
             calcul.skip("\\s*");
             tmp = calcul.nextLine();
-            System.out.println("TMP = " + tmp);
             calcul = new Scanner(tmp);
             calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
             if (tmp.length() > 0 && tmp.charAt(0) == '(') {
@@ -506,12 +505,10 @@ public class Commandes {
                 aRenvoyer = aRenvoyer.concat(calcul.next());
                 calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
             } catch (NoSuchElementException e) {
-                System.out.println("FIN = " + aRenvoyer);
                 calcul.close();
                 return aRenvoyer;
             }
         }
-        System.out.println("FIN = " + aRenvoyer);
         calcul.close();
         return aRenvoyer;
     }

@@ -1,13 +1,9 @@
 - implementer les cases dans les calcs
 méthode qui remplace toutes les occs de REG_MODIF
 "(((\\0044)?)([0]*((1?\\d)||(20)))((\\0044)?)([A-Z])||((\\0044)?)([A-Z])((\\0044)?)([0]*((1?\\d)||(20))))"
+- implementer les parenthèses dans les calcs
 done
 
-
 - coder copier
-
-- implementer les parenthèses dans les calcs
-
 -faire des trucs directement à pair des cases
-
 A1 = (1+1+((1+1)+(1+1)+1))+1

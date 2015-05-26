@@ -61,7 +61,6 @@ public class Utilitaires {
         while (calculateur.hasNext()) {
             calculateur.skip("\\s*");
             tmp = calculateur.nextLine();
-            System.out.println("TMP = " + tmp);
             calculateur = new Scanner(tmp);
             calculateur.useDelimiter(REG_OPERATEUR + "[(]");
             if (tmp.length() > 0 && tmp.charAt(0) == '(') {
@@ -93,12 +92,10 @@ public class Utilitaires {
                 resultat = resultat.concat(calculateur.next());
                 calculateur.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
             } catch (NoSuchElementException e) {
-                System.out.println("FIN = " + calculIntermediaire(resultat));
                 calculateur.close();
                 return calculIntermediaire(resultat);
             }
         }
-        System.out.println("FIN = " + calculIntermediaire(resultat));
         calculateur.close();
         return calculIntermediaire(resultat);
     }
