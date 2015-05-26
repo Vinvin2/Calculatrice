@@ -4,7 +4,7 @@
  */
 package iut.info1.projetS2.utilitaires;
 
-import iut.info1.projetS2.calculatrice.Aide;
+import iut.info1.projetS2.calculatrice.navigation.Aide;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

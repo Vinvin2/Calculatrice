@@ -23,7 +23,7 @@ public class Quitter implements ActionListener {
 	
     /**
      * On récupère la fenêtre à fermer
-     * @param fenetre
+     * @param fenetre de notre calculatrice
      */
     public Quitter(JFrame fenetre) {
     	

@@ -25,7 +25,7 @@ public class AideAction extends AbstractAction {
     /**
      * Récupération des informations essentielles comme l'instance de la 
      * JFrame et le nom de notre sous-menu.
-     * @param fenetre de notre tableur
+     * @param fenetre 
      * @param texte nom du sous-menu
      */
     public AideAction(Tableur fenetre, String texte) {
@@ -35,9 +35,10 @@ public class AideAction extends AbstractAction {
     }
 
     /**
-     * Permet d'affecter une tache lors du déclenchement de l'évennement
+     * Ouvre une fenêtre d'aide 
      */
     public void actionPerformed(ActionEvent e) {
         
+    	new Aide();
     }
 }

@@ -131,7 +131,7 @@ public class Navigation extends JMenuBar{
         // Création du menu autre
         menuAutre = new JMenu("?");
         
-//        // Ajout du sous-menu aide
+        // Ajout du sous-menu aide
         item = new JMenuItem(new ActionAide(fenetre,"Aide"));
         item.setIcon(new ImageIcon("aide.png"));
         menuAutre.add(item);

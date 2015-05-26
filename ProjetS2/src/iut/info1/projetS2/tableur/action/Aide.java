@@ -1,9 +1,11 @@
 /*
- * Aide.java					2 mai 2015
+ * Aide.java					26 mai 2015
  * IUT Info 1 2014/2015 groupe projet
  */
 
-package iut.info1.projetS2.calculatrice;
+package iut.info1.projetS2.tableur.action;
+
+import iut.info1.projetS2.calculatrice.Container;
 
 import javax.swing.JFrame;
 
@@ -49,7 +51,7 @@ public class Aide extends JFrame {
 
 		// On rend visible la fenêtre
 		this.setVisible(true);
-		
+
 	}
 	
 }

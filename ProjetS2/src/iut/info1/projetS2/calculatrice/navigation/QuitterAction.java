@@ -25,7 +25,7 @@ public class QuitterAction extends AbstractAction {
 	
     /**
      * On récupère la fenêtre à fermer
-     * @param fenetre
+     * @param fenetre du menu
      * @param texte
      */
     public QuitterAction(Calculatrice fenetre, String texte) {

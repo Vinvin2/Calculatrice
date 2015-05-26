@@ -26,7 +26,7 @@ public class Accueil extends AbstractAction {
     /**
      * Récupération des informations essentielles comme l'instance de la 
      * JFrame et le nom de notre sous-menu.
-     * @param fenetre de notre tableur
+     * @param fenetre de notre calculatrice
      * @param texte nom du menu
      */
     public Accueil(Calculatrice fenetre, String texte) {
