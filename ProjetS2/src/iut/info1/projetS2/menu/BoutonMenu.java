@@ -8,11 +8,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
 
 import javax.swing.JButton;
-import javax.swing.SwingUtilities;
 
 /**
  * Classe qui permet de construire un bouton personnalisé
@@ -23,10 +20,12 @@ import javax.swing.SwingUtilities;
 public class BoutonMenu extends JButton {
 	
 	/** fenetre de notre menu */
-	private Menu fenetre;
+	@SuppressWarnings("unused")
+    private Menu fenetre;
 
     /**
      * Créé un type de bouton que l'on utilisera pour la partie mini-calculatrice
+     * @param fenetre de notre menu
      * @param texte le texte du bouton
      */
     public BoutonMenu(Menu fenetre, String texte) {
@@ -47,23 +46,6 @@ public class BoutonMenu extends JButton {
         // Le curseur devient une main quandon survole un bouton
         setCursor(Cursor.getPredefinedCursor((Cursor.HAND_CURSOR)));    
         
-		
-		//actionSouris();
 	}
-//	/**
-//	 * Quand on effectue un clic sur le bouton sans relacher la souris,
-//	 * la couleur de fond du bouton change
-//	 * @param e
-//	 */
-//	public void actionSouris() {
-//		fenetre.getContainerPrincipal().addMouseListener(new MouseAdapter() {
-//			public void MousseClicked(ActionEvent e) {
-//				
-//				if (SwingUtilities.isLeftMouseButton(null)) {
-//					// On définit la nouvelle couleur des boutons
-//					setBackground(new Color(255,127,36));
-//				}
-//			}
-//		});
-//	}
+
 }

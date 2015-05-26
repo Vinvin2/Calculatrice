@@ -107,8 +107,4 @@ public class Menu extends JFrame {
 	    
 	}
 
-	public Container getContainerPrincipal() {
-		return containerPrincipal;
-	}
-
 }
