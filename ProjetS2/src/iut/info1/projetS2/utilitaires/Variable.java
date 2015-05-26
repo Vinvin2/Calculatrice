@@ -42,7 +42,11 @@ public class Variable {
      * @param nom le nom à set
      */
     public void setNom(char nom) {
-        this.nom = nom;
+        if (nom >= 65 && nom <= 90) {   // si le nom est un caractère majuscule
+            this.nom = nom;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     /**
