@@ -5,6 +5,7 @@
 package iut.info1.projetS2.utilitaires;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,16 +24,91 @@ public class Utilitaires {
     public final static String REG_OPERANDE = "\\s*\\d+(\\0056\\d+)?\\s*";
 
     /** regex vérifiant le format d'un calcul */
-    private final static String REG_CALCUL = 
+    public final static String REG_CALCUL = 
             "-?" + REG_OPERANDE + "(" + REG_OPERATEUR + REG_OPERANDE + ")*";
+
+    /** regex identifiant une opérande plus complexe*/
+    private final static String REG_OP_EVO = "(-?([(].*[)])*||([^/+*-]))";
+
+    /** regex vérifiant un calcul évolué */
+    private final static String REG_CALC_EVO =
+            "((" + REG_OP_EVO + ")+"+REG_OPERATEUR+")*" + REG_OP_EVO;
+
+    /**
+     * Type de calcul le plus évolué que la calculatrice et le tableur peuvent
+     * réaliser, prends en compte les parenthèses
+     * @param aCalculer
+     * @return <ul><li>le calcul réalisé sous un double facile à exploiter
+     *                 à la fois pour la calculatrice et le tableur</li>
+     *             <li>Double.NaN si erreur dans le calcul</li></ul>
+     */
+    public static double calculEvolue(String aCalculer) {
+        /*
+         *  teste si calcul bon format via regex et retourne un NaN si err
+         *  la première opérande peut être négative
+         */
+        Pattern testCalcEvo = Pattern.compile(REG_CALC_EVO);
+        Matcher estCalcEvo = testCalcEvo.matcher(aCalculer);
+        if (!estCalcEvo.matches()) {
+            return Double.NaN; // le calcul n'est pas réalisable
+        }
+        // else, calcul potentiellement réalisable
+        String resultat = "";
+        String tmp;
+        Scanner calculateur = new Scanner(aCalculer);
+
+        // 1+(1+1)+1
+        while (calculateur.hasNext()) {
+            calculateur.skip("\\s*");
+            tmp = calculateur.nextLine();
+            System.out.println("TMP = " + tmp);
+            calculateur = new Scanner(tmp);
+            calculateur.useDelimiter(REG_OPERATEUR + "[(]");
+            if (tmp.length() > 0 && tmp.charAt(0) == '(') {
+                int deb = tmp.indexOf("(") + 1;
+                int fin = tmp.lastIndexOf(")");
+                tmp = String.valueOf(calculEvolue(tmp.substring(deb, fin)));
+                calculateur.findInLine("[(].*[)]");
+                resultat = resultat.concat(tmp);
+            } else {
+                int deb = tmp.indexOf("(") + 1;
+                int fin = tmp.lastIndexOf(")");
+                if (deb > 1 && fin > 1 && deb > fin) {
+                    calculateur.useDelimiter("[)]" + Utilitaires.REG_OPERATEUR);
+                    tmp = calculateur.next();
+                    calculateur.useDelimiter("[^*/+-]");
+                    tmp = tmp.concat(calculateur.next());
+                    calculateur.useDelimiter("[(]");
+                    tmp = tmp.concat(calculateur.next());
+                    resultat = resultat.concat(
+                            String.valueOf(calculEvolue(tmp)));
+                } else {
+                    tmp = String.valueOf(calculIntermediaire(
+                            calculateur.next()));
+                    resultat = resultat.concat(tmp);
+                }
+            }
+            try {
+                calculateur.useDelimiter("[^*/+-]+");
+                resultat = resultat.concat(calculateur.next());
+                calculateur.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
+            } catch (NoSuchElementException e) {
+                System.out.println("FIN = " + calculIntermediaire(resultat));
+                calculateur.close();
+                return calculIntermediaire(resultat);
+            }
+        }
+        System.out.println("FIN = " + calculIntermediaire(resultat));
+        calculateur.close();
+        return calculIntermediaire(resultat);
+    }
 
     /**
      * Le calcul intermidiaire permet d'effectuer un nombre inconnu à l'avance
      * d'opérations,les parenthèses ne sont pas prises en compte
      * @param aCalculer String d'ou il faudra décortiquer le calcul
-     * @return <ul><li>le calcul réalisé tout beau tout propre sous un double 
-     *                 facile à exploter à la fois pour la calculatrice et le 
-     *                 tableur</li>
+     * @return <ul><li>le calcul réalisé sous un double facile à exploiter
+     *                 à la fois pour la calculatrice et le tableur</li>
      *             <li>Double.NaN si erreur dans le calcul</li></ul>
      */
     public static double calculIntermediaire(String aCalculer) {
@@ -45,7 +121,7 @@ public class Utilitaires {
         if (!estCalc.matches()) {
             return Double.NaN; // le calcul n'est pas réalisable
         }
-
+        // else
         double resultat = 0;      // resultat du calcul
         char signeSuiv = '\0';    // opérateur suivant à prendre en compte
         double resultTmp;         // resutalt d'un sous calcul de * et /

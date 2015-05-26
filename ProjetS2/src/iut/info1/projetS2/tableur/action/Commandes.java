@@ -128,7 +128,8 @@ public class Commandes {
             } else if (matchSiCom.group(6)!= null // cas du COPVAL
                     && matchSiCom.group(6).equals("COPVAL")) {
                 this.copval(matchSiCom.group(7), matchSiCom.group(8));  
-            } else { //group(10).equals("RAZ")
+            } else if (matchSiCom.group(10)!= null // cas du RAZ
+                    && matchSiCom.group(10).equals("RAZ")) {
                 this.raz(matchSiCom.group(11));                
             }
         } else if (matchSiCalc.matches() || matchSiCalc2.matches()) {
@@ -152,9 +153,9 @@ public class Commandes {
         Matcher siCase = testCase.matcher(aRecuperer);
 
         if (siCase.matches()) {
-            //            for (int i = 0; i < siCase.groupCount(); i++) {
-            //                System.out.println(i + " " + siCase.group(i));
-            //            }
+            //          for (int i = 0; i < siCase.groupCount(); i++) {
+            //              System.out.println(i + " " + siCase.group(i));
+            //          }
             /*
              * cas chiffre / lettre
              * chiffre -> group(5)
@@ -392,9 +393,8 @@ public class Commandes {
             lig = Integer.parseInt(lul.group(3)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
             col = lul.group(2).charAt(0) - 65;
-            aAfficherTraite = remplaceCases(lul.group(7));
-            aAfficherTraite = String.valueOf(
-                    Utilitaires.calculIntermediaire(aAfficherTraite));
+            aAfficherTraite = String.valueOf(Utilitaires.calculEvolue(
+                    this.prepareCalc(lul.group(7))));
             this.entrees[lig][col] = "=" + lul.group(7);
             if (!aAfficherTraite.equals("NaN")) {
                 this.fenetre.getLabel().setText("Calcul effectué");
@@ -412,8 +412,8 @@ public class Commandes {
             lig = Integer.parseInt(lil.group(2)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
             col = lil.group(6).charAt(0) - 65;
-            aAfficherTraite = String.valueOf(
-                    Utilitaires.calculIntermediaire(lil.group(7)));
+            aAfficherTraite = String.valueOf(Utilitaires.calculEvolue(
+                    this.prepareCalc(lil.group(7))));
             this.entrees[lig][col] = "=" + lil.group(7);
             if (!aAfficherTraite.equals("NaN")) {
                 this.fenetre.getLabel().setText("Calcul effectué");
@@ -463,6 +463,60 @@ public class Commandes {
 
 
     /**
+     * prepare un calcul évolué en remplaçant les occurences de case par 
+     * leurs valeurs, erreurs de syntaxe non vérifiées
+     * @param aPreparer chaine à modifier
+     * @return une chaine prête à être exploiter pour un calcul évolué
+     */
+    public String prepareCalc(String aPreparer) {
+        String aRenvoyer = ""; // chaine transformée à renvoyer
+        String tmp; // chaine temporaire
+        Scanner calcul = new Scanner(aPreparer); // Scanner d'analyse du calcul
+        calcul.useDelimiter(Utilitaires.REG_OPERATEUR);
+
+        while (calcul.hasNext()) { // remplace toutes les occurences de cases
+            calcul.skip("\\s*");
+            tmp = calcul.nextLine();
+            System.out.println("TMP = " + tmp);
+            calcul = new Scanner(tmp);
+            calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
+            if (tmp.length() > 0 && tmp.charAt(0) == '(') {
+                int deb = tmp.indexOf("(") + 1;
+                int fin = tmp.lastIndexOf(")");
+                tmp = "(" + prepareCalc(tmp.substring(deb, fin)) + ")";
+                calcul.findInLine("[(].*[)]");
+            } else {
+                int deb = tmp.indexOf("(") + 1;
+                int fin = tmp.lastIndexOf(")");
+                if (deb > 1 && fin > 1 && deb > fin) {
+                    calcul.useDelimiter("[)]" + Utilitaires.REG_OPERATEUR);
+                    tmp = prepareCalc(calcul.next());
+                    tmp = tmp.concat(")");
+                    calcul.useDelimiter("[^*/+-]");
+                    tmp = tmp.concat(calcul.next()).concat("(");
+                    calcul.useDelimiter("[(]");
+                    tmp = tmp.concat(prepareCalc(calcul.next()));
+                } else {
+                    tmp = this.remplaceCases(calcul.next());
+                }
+            }
+            aRenvoyer = aRenvoyer.concat(tmp);
+            try {
+                calcul.useDelimiter("[^*/+-]+");
+                aRenvoyer = aRenvoyer.concat(calcul.next());
+                calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
+            } catch (NoSuchElementException e) {
+                System.out.println("FIN = " + aRenvoyer);
+                calcul.close();
+                return aRenvoyer;
+            }
+        }
+        System.out.println("FIN = " + aRenvoyer);
+        calcul.close();
+        return aRenvoyer;
+    }
+
+    /**
      * Remplace chaque occurences de coordonnées de cases par leur valeur
      * correspondante
      * @param aRemplacer chaine qu'il faut modifier
@@ -473,7 +527,7 @@ public class Commandes {
         String operandeTmp;         // dernière opérande récupérée à analyser
         int[] coordonnees; // coordonnées d'une opérande identifiée comme case
         String aRemplacerVerif;
-        if (aRemplacer.charAt(0) == '-') {
+        if (aRemplacer.length() > 0 && aRemplacer.charAt(0) == '-') {
             aRemplacerVerif = aRemplacer.substring(1);
             chaineModifiee = "-";
         } else {
@@ -488,7 +542,7 @@ public class Commandes {
          *  au moment du calcul
          */
         Scanner recupOperande = new Scanner(aRemplacerVerif);
-        recupOperande.useDelimiter(Utilitaires.REG_OPERATEUR);
+        recupOperande.useDelimiter("\\s*[+*/-]\\s*");
         /*
          * préparation d'un Scanner récupérant les opérateur
          * note: si une opérande est manquante aucune erreur ne sera renvoyée
@@ -527,12 +581,14 @@ public class Commandes {
                 operandeTmp = recupOperande.next();
                 if (operandeTmp.matches(REG_MODIF)) { // si case détectée
                     coordonnees = recupCase(operandeTmp);
+                    // on récupère sa valeur et on la place dans la chaine
                     operandeTmp = String.valueOf(this.fenetre.getModele()
                             .getValueAt(coordonnees[0], coordonnees[1]));
                 }
                 chaineModifiee = chaineModifiee.concat(operandeTmp);
             } catch (NoSuchElementException e) { // rien n'est géré ici
             }
+            //          System.out.println(chaineModifiee);
         }
         recupOperande.close();
         recupOperateur.close();
@@ -546,6 +602,9 @@ public class Commandes {
      */
     private void affichageSimple() {
         String aAfficher = this.fenetre.getConsole().getText();
+        if (aAfficher == null) {
+            aAfficher = "";
+        }
         this.affichage(aAfficher); // affichage du texte voulu
         this.fenetre.getLabel().setText("Texte affiché");
     }
@@ -557,6 +616,9 @@ public class Commandes {
      */
     private void affichageCalcule() {
         String aAfficher = this.fenetre.getConsole().getText();
+        if (aAfficher == null) {
+            aAfficher = "";
+        }
         this.affichage(aAfficher); // affichage du texte (après calcul)
     }
 
@@ -592,8 +654,6 @@ public class Commandes {
     public String[][] getEntrees() {
         return entrees;
     }
-
-
 
     /**
      * @param entrees the entrees to set
