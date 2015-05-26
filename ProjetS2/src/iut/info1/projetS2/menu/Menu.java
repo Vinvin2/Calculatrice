@@ -58,7 +58,7 @@ public class Menu extends JFrame {
 		super();
 
 		//Définit un titre pour la fenêtre
-		this.setTitle("Mini-Calculatrice - Mini Tableur ");
+		this.setTitle("Mini-Calculatrice - Mini-Tableur ");
 
 		// On utilisera les mêmes caractéristiques pour les autres fenêtres
 		// afin d'avoir une IHM la plus homogène possible

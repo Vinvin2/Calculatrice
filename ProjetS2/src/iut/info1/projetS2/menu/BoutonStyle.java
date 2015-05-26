@@ -16,6 +16,7 @@ import javax.swing.JButton;
  * @author 20-20
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class BoutonStyle extends JButton {
 
 	/**
