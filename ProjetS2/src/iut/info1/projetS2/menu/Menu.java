@@ -42,13 +42,13 @@ public class Menu extends JFrame {
 	private Container espace2 = new Container(900,10);
 	
 	/** Bouton Calculatrice */
-	private BoutonMenu boutonCalculatrice = new BoutonMenu("MINI CALCULATRICE");
+	private BoutonMenu boutonCalculatrice = new BoutonMenu(this, "MINI CALCULATRICE");
 
 	/** Bouton Tableur */
-	private BoutonMenu boutonTab = new BoutonMenu("MINI TABLEUR");
+	private BoutonMenu boutonTab = new BoutonMenu(this, "MINI TABLEUR");
 
 	/** Bouton Quitter */
-	private BoutonMenu boutonQuit2 = new BoutonMenu("QUITTER");
+	private BoutonMenu boutonQuit2 = new BoutonMenu(this, "QUITTER");
 
 	/**
 	 * Création de la fenêtre contenant le menu principal de l'application
@@ -99,6 +99,12 @@ public class Menu extends JFrame {
         Image icone = Toolkit.getDefaultToolkit().getImage("projetS2.png");
         setIconImage(icone);
 	
+        
+        
+	}
+
+	public Container getContainerPrincipal() {
+		return containerPrincipal;
 	}
 
 }
