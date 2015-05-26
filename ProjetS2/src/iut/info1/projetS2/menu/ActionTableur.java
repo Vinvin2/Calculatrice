@@ -3,7 +3,7 @@
  * IUT Info 1 2014/2015 groupe projet
  */
 
-package iut.info1.projetS2.calculatrice;
+package iut.info1.projetS2.menu;
 
 import iut.info1.projetS2.tableur.Tableur;
 

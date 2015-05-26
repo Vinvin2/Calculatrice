@@ -3,11 +3,10 @@
  * IUT Info 1 2014/2015 groupe projet
  */
 
-package iut.info1.projetS2.calculatrice;
+package iut.info1.projetS2.menu;
 
-import java.awt.Color;
-import java.awt.event.MouseEvent;
-
+import iut.info1.projetS2.calculatrice.BoutonMenu;
+import iut.info1.projetS2.calculatrice.Container;
 import iut.info1.projetS2.calculatrice.navigation.Quitter;
 
 import javax.swing.JFrame;

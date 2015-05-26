@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2.tableur;
 
+import iut.info1.projetS2.menu.ActionCalculatrice;
+import iut.info1.projetS2.menu.ActionTableur;
 import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.Toolkit;
@@ -177,6 +179,15 @@ public class Menu extends JMenuBar{
         item = new JMenuItem(new NouveauAction(fenetre,"Nouveau"));
         item.setIcon(new ImageIcon("nouveau.jpg"));
         menuFichier.add(item);
+        
+        // Ajout d'une barre de séparation
+        menuFichier.insertSeparator(1);
+        
+          // TODO
+//        // Ajout du sous-menu ouvrir la calculatrice
+//        item = new JMenuItem(new ActionCalculatrice(fenetre,"Calculatrice"));
+//        item.setIcon(new ImageIcon("calculette-menu.png"));
+//        menuFichier.add(item);
         
         // Ajout d'une barre de séparation
         menuFichier.insertSeparator(1);

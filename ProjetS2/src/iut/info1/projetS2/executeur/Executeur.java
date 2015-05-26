@@ -4,7 +4,7 @@
  */
 package iut.info1.projetS2.executeur;
 
-import iut.info1.projetS2.calculatrice.Menu;
+import iut.info1.projetS2.menu.Menu;
 
 /**
  * Lance l'application Calculatrice

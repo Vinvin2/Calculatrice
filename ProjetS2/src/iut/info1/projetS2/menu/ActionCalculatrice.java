@@ -3,7 +3,9 @@
  * IUT Info 1 2014/2015 groupe projet
  */
 
-package iut.info1.projetS2.calculatrice;
+package iut.info1.projetS2.menu;
+
+import iut.info1.projetS2.calculatrice.Calculatrice;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

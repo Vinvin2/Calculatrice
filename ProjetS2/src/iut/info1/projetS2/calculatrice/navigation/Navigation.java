@@ -9,6 +9,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import iut.info1.projetS2.calculatrice.Calculatrice;
+import iut.info1.projetS2.menu.ActionTableur;
+
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -178,6 +180,12 @@ public class Navigation extends JMenuBar{
         item = new JMenuItem(new Accueil(fenetre, "Accueil"));
         item.setIcon(new ImageIcon("accueil.png"));
         menuFichier.add(item);   
+        
+        // TODO
+//        // Ajout du sous-menu ouvrir tableur 
+//        item = new JMenuItem(new ActionTableur(fenetre,"Tableur"));
+//        item.setIcon(new ImageIcon("tableur.png"));
+//        menuFichier.add(item);
         
         // Ajout du sous-menu quitter
         item = new JMenuItem(new QuitterAction(fenetre, "Quitter"));

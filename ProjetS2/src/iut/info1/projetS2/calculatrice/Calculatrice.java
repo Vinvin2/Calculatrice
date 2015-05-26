@@ -6,9 +6,7 @@ package iut.info1.projetS2.calculatrice;
 
 import iut.info1.projetS2.calculatrice.navigation.Navigation;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;

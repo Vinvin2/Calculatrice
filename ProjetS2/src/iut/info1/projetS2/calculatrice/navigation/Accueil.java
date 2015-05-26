@@ -5,7 +5,7 @@
 package iut.info1.projetS2.calculatrice.navigation;
 
 import iut.info1.projetS2.calculatrice.Calculatrice;
-import iut.info1.projetS2.calculatrice.Menu;
+import iut.info1.projetS2.menu.Menu;
 
 import java.awt.event.ActionEvent;
 

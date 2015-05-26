@@ -4,7 +4,7 @@
  */
 package iut.info1.projetS2.tableur.action;
 
-import iut.info1.projetS2.calculatrice.Menu;
+import iut.info1.projetS2.menu.Menu;
 import iut.info1.projetS2.tableur.Tableur;
 
 import java.awt.event.ActionEvent;
