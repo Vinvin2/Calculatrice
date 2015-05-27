@@ -53,14 +53,14 @@ public class TexteAide extends JTextArea {
         +"Les opérateur disponibles sont :\n"
         + "    +                  -                    *                  /\n"
         + "addition    soustraction    multiplication    division\n\n"
-        +"Symbole . pour les nombres décimaux\n\n"
+        +"Symbole '.' pour les nombres décimaux\n\n"
         + "* Les Instructuins de calculs avec des parenthèses :\n\n"
         + "Imbrication d'au moins 3 niveaux de parenthèses possible\n\n"
         + "* Instructions de calcul utilisant la mémoire : \n\n"
         + "26 mémoires nommées de A à Z disponibles\n\n"
         + "Conservation d'un calcul dans une mémoire : \n"
         + "expression     opéarateur     expression  =  memoire\n"
-        + "La valeur d'une mémoire peut être utilisé pour un calcul\n\n"       
+        + "La valeur d'une mémoire peut être utilisée pour un calcul\n\n"       
         // Texte regroupant les commandes disponibles pour le gestionnaire
         // de la mémoire
         +"- Commandes pour le Gestionnaire de la mémoire : \n\n"

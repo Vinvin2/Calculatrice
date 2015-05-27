@@ -45,7 +45,7 @@ public class TexteTabAide extends JTextArea {
         setEditable(false);
 
         // Texte pour expliquer le fonctionnement général du tableur
-        setText(" - Fonctionnement Mini - Tableur :\n\n"
+        setText(" - Fonctionnement du Mini-Tableur :\n\n"
         +"Les formules de calcul pourront faire intervenir les opérations \n"
         +"de la mini-calculatrice, les parenthèses, des opérandes qui  \n"
         +"pourront être des valeurs ou bien une cellule de la feuille de \n"
@@ -53,11 +53,11 @@ public class TexteTabAide extends JTextArea {
         + "-> Exemple : A1 6, B2 A1 * 5\n\n"
 
         + "Les coordonnées d'une cellule peuvent comporter le symbole $,\n"
-        +"une seule fois ou deux fois, afin de figer la ligne/colonne \n"
+        +"une seule fois ou deux fois, afin de figer la ligne/colonne "
         + "pour la copie\n"
         + "-> Exemple :  $A20, A$20, $A$20\n\n"
 
-        + "Les commandes ont en argument soit les coordonnées d'une cellule\n\n"
+        + "Les commandes ont en argument soit les coordonnées d'une cellule\n"
         + " comme par exemple A1 ou Z20, soit une plage de cellule comme : \n "
         + "A1..D5 ou B5..B20\n\n"
         // Texte regroupant les commandes disponibles pour le mini-tableur
@@ -65,25 +65,25 @@ public class TexteTabAide extends JTextArea {
         +"VOIR   : Affiche soit le contenu de toutes les cellules de la \n"
         + "feuille , soit le contenu de la cellule spécifiée, soit celui\n"
         + "des cellules de la plage spécifiée\n"
-        + "--> Argument 1 : aucun ou cellule de plage \n\n" 
+        + "--> Argument 1 : aucun ou cellule ou plage \n\n" 
 
         +"VALEUR : Affiche soit le contenu de toutes les cellules de la \n"
         + "feuille, soit la valeur de la cellule spécifiée, soit celle des\n"
         + "cellules de la plage spécifiée\n"
-        + "--> Argument 1 : aucun ou cellule de plage \n\n"
+        + "--> Argument 1 : aucun ou cellule ou plage \n\n"
 
         +"CONT   : Affiche soit le contenu de toutes les cellules de la \n"
         + "feuille , soit le contenu de la cellule spécifiée, soit celui\n"
         + "des cellules de la plage spécifiée. On entend par contenu la \n"
         + "valeur de la cellule et éventuellement la formule qu'elle contient\n"
-        + "--> Argument 1 : aucun ou cellule de plage \n\n"
+        + "--> Argument 1 : aucun ou cellule ou plage \n\n"
 
         +"INIT   : Entrer la valeur de la cellule spécifiée, ou bien de \n"
         + "toutes les cellules de la plage spécifiée \n"
         + "Valeur identique pour toutes les cellules ou valeurs distinctes\n"
         + "--> Argument 1 : cellule ou plage\n\n"
 
-        +"COPIER : Copie le contenu de la première cellule dans le deuxième\n"
+        +"COPIER : Copie le contenu de la première cellule dans la deuxième\n"
         +"--> Argument 1 : cellule   --> Argument 2 : cellule\n\n"
 
         +"COPIER : Copie le contenu de la cellule spécifiée dans toutes\n"

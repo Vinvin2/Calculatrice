@@ -68,7 +68,9 @@ public class Aide extends JFrame {
         // On ajoute l'écran contenant les commandes à la fenêtre
         containerPrincipal.add(scroll);
         ecranCommandes.setMargin(new Insets(20,30,20,20));
-
+        
+        // On fait en sorte que la scrollbar démarre bien en haut de la fenêtre
+        ecranCommandes.setCaretPosition(0);
     }
 
 }

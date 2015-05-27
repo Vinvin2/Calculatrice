@@ -89,6 +89,7 @@ public class Menu extends JFrame {
 		containerPrincipal.add(image);
 		containerPrincipal.add(espace2);
 		
+		
 		// On place les boutons au centre de l'écran sur une ligne verticale
 		containerPrincipal.add(boutonCalculatrice);
 		containerPrincipal.add(espace3);
@@ -107,7 +108,7 @@ public class Menu extends JFrame {
 		containerPrincipal.add(vide);
 		
 		// On change l'icone de la fenêtre
-        Image icone = Toolkit.getDefaultToolkit().getImage("projetS2.png");
+        Image icone = Toolkit.getDefaultToolkit().getImage("logo2.jpg");
         setIconImage(icone);
 	    
 	}
