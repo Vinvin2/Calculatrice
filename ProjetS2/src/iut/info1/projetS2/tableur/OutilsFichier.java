@@ -36,10 +36,12 @@ public class OutilsFichier {
      * Enregistre dans le fichier ayant pour nom NOM_FICHIER_PAIRE
      * le tableau contenant les paires "ligne/arrêt". Il s'agit d'un tableau
      * à 2 dimensions contenant des valeurs de type String.
-     * @param table  tableau à 2 dimensions contenant des String
+     * @param tableCalcule 
+     * @param tableEnDur 
      * @return un booléen égal à vrai ssi la sauvegarde a bien été effecuée
      */
-    public static boolean enregistrerTableur(Object[][] table) {
+    public static boolean enregistrerTableur(Object[][] tableCalcule,
+                                             String[][] tableEnDur) {
         boolean reussi = true;      // vrai ssi l'enregistrement a réussi
         
         // création et ouverture du fichier NOM_FICHIER_PAIRE
@@ -47,7 +49,8 @@ public class OutilsFichier {
                     new FileOutputStream(nomFichier))) {
                        
             // On écrit l'objet argument dans le fichier
-            fichier.writeObject(table);  
+            fichier.writeObject(tableCalcule);  
+            fichier.writeObject(tableEnDur);
         }  catch (IOException erreur) {
             
             // une erreur s'est produite lors de l'accès au fichier

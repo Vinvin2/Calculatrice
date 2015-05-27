@@ -9,10 +9,12 @@ import iut.info1.projetS2.tableur.OutilsFichier;
 import iut.info1.projetS2.tableur.Tableur;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 /**
  * Permet de sauvgarder un fichier tableur lors de l'activation de 
@@ -44,21 +46,52 @@ public class SauverAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
         
-        // création de la boîte de dialogue
+        // nom du bouton qui permet l'enregistrement
+        String sauver = "ENREGISTRER";
+        
+        // On choisi notre filtre
+        FileFilter tabix = new FiltreSimple("Fichiers Tableur",".tabix");
+        
+        // On initialise la fenetre permettant le choix des fichiers
         JFileChooser dialogue = new JFileChooser();
-         
-        // affichage
-        dialogue.showOpenDialog(null);
+        
+        // on lui ajoute notre filtre
+        dialogue.addChoosableFileFilter(tabix);
+        
+        // on lui donne un nouveau titre
+        dialogue.setDialogTitle("Enregistrer ");
+        
+        // affichage de notre        
+        int resultatEnregistrer = dialogue.showDialog(dialogue, sauver);
+        
+        // si l'utilisateur appui sur enregistrer
+        if (resultatEnregistrer == JFileChooser.APPROVE_OPTION) {
+            
+            // récupération du fichier sélectionné
+            String nom = new String(dialogue.getSelectedFile().toString());
+          
+            // si le fichier à déja le bon nom d'extension
+            if (nom.endsWith(".tabix")) {
+                // on ne fait rien
+            
+            // si le nom entré est vide
+            }else if (nom.equals(0)) {
+                nom = "sans_nom.tabix";
+            
+            // si nous n'avons pas mis d'extension
+            } else {
+                // on lu rajoute l'extension
+                nom = nom + ".tabix";
+            }
+            
+            OutilsFichier.nomFichier = new File(nom);
+            
+            if (OutilsFichier.nomFichier.exists()) {
+            
 
-        // récupération du fichier sélectionné
-        OutilsFichier.nomFichier = dialogue.getSelectedFile();
+            } else {
         
-        // Saugarde le tableau de données du tableur dans un fichier
-        if (OutilsFichier.enregistrerTableur(ModeleDeTable.getDonnees())) {
-        
-            // Ouverture d'une fenetre avec un message
-            JOptionPane.showMessageDialog(fenetre, "Votre tableur a été "
-                                          + "sauvegardé avec succés");
+            }
         } else {
             
             // Affichage d'un message d'erreur en cas d'échec
@@ -67,4 +100,18 @@ public class SauverAction extends AbstractAction {
         }
                                      
     }
+        
+        /**
+         * Permet de sauvegarder notre tabbleur dans un fichier
+         */
+        public void enregistrement() {
+
+            // Sauvegarde le tableau de données du tableur dans un fichier
+            OutilsFichier.enregistrerTableur(ModeleDeTable.getDonnees(),
+                    fenetre.getActions().getEntrees());
+
+            // Ouverture d'une fenetre avec un message
+            JOptionPane.showMessageDialog(fenetre, "Votre tableur a été "
+                    + "sauvegardé avec succés");
+        }
 }

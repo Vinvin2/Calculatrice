@@ -9,9 +9,6 @@ import iut.info1.projetS2.tableur.OutilsFichier;
 import iut.info1.projetS2.tableur.Tableur;
 
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -48,17 +45,17 @@ public class ChargerAction extends AbstractAction {
      * Si non on revient au tableur sans rien faire.
      */
     public void actionPerformed(ActionEvent e) {
-        
-        Scanner delimiteur = null;
-        String extension = null;
 
+        // On choisi notre filtre
         FileFilter tabix = new FiltreSimple("Fichiers Tableur",".tabix");
         
+        // On initialise la fenetre permettant le choix des fichiers
         JFileChooser dialogue = new JFileChooser();
         
+        // on lui ajoute notre filtre
         dialogue.addChoosableFileFilter(tabix);
 
-        // affichage
+        // affichage de la fenetre de choix de fichiers
         dialogue.showOpenDialog(null);
         
         // Permet de ne pouvoir choisir seulement des fichiers
@@ -67,18 +64,12 @@ public class ChargerAction extends AbstractAction {
         // récupération du fichier sélectionné
         OutilsFichier.nomFichier = dialogue.getSelectedFile();
 
+        // si le nom du fichier existe
         if (OutilsFichier.nomFichier.exists()) {
-            try {
-                delimiteur = new Scanner(OutilsFichier.nomFichier);
-                delimiteur.useDelimiter("\\056");
-                delimiteur.next();
-                extension = delimiteur.next();
+            
+            // si notre fichier est un .tabix
+            if (OutilsFichier.nomFichier.toString().endsWith(".tabix")) {
                 
-            } catch (FileNotFoundException e1) { // branche morte
-               
-            }
-
-            if (extension == "tabix") {
                 // On remplace notre tableau par celui à l'intérieur
                 // de notre fichier
                 ModeleDeTable.setDonnees(
