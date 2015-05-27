@@ -111,7 +111,7 @@ public class TexteTabAide extends JTextArea {
         +"RAZ    : Vide le contenu de toutes les cellules de la plage \n"
         + "spécifiée \n"
         + "--> Argument 1 : plage");
-
+        
     }
 
 }

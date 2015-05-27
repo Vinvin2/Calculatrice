@@ -5,13 +5,14 @@
 
 package iut.info1.projetS2.menu;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 
 import iut.info1.projetS2.calculatrice.Container;
 import iut.info1.projetS2.calculatrice.navigation.Quitter;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -35,16 +36,16 @@ public class Menu extends JFrame {
 	private Container vide = new Container(900,80);
 	
 	/** panel contenant un espace */
-	private Container espace = new Container(900,10);
+	private Container espace = new Container(900,50);
 	
 	/** panel contenant un second espace */
-	private Container espace2 = new Container(900,10);
+	private Container espace2 = new Container(900,60);
 	
 	/** panel contenant un troisième espace */
-	private Container espace3 = new Container(900,10);
+	private Container espace3 = new Container(900,30);
 	
 	/** panel contenant un quatrième espace */
-	private Container espace4 = new Container(900,10);
+	private Container espace4 = new Container(900,30);
 	
 	/** Bouton Calculatrice */
 	private BoutonMenu boutonCalculatrice = 
@@ -55,6 +56,9 @@ public class Menu extends JFrame {
 
 	/** Bouton Quitter */
 	private BoutonMenu boutonQuit2 = new BoutonMenu(this, "QUITTER");
+	
+	/** Police d'écriture pour le titre */
+    private static final Font PoliceTitre = new Font("Verdana", Font.BOLD, 24);
 
 	/**
 	 * Création de la fenêtre contenant le menu principal de l'application
@@ -84,9 +88,13 @@ public class Menu extends JFrame {
 		this.setContentPane(containerPrincipal);
 		
 		// On ajoute une image au dessus des boutons du menu
-		JLabel image = new JLabel( new ImageIcon("logo.png"));
+		JLabel titre = 
+				new JLabel("Avec Mini-Calculator et Mini-Tablor, devenez "
+						 + "le plus fort !");
+		titre.setFont(PoliceTitre);
+		titre.setForeground(new Color(255,160,122));
 		containerPrincipal.add(espace);
-		containerPrincipal.add(image);
+		containerPrincipal.add(titre);
 		containerPrincipal.add(espace2);
 		
 		
