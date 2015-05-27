@@ -136,7 +136,7 @@ public class Menu extends JMenuBar{
         menuAutre.setMnemonic(KeyEvent.VK_F3);
         
         // Ajout du sous-menu aide
-        item = new JMenuItem(new AideAction(fenetre,"Aide"));
+        item = new JMenuItem(new AideTabAction(fenetre,"Aide"));
         item.setIcon(new ImageIcon("aide.png"));
         menuAutre.add(item);
         

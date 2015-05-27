@@ -5,9 +5,12 @@
 
 package iut.info1.projetS2.tableur.action;
 
-import iut.info1.projetS2.calculatrice.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
 
+import iut.info1.projetS2.calculatrice.Container;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 /**
  * Classe qui permet d'ouvrir une fenêtre contenant les aides,
@@ -15,12 +18,17 @@ import javax.swing.JFrame;
  * @author 20-20
  * @version 0.1
  */
-
 @SuppressWarnings("serial")
 public class AideTab extends JFrame {
-	
-	/** Container principal de l'application */
-	private Container containerPrincipal = new Container(900, 700);
+    
+    /** Container principal de l'application */
+    private Container containerPrincipal = new Container(900, 700);
+
+    /** Ecran où les commandes disponibles seront affichées */
+    private TexteTabAide ecranCommandes = new TexteTabAide();
+
+    /** Barre de défilement pour l'écran */
+    private JScrollPane scroll = new JScrollPane(ecranCommandes);
 
 	/**
 	 * Création de la fenêtre contenant le menu principal de l'application
@@ -33,7 +41,7 @@ public class AideTab extends JFrame {
 		this.setTitle("AIDE : Commandes Mini-Tableur");
 		
 		// On définit la taille de la fenêtre
-		this.setSize(630, 450);
+		this.setSize(630, 500);
 
 		// On place la fenêtre au centre de l'écran
 		this.setLocationRelativeTo(null);
@@ -49,6 +57,15 @@ public class AideTab extends JFrame {
 
 		// On rend visible la fenêtre
 		this.setVisible(true);
+		
+		// propriétés du scroll pour le défilement de la fenêtre
+        scroll.setVerticalScrollBarPolicy
+                                    (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setPreferredSize(new Dimension(610, 460));
+
+        // On ajoute l'écran contenant les commandes à la fenêtre
+        containerPrincipal.add(scroll);
+        ecranCommandes.setMargin(new Insets(20,30,20,20));
 
 	}
 	

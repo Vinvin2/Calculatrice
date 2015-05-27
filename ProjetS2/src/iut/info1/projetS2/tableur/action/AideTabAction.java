@@ -16,7 +16,7 @@ import javax.swing.AbstractAction;
  * @version 0.1
  */
 @SuppressWarnings("serial")
-public class AideAction extends AbstractAction {
+public class AideTabAction extends AbstractAction {
     
     /** Fenetre de notre application */
     @SuppressWarnings("unused")
@@ -28,7 +28,7 @@ public class AideAction extends AbstractAction {
      * @param fenetre 
      * @param texte nom du sous-menu
      */
-    public AideAction(Tableur fenetre, String texte) {
+    public AideTabAction(Tableur fenetre, String texte) {
         super(texte);
 
         this.fenetre = fenetre;

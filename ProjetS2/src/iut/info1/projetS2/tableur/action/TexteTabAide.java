@@ -58,7 +58,7 @@ public class TexteTabAide extends JTextArea {
         + "-> Exemple :  $A20, A$20, $A$20\n\n"
 
         + "Les commandes ont en argument soit les coordonnées d'une cellule\n\n"
-        + " comme par exemple A1 ou Z20, soit une plage de cellule comme "
+        + " comme par exemple A1 ou Z20, soit une plage de cellule comme : \n "
         + "A1..D5 ou B5..B20\n\n"
         // Texte regroupant les commandes disponibles pour le mini-tableur
         +"- Commandes pour le Mini-Tableur : \n\n"
