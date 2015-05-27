@@ -5,9 +5,12 @@
 
 package iut.info1.projetS2.calculatrice.navigation;
 
+import java.awt.Dimension;
+
 import iut.info1.projetS2.calculatrice.Container;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 /**
  * Classe qui permet d'ouvrir une fenêtre contenant les aides,
@@ -21,6 +24,15 @@ public class Aide extends JFrame {
 	
 	/** Container principal de l'application */
 	private Container containerPrincipal = new Container(900, 700);
+	
+	/** Container pour le positionnement */
+    private Container containerPositionnement = new Container(120, 700);
+	
+	/** Ecran où les commandes disponibles seront affichées */
+    private TexteAide ecranCommandes = new TexteAide();
+    
+    /** Barre de défilement pour l'écran */
+    private JScrollPane scroll = new JScrollPane(ecranCommandes);
 
 	/**
 	 * Création de la fenêtre contenant le menu principal de l'application
@@ -30,12 +42,10 @@ public class Aide extends JFrame {
 		super();
 
 		//Définit un titre pour la fenêtre
-		this.setTitle("AIDE : Commandes-Exemples");
+		this.setTitle("AIDE : Commandes Mini-Calculatrice");
 
-		// On utilisera les mêmes caractéristiques pour les autres fenêtres
-		// afin d'avoir une IHM la plus homogène possible
 		// On définit la taille de la fenêtre
-		this.setSize(630, 450);
+		this.setSize(630, 500);
 
 		// On place la fenêtre au centre de l'écran
 		this.setLocationRelativeTo(null);
@@ -46,13 +56,22 @@ public class Aide extends JFrame {
 		// On empêche la modification de la taille de la fenêtre
 		this.setResizable(false);
 
-		// On ajoute les boutons
+		// On ajoute le container principal
 		this.setContentPane(containerPrincipal);
 
 		// On rend visible la fenêtre
 		this.setVisible(true);
 		
-		System.out.println("MEM : active le mode Mémoire");
+		// propriétés du scroll pour le défilement de la fenêtre
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setPreferredSize(new Dimension(530, 350));
+		
+        // On ajoute l'écran contenant les commandes à la fenêtre
+		containerPrincipal.add(ecranCommandes);
+		// On ajoute la barre de scroll à l'écran
+		ecranCommandes.add(scroll);
+		// On positionne le texte plus à droite de l'écran
+		containerPrincipal.add(containerPositionnement);
 		
 	}
 	

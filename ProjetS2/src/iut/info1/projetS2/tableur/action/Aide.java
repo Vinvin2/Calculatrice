@@ -31,9 +31,7 @@ public class Aide extends JFrame {
 
 		//Définit un titre pour la fenêtre
 		this.setTitle("AIDE : Commandes-Exemples");
-
-		// On utilisera les mêmes caractéristiques pour les autres fenêtres
-		// afin d'avoir une IHM la plus homogène possible
+		
 		// On définit la taille de la fenêtre
 		this.setSize(630, 450);
 
