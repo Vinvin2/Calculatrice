@@ -34,7 +34,7 @@ public class ChargerAction extends AbstractAction {
      */
     public ChargerAction(Tableur fenetre, String texte) {
         super(texte);
-        
+
         this.fenetre = fenetre;
     }
 
@@ -48,46 +48,55 @@ public class ChargerAction extends AbstractAction {
 
         // On choisi notre filtre
         FileFilter tabix = new FiltreSimple("Fichiers Tableur",".tabix");
-        
+
         // On initialise la fenetre permettant le choix des fichiers
         JFileChooser dialogue = new JFileChooser();
-        
+
         // on lui ajoute notre filtre
         dialogue.addChoosableFileFilter(tabix);
 
-        // affichage de la fenetre de choix de fichiers
-        dialogue.showOpenDialog(null);
-        
         // Permet de ne pouvoir choisir seulement des fichiers
         dialogue.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-        // récupération du fichier sélectionné
-        OutilsFichier.nomFichier = dialogue.getSelectedFile();
+        // affichage de notre fenetre de choix de fichiers    
+        int resultatEnregistrer = dialogue.showOpenDialog(dialogue);
 
-        // si le nom du fichier existe
-        if (OutilsFichier.nomFichier.exists()) {
+        if (resultatEnregistrer == JFileChooser.APPROVE_OPTION) {
             
-            // si notre fichier est un .tabix
-            if (OutilsFichier.nomFichier.toString().endsWith(".tabix")) {
-                
-                // On remplace notre tableau par celui à l'intérieur
-                // de notre fichier
-                ModeleDeTable.setDonnees(
-                         OutilsFichier.restaurerPaireLignTableur());
+            // récupération du fichier sélectionné
+            OutilsFichier.nomFichier = dialogue.getSelectedFile();
+            
+            // si le nom du fichier existe
+            if (OutilsFichier.nomFichier.exists()) {
 
-                // Et on raffraichie notre tableur pour voir la mise à jour
-                Tableur.refresh(fenetre);
+                // si notre fichier est un .tabix
+                if (OutilsFichier.nomFichier.toString().endsWith(".tabix")) {
+
+                    // On remplace notre tableau par celui à l'intérieur
+                    // de notre fichier
+                    ModeleDeTable.setDonnees(
+                            OutilsFichier.restaurerPaireLignTableur());
+
+                    // Et on raffraichie notre tableur pour voir la mise à jour
+                    Tableur.refresh(fenetre);
+                } else {
+
+                    // On affiche un message d'erreur
+                    JOptionPane.showMessageDialog(fenetre,
+                            "Erreur, type de fichier incorrect.");
+                }
             } else {
-                
-                // On affiche un message d'erreur
+
+                // Sinon on affiche un message d'erreur
                 JOptionPane.showMessageDialog(fenetre,
-                        "Erreur, type de fichier incorrect.");
+                        "Erreur, fichier introuvable !");
             }
+            
         } else {
             
             // Sinon on affiche un message d'erreur
             JOptionPane.showMessageDialog(fenetre,
-                    "Erreur, fichier introuvable !");
+                    "Attention, aucun fichier chargé !");   
         }
 
     }

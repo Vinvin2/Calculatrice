@@ -5,10 +5,12 @@
 package iut.info1.projetS2.tableur;
 
 import iut.info1.projetS2.calculatrice.navigation.OuvrirCalculatrice;
+import iut.info1.projetS2.calculatrice.navigation.QuitterAction;
 import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -81,6 +83,7 @@ public class Menu extends JMenuBar{
         buildMenuPopUp();
         
         // Ajout du menu fichier dans la barre de menu
+        
         this.add(menuFichier);
         
         // Ajout du menu éditer dans la barre de menu
@@ -88,6 +91,7 @@ public class Menu extends JMenuBar{
         
         // Ajout du menu autre dans la barre de menu
         this.add(menuAutre);
+        
         
     }
 
@@ -129,6 +133,9 @@ public class Menu extends JMenuBar{
         // Création du menu autre
         menuAutre = new JMenu("?");
         
+        // Ajout d'un raccourci pour le menu
+        menuAutre.setMnemonic(KeyEvent.VK_F3);
+        
         // Ajout du sous-menu aide
         item = new JMenuItem(new AideAction(fenetre,"Aide"));
         item.setIcon(new ImageIcon("aide.png"));
@@ -147,6 +154,9 @@ public class Menu extends JMenuBar{
        
         // Création du menu Editer
         menuEditer = new JMenu("Editer");
+        
+        // Ajout d'un raccourci pour le menu
+        menuEditer.setMnemonic(KeyEvent.VK_F2);
         
         // Ajout du sous-menu copier
         item = new JMenuItem(new CopierAction(fenetre,"Copier"));
@@ -178,6 +188,9 @@ public class Menu extends JMenuBar{
         // Création du menu fichier
         menuFichier = new JMenu("Fichier");
         
+        // Ajout d'un raccourci pour le menu
+        menuFichier.setMnemonic(KeyEvent.VK_F1);
+        
         // Ajout du sous-menu nouveau
         item = new JMenuItem(new NouveauAction(fenetre,"Nouveau"));
         item.setIcon(new ImageIcon("nouveau.jpg"));
@@ -196,7 +209,7 @@ public class Menu extends JMenuBar{
         // Ajout d'une barre de séparation
         menuFichier.insertSeparator(4);
         
-        // Ajout du sous-menu quitter
+        // Ajout du sous-menu Accueil
         item = new JMenuItem(new AccueilAction(fenetre, "Accueil"));
         item.setIcon(new ImageIcon("accueil.png"));
         menuFichier.add(item); 
@@ -204,6 +217,11 @@ public class Menu extends JMenuBar{
         // Ajout du sous-menu ouvrir la calculatrice
         item = new JMenuItem(new OuvrirCalculatrice(fenetre,"Calculatrice"));
         item.setIcon(new ImageIcon("calculette.jpg"));
+        menuFichier.add(item);
+        
+        // Ajout du sous-menu quitter
+        item = new JMenuItem(new Quitter2Action(fenetre, "Quitter"));
+        item.setIcon(new ImageIcon("quitter.png"));
         menuFichier.add(item);
       
     }

@@ -6,6 +6,7 @@ package iut.info1.projetS2.calculatrice.navigation;
 
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -131,6 +132,9 @@ public class Navigation extends JMenuBar{
         // Création du menu autre
         menuAutre = new JMenu("?");
         
+        // Ajout d'un raccourci au menu
+        menuAutre.setMnemonic(KeyEvent.VK_F3);
+        
         // Ajout du sous-menu aide
         item = new JMenuItem(new ActionAide(fenetre,"Aide"));
         item.setIcon(new ImageIcon("aide.png"));
@@ -149,6 +153,9 @@ public class Navigation extends JMenuBar{
        
         // Création du menu Editer
         menuEditer = new JMenu("Editer");
+        
+        // Ajout d'un raccourci pour le menu
+        menuEditer.setMnemonic(KeyEvent.VK_F2);
         
         // Ajout du sous-menu copier
         item = new JMenuItem(new Copier(fenetre,"Copier"));
@@ -179,6 +186,9 @@ public class Navigation extends JMenuBar{
         
         // Création du menu fichier
         menuFichier = new JMenu("Fichier");
+        
+        // Ajout d'un raccourci pour le menu
+        menuFichier.setMnemonic(KeyEvent.VK_F1);
         
         // Ajout du sous-menu accueil
         item = new JMenuItem(new Accueil(fenetre, "Accueil"));
