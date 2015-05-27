@@ -6,6 +6,7 @@ package iut.info1.projetS2.tableur;
 
 import iut.info1.projetS2.tableur.Menu;
 import iut.info1.projetS2.tableur.action.*;
+import iut.info1.projetS2.tests.SauvegardeFichier;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -5,6 +5,8 @@
 
 package iut.info1.projetS2.tableur;
 
+import iut.info1.projetS2.tableur.action.Commandes;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -50,7 +52,7 @@ public class OutilsFichier {
                        
             // On écrit l'objet argument dans le fichier
             fichier.writeObject(tableCalcule);  
-            fichier.writeObject(tableEnDur);
+            fichier.writeObject((Object[][])tableEnDur);
         }  catch (IOException erreur) {
             
             // une erreur s'est produite lors de l'accès au fichier
@@ -71,7 +73,8 @@ public class OutilsFichier {
     public static Object[][] restaurerPaireLignTableur()  {
         
         // objet tampon dans lequel est placé l'objet lu dans le fichier  
-        Object[][] tampon = null;  
+        Object[][] tampon = null; 
+        String[][] tampon2 = null;
         
         // ouverture du fichier et lecture de l'objet qu'il contient
         try(ObjectInputStream fichier = new ObjectInputStream(
@@ -79,6 +82,10 @@ public class OutilsFichier {
             
             // lecture de l'objet contenu dans le fichier
             tampon = (Object[][]) fichier.readObject();
+            ModeleDeTable.setDonnees(tampon);
+            tampon2 = (String[][]) fichier.readObject();
+            setEntrees(tampon2);
+            
             
         } catch (ClassNotFoundException erreur) {
             
