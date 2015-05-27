@@ -4,7 +4,6 @@
  */
 package iut.info1.projetS2.tableur.action;
 
-import iut.info1.projetS2.tableur.ModeleDeTable;
 import iut.info1.projetS2.tableur.OutilsFichier;
 import iut.info1.projetS2.tableur.Tableur;
 

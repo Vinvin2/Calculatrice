@@ -5,7 +5,6 @@
 package iut.info1.projetS2.tableur;
 
 import iut.info1.projetS2.calculatrice.navigation.OuvrirCalculatrice;
-import iut.info1.projetS2.calculatrice.navigation.QuitterAction;
 import iut.info1.projetS2.tableur.action.*;
 
 import java.awt.Cursor;

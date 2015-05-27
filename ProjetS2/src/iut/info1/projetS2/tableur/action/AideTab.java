@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  */
 
 @SuppressWarnings("serial")
-public class Aide extends JFrame {
+public class AideTab extends JFrame {
 	
 	/** Container principal de l'application */
 	private Container containerPrincipal = new Container(900, 700);
@@ -25,7 +25,7 @@ public class Aide extends JFrame {
 	/**
 	 * Création de la fenêtre contenant le menu principal de l'application
 	 */
-	public Aide() {
+	public AideTab() {
 
 		super();
 

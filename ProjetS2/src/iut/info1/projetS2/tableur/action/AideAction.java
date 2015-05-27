@@ -39,6 +39,6 @@ public class AideAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
         
-    	new Aide();
+    	new AideTab();
     }
 }
