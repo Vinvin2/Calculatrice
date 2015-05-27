@@ -39,7 +39,7 @@ public class Commandes {
     private static final String REG_NBRE = "([0]*((1?\\d)||(20)))";
 
     /** pattern d'un nombre de cellule */
-    private static final String REG_NBRE2 = "((\\0044)?)([0]*((1?\\d)||(20)))";
+    private static final String REG_NBRE2 = "((\\0044)?)(0*((1?\\d)||(20)))";
 
     /** Pattern d'une case type nombreLettre */
     private static final String REG_CASE1 = "("+REG_NBRE+REG_LETTRE+")";
@@ -573,10 +573,17 @@ public class Commandes {
 //        // si le calcul est syntaxiquement correcte on ne passe pas ici
 //        calcul.close();
         aRenvoyer = "A1 + 2B + 3";
-        aRenvoyer = aRenvoyer.replaceAll(REG_MODIF2, "lol");
+        aRenvoyer = aRenvoyer.replaceAll("[A-Z]\\d+", "lol");
+        Scanner test = new Scanner(aPreparer);
+        while (test.hasNext()) {
+        //    aRenvoyer
+        }
+        
         return aRenvoyer;
     }
 
+   // private String getValueAt() {
+    
 //    /**
 //     * Remplace chaque occurences de coordonnées de cases par leur valeur
 //     * correspondante

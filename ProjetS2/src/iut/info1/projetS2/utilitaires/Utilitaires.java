@@ -30,6 +30,24 @@ public class Utilitaires {
             REG_OPERANDE + "(" + REG_OPERATEUR + REG_OPERANDE + ")*";
 
     /**
+     * TODO commenter le rôle de la méthode
+     * @param aVerifier 
+     * @return ezaq
+     */
+    public static boolean verifNbParent(String aVerifier) {
+        int nbOuv = 0;
+        int nbFerm = 0;
+        for (int i =0; i < aVerifier.length(); i++) {
+            if (aVerifier.charAt(i) == '(') {
+                nbOuv++;
+            } else if (aVerifier.charAt(i) == ')') {
+                nbFerm++;
+            }
+        }
+        return nbOuv == nbFerm;
+    }
+    
+    /**
      * Type de calcul le plus évolué que la calculatrice et le tableur peuvent
      * réaliser, prends en compte les parenthèses
      * @param aCalculer
@@ -43,12 +61,13 @@ public class Utilitaires {
         String resultat = ""; // chaine transformée à renvoyer
         String tmp; // chaine temporaire
         String subTmp; // coupure de chaine temporaire
+        
+        if (!verifNbParent(aCalculer)) {
+            return Double.NaN;
+        }
         // Scanner d'analyse du calcul
         Scanner calculateur = new Scanner(aCalculer);
 
-        if (aCalculer.charAt(0) == '-') {
-
-        }
 
         // on boucle tant qu'il reste quelquechose à calcul
         while (calculateur.hasNext()) {
@@ -122,6 +141,7 @@ public class Utilitaires {
      *             <li>Double.NaN si erreur dans le calcul</li></ul>
      */
     public static double calculIntermediaire(String aCalculer) {
+        System.out.println(aCalculer);
         /*
          *  teste si calcul bon format via regex et retourne un NaN si err
          *  la première opérande peut être négative
@@ -135,7 +155,7 @@ public class Utilitaires {
         
         if (!estCalc.matches()) {
             // return Double.NaN; // le calcul n'est pas réalisable
-            System.out.println("detecté comme faux");
+            //System.out.println("detecté comme faux");
         }
         // else
         double resultat = 0;      // resultat du calcul
@@ -161,20 +181,21 @@ public class Utilitaires {
         // récupère toutes les opérandes
         while (testeur.hasNext()) {
             verific = testeur.findInLine(REG_OPERANDE);
-            System.out.println(verific);
+            //System.out.println(verific);
             listeOperande.add(Double.parseDouble(verific));
 
             testeur.skip("\\s*");
             verific = testeur.findInLine(REG_OPERATEUR);
-            System.out.println(verific);
+            //System.out.println(verific);
             if (verific != null) {
                 listeOperateur.add(verific.charAt(0));
                 testeur.skip("\\s*");
             }
         }
-        System.out.println(listeOperande.toString());
-        System.out.println(listeOperateur.toString());
+        //System.out.println(listeOperande.toString());
+        //System.out.println(listeOperateur.toString());
 
+        resultat = listeOperande.get(0);
         // pour chaques opérateur on effectue les calculs associés
         for (int i=0; i < listeOperateur.size(); i++) {
             // on modifie le résultat intermédiaire selon l'opérateur
