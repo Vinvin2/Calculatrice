@@ -389,6 +389,7 @@ public class Commandes {
             /*
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~19)
+             * 
              */             
             lig = Integer.parseInt(lul.group(3)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
