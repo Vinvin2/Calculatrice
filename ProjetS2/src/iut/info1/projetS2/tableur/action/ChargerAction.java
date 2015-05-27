@@ -4,7 +4,6 @@
  */
 package iut.info1.projetS2.tableur.action;
 
-import iut.info1.projetS2.tableur.ModeleDeTable;
 import iut.info1.projetS2.tableur.OutilsFichier;
 import iut.info1.projetS2.tableur.Tableur;
 
@@ -74,7 +73,7 @@ public class ChargerAction extends AbstractAction {
 
                     // On remplace notre tableau par celui à l'intérieur
                     // de notre fichier
-                    OutilsFichier.restaurerPaireLignTableur();
+                    this.fenetre.getSauvegarde().restaurerPaireLignTableur();
 
                     // Et on raffraichie notre tableur pour voir la mise à jour
                     Tableur.refresh(fenetre);
