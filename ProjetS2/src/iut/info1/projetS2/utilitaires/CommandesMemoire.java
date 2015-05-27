@@ -176,7 +176,7 @@ public class CommandesMemoire {
             if (casesMem[nomvar - 65] != null) {
                 aRetourner = casesMem[nomvar - 65].toString();
             } else {
-                aRetourner = "Variable " + nomvar + " non déclarée";
+                aRetourner = "Variable " + nomvar + " non déclarée\n";
             }
             return aRetourner;
         } else {
@@ -560,7 +560,7 @@ Pattern.compile("(\\s*INIT\\s*)([A-Z]..[A-Z])\\s*([+-]?\\d+(\\0056\\d+)?)\\s*");
                 }
             } else {
                 return "Erreur, veuillez entrer une commande du type "
-                        + "\"INIT A..D 2\"";
+                        + "\"INIT A..D 2\"\n";
             }
         }
     }

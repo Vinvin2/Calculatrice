@@ -64,8 +64,8 @@ public class ActionCalculer implements ActionListener {
             // à la commande
             fonctionok = fonctionAUtiliserNonMem(commande);
 
-            // on vérifie si la commande ne dépasse pas les 80 caracteres
-            if (commande.length() > 80) {
+            // on vérifie si la commande ne dépasse pas les 75 caracteres
+            if (commande.length() > 75) {
                 fonctionok = 0;
             }          
             if (fonctionok == 1){       // commande MEM
@@ -183,9 +183,9 @@ public class ActionCalculer implements ActionListener {
             } else if (fonctionok == 6) { // commande CAR
                 ecran.insert(CommandesMemoire.car(commande),
                         ecran.getText().length());
-            } else if (fonctionok == 7) {
-                CommandesMemoire.sqrt(commande);// commande SQRT
-                ecran.insert(" OK\n", ecran.getText().length());
+            } else if (fonctionok == 7) {// commande SQRT
+                ecran.insert(CommandesMemoire.sqrt(commande),
+                        ecran.getText().length());
             } else if (fonctionok == 8) {       // commande SOM
                 // on stocke le résultat de la somme
                 double resultat = CommandesMemoire.som(commande);

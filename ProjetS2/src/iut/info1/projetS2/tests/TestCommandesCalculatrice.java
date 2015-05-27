@@ -44,7 +44,7 @@ public class TestCommandesCalculatrice {
         // autant de niveaux de parenthèses que l'on souhaite
         System.out.println("\nPlusieurs niveaux de parenthèses : \n");
         System.out.println(Utilitaires.
-                calculEvolue("(((15.12*(5+1.35))+4)*4)-1"));
+                calculEvolue("(((5.12*(5+1))+4)*4)-1"));
         // sans parenthèses mais avec plusieurs opérandes
         System.out.println("\nplusieurs opérandes, sans parenthèses : \n");
         System.out.println(Utilitaires.calculEvolue("15+1*4+45-1/2"));
