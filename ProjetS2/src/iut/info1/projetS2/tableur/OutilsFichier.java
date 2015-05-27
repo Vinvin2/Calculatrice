@@ -26,7 +26,10 @@ import java.io.ObjectOutputStream;
  * @version 1.0
  */
 public class OutilsFichier {
-        
+
+    /** Tableur associée à la fenetre */
+    private Tableur fenetre;
+    
     /**
      * Nom du fichier dans lequel est enregistré le tableau à 2 dimensions
      * contenant les paires "arrêt/ligne".
@@ -70,7 +73,7 @@ public class OutilsFichier {
      * @return un tableau à 2 dimensions contenant des chaînes de caractères
      *         ou bien la valeur null si un problème empêche l'accès au fichier
      */
-    public static Object[][] restaurerPaireLignTableur()  {
+    public Object[][] restaurerPaireLignTableur()  {
         
         // objet tampon dans lequel est placé l'objet lu dans le fichier  
         Object[][] tampon = null; 
@@ -84,7 +87,7 @@ public class OutilsFichier {
             tampon = (Object[][]) fichier.readObject();
             ModeleDeTable.setDonnees(tampon);
             tampon2 = (String[][]) fichier.readObject();
-            setEntrees(tampon2);
+            this.fenetre.getActions().setEntrees(tampon2);
             
             
         } catch (ClassNotFoundException erreur) {
@@ -98,5 +101,21 @@ public class OutilsFichier {
             // problème d'accès au fichier
         }
         return tampon;
+    }
+
+
+    /**
+     * Constructeur par défaut rendu inutilisable
+     */
+    private OutilsFichier() {
+    }
+    
+    /**
+     * Construit une instance de OutilsFichier associée à un tableur
+     * @param fenetre fenetre associée à cette classe OutilsFichier
+     */
+    public OutilsFichier(Tableur fenetre) {
+        this();
+        this.fenetre = fenetre;
     }
  }
