@@ -30,7 +30,7 @@ public class AideTab extends JFrame {
 		super();
 
 		//Définit un titre pour la fenêtre
-		this.setTitle("AIDE : Commandes-Exemples");
+		this.setTitle("AIDE : Commandes Mini-Tableur");
 		
 		// On définit la taille de la fenêtre
 		this.setSize(630, 450);
