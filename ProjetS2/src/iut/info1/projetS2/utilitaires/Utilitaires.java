@@ -4,6 +4,8 @@
  */
 package iut.info1.projetS2.utilitaires;
 
+import iut.info1.projetS2.tableur.action.Commandes;
+
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -21,18 +23,11 @@ public class Utilitaires {
     public final static String REG_OPERATEUR = "\\s*[/+*-]\\s*";
 
     /** regex permettant d'identifier les opérandes d'un calcul */
-    public final static String REG_OPERANDE = "\\s*\\d+(\\0056\\d+)?\\s*";
+    public final static String REG_OPERANDE = "\\s*[-]?\\d+(\\0056\\d+)?\\s*";
 
     /** regex vérifiant le format d'un calcul */
     public final static String REG_CALCUL = 
-            "-?" + REG_OPERANDE + "(" + REG_OPERATEUR + REG_OPERANDE + ")*";
-
-    /** regex identifiant une opérande plus complexe*/
-    private final static String REG_OP_EVO = "(-?([(].*[)])*||([^/+*-]))";
-
-    /** regex vérifiant un calcul évolué */
-    private final static String REG_CALC_EVO =
-            "((" + REG_OP_EVO + ")+"+REG_OPERATEUR+")*" + REG_OP_EVO;
+            REG_OPERANDE + "(" + REG_OPERATEUR + REG_OPERANDE + ")*";
 
     /**
      * Type de calcul le plus évolué que la calculatrice et le tableur peuvent
@@ -43,59 +38,77 @@ public class Utilitaires {
      *             <li>Double.NaN si erreur dans le calcul</li></ul>
      */
     public static double calculEvolue(String aCalculer) {
-        /*
-         *  teste si calcul bon format via regex et retourne un NaN si err
-         *  la première opérande peut être négative
-         */
-        Pattern testCalcEvo = Pattern.compile(REG_CALC_EVO);
-        Matcher estCalcEvo = testCalcEvo.matcher(aCalculer);
-        if (!estCalcEvo.matches()) {
-           // return Double.NaN; // le calcul n'est pas réalisable
-        }
-        // else, calcul potentiellement réalisable
-        String resultat = "";
-        String tmp;
+        // la vérification de syntaxe se fait dans calculIntermedaire()
+        //String aCalculerVerif;
+        String resultat = ""; // chaine transformée à renvoyer
+        String tmp; // chaine temporaire
+        String subTmp; // coupure de chaine temporaire
+        // Scanner d'analyse du calcul
         Scanner calculateur = new Scanner(aCalculer);
 
-        // 1+(1+1)+1
+        if (aCalculer.charAt(0) == '-') {
+
+        }
+
+        // on boucle tant qu'il reste quelquechose à calcul
         while (calculateur.hasNext()) {
+            // on supprimer les occurences d'espaces, inutiles au calcul
             calculateur.skip("\\s*");
+            // on stocke le contenu du Scanner dans tmp
             tmp = calculateur.nextLine();
+            /*
+             * calcul analyse une String equals à celle analysée avant
+             * l'instruction précédente
+             */
             calculateur = new Scanner(tmp);
+            /*
+             *  la délimitation entre calculs simple et calcul évolué est
+             *  toujours de type opérande suivit d'une parenthèse ouvrante
+             *  donc on modifie le delimier pour séparer ces deux types de 
+             *  calculs
+             */
             calculateur.useDelimiter(REG_OPERATEUR + "[(]");
+            // le prochain calcul est un calcul évolué
             if (tmp.length() > 0 && tmp.charAt(0) == '(') {
-                int deb = tmp.indexOf("(") + 1;
-                int fin = tmp.lastIndexOf(")");
-                tmp = String.valueOf(calculEvolue(tmp.substring(deb, fin)));
-                calculateur.findInLine("[(].*[)]");
+                // récupère l'indexe de fin de ce calcul évolué
+                int fin = Commandes.fermetureParentheseA(tmp);
+                // sauvegarde de tmp qui va être modifiée
+                String sauvegarde = tmp.toString();
+                // réupère le calcul évolué dans subTmp 
+                subTmp = String.valueOf(calculEvolue(tmp.substring(1, fin)));
+                // occurence de cases remplacées
+                tmp = subTmp.toString();
                 resultat = resultat.concat(tmp);
+                tmp = sauvegarde.substring(fin + 1);
+                /* 
+                 * créé un nouveau scanner qui a été 'avancé' de la chaine 
+                 * récupérée à la main
+                 */
+                calculateur.close();
+                calculateur = new Scanner(tmp);
             } else {
-                int deb = tmp.indexOf("(") + 1;
-                int fin = tmp.lastIndexOf(")");
-                if (deb > 1 && fin > 1 && deb > fin) {
-                    calculateur.useDelimiter("[)]" + Utilitaires.REG_OPERATEUR);
-                    tmp = calculateur.next();
-                    calculateur.useDelimiter("[^*/+-]");
-                    tmp = tmp.concat(calculateur.next());
-                    calculateur.useDelimiter("[(]");
-                    tmp = tmp.concat(calculateur.next());
-                    resultat = resultat.concat(
-                            String.valueOf(calculEvolue(tmp)));
-                } else {
-                    tmp = String.valueOf(calculIntermediaire(
-                            calculateur.next()));
-                    resultat = resultat.concat(tmp);
-                }
+                /*
+                 *  le calcul est assez simple pour être réalisé directement 
+                 *  par calculIntermediaire
+                 */
+                tmp = String.valueOf(calculIntermediaire(calculateur.next()));
+                resultat = resultat.concat(tmp);
             }
             try {
+                // calcul simple que remplaceCases peut modifier correctement
                 calculateur.useDelimiter("[^*/+-]+");
                 resultat = resultat.concat(calculateur.next());
                 calculateur.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
             } catch (NoSuchElementException e) {
+                /* 
+                 * calcul n'a plus d'opérateur et est donc vide, la 
+                 * transformation est terminée
+                 */
                 calculateur.close();
                 return calculIntermediaire(resultat);
             }
         }
+        // si le calcul est syntaxiquement correcte on ne passe pas ici
         calculateur.close();
         return calculIntermediaire(resultat);
     }
@@ -115,15 +128,20 @@ public class Utilitaires {
          */
         Pattern testCalc = Pattern.compile(REG_CALCUL);
         Matcher estCalc = testCalc.matcher(aCalculer);
+        
+        if (aCalculer.matches(REG_OPERANDE)) {
+            return Double.parseDouble(aCalculer);
+        }
+        
         if (!estCalc.matches()) {
-            return Double.NaN; // le calcul n'est pas réalisable
+            // return Double.NaN; // le calcul n'est pas réalisable
+            System.out.println("detecté comme faux");
         }
         // else
         double resultat = 0;      // resultat du calcul
         char signeSuiv = '\0';    // opérateur suivant à prendre en compte
         double resultTmp;         // resutalt d'un sous calcul de * et /
-        boolean debutNeg = false; // true si le cacul commance par un '-'
-        String aCalculerVerif = aCalculer; // chaine utilisée pour le calcul
+        String verific;           // variable de récupération
 
         /*
          *  contiendra toutes les opérandes stockées dans l'ordre entré par
@@ -136,52 +154,26 @@ public class Utilitaires {
          * l'opérateur[n] (gauche) et l'opérateur[n+1] (droite)
          */
         ArrayList<Character> listeOperateur = new ArrayList<Character>();
-        /*
-         * analyse le calcul entré par l'user pour récupérer facilement
-         * et uniquement tous les opérandes
-         */
-
-        // vérifie si la première opérande est négative
-        if (aCalculer.charAt(0) == '-') {
-            debutNeg = true;
-            aCalculerVerif = aCalculer.substring(1);
-        }
-
-        Scanner testeurOperande = new Scanner(aCalculerVerif);
-        // pattern d'analyse d'opérandes supposées OK
-        Pattern operandeV1 = Pattern.compile(REG_OPERATEUR);
-        // testeurOperande est prêt à analyser la calcul grâce à ce pattern
-        testeurOperande.useDelimiter(operandeV1);
-
-        /*
-         * analyse le calcul entré par l'user pour récupérer uniquement les
-         * opérateurs
-         */
-        Scanner testeurOperateur = new Scanner(aCalculerVerif);
-        // pattern d'analyse d'opérateurs supposés OK
-        Pattern operateurV1 = Pattern.compile(REG_OPERANDE );
-        // testeurOperateur est prêt à analyser le calcul grâce à ce pattern
-        testeurOperateur.useDelimiter(operateurV1);
+        // Scanner d'analyse du calcul
+        Scanner testeur = new Scanner(aCalculer);
+        // pattern d'analyse
 
         // récupère toutes les opérandes
-        while (testeurOperande.hasNext()) {
-            String verific = testeurOperande.next();
+        while (testeur.hasNext()) {
+            verific = testeur.findInLine(REG_OPERANDE);
+            System.out.println(verific);
             listeOperande.add(Double.parseDouble(verific));
+
+            testeur.skip("\\s*");
+            verific = testeur.findInLine(REG_OPERATEUR);
+            System.out.println(verific);
+            if (verific != null) {
+                listeOperateur.add(verific.charAt(0));
+                testeur.skip("\\s*");
+            }
         }
-        // récupère tous les opérateurs
-        while (testeurOperateur.hasNext()) {
-            char verif = testeurOperateur.next().charAt(0);
-            listeOperateur.add(verif);
-        }
-        /*
-         * préparation pour les calculs, devra évoluer pour prendre en compte
-         * tous les calculs
-         */
-        if (debutNeg) {
-            resultat = 0 - listeOperande.get(0);
-        } else {
-            resultat = listeOperande.get(0);
-        }
+        System.out.println(listeOperande.toString());
+        System.out.println(listeOperateur.toString());
 
         // pour chaques opérateur on effectue les calculs associés
         for (int i=0; i < listeOperateur.size(); i++) {
@@ -241,8 +233,7 @@ public class Utilitaires {
                 break;
             default: // si le premier opérateur est * ou /
                 // listeOperande.get(i+1) est la première opérande
-                resultTmp = debutNeg ? 0 - listeOperande.get(i)
-                        : listeOperande.get(i);
+                resultTmp = listeOperande.get(i);
                 // si il y a un autre calcul à effectuer
                 if (i < listeOperateur.size()) {
                     // pour savoir si l'opération suivante est prioritaire (* /)
@@ -272,8 +263,7 @@ public class Utilitaires {
                 resultat = resultTmp;
             }
         }
-        testeurOperande.close();
-        testeurOperateur.close();
+        testeur.close();
         return resultat; // resultat du calcul terminé
     }
 }

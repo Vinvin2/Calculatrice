@@ -7,3 +7,5 @@ done
 - coder copier
 -faire des trucs directement à pair des cases
 A1 = (1+1+((1+1)+(1+1)+1))+1
+A2 = (A1+((A1+A1)+A1)+(A1+A1)+A1)+A1
+A2 = (A1+(A1+A1))+A1
