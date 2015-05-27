@@ -19,7 +19,7 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class GetAction extends AbstractAction {
     
-    /** Fenetre de notre application */
+    /** Fenetre de notre application  */
     private Tableur fenetre;
 
     /**
