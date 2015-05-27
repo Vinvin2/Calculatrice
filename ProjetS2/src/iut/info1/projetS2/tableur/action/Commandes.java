@@ -511,6 +511,13 @@ public class Commandes {
         String tmp; // chaine temporaire
         String subTmp; // coupure de chaine temporaire
         Scanner calcul = new Scanner(aPreparer); // Scanner d'analyse du calcul
+        
+        if (Utilitaires.verifNbParent(aPreparer)) {
+            return "NaN";
+        }
+        if (Utilitaires.verifNbParent(aPreparer)) {
+            return "NaN";
+        }
 
         while (calcul.hasNext()) { // remplace toutes les occurences de cases
             // on supprimer les occurences d'espaces, inutiles au calcul
@@ -585,14 +592,6 @@ public class Commandes {
         String chaineModifiee = "";      // chaine après modification
         String operandeTmp;         // dernière opérande récupérée à analyser
         int[] coordonnees; // coordonnées d'une opérande identifiée comme case
-//        String aRemplacerVerif;
-//        if (aRemplacer.length() > 0 && aRemplacer.charAt(0) == '-') {
-//            aRemplacerVerif = aRemplacer.substring(1);
-//            chaineModifiee = "-";
-//        } else {
-//            aRemplacerVerif = aRemplacer;
-//            chaineModifiee = "";
-//        }
 
         /*
          *  préparation d'un Scanner récupérant les opérandes
@@ -601,58 +600,66 @@ public class Commandes {
          *  au moment du calcul
          */
         Scanner recupOperande = new Scanner(aRemplacer);
-        recupOperande.useDelimiter("\\s*[)(+*/-]\\s*");
-        /*
-         * préparation d'un Scanner récupérant les opérateur
-         * note: si une opérande est manquante aucune erreur ne sera renvoyée
-         * l'erreur sera détectée au moment du calcul
-         */
-        Scanner recupOperateur = new Scanner(aRemplacer);
-        recupOperateur.useDelimiter("[^+/*-]+");
 
-        try {
-            // inititialisation de chaineModifiee
-            operandeTmp = recupOperande.next();
-            if (operandeTmp.matches(REG_MODIF)) { // si case détectée
-                coordonnees = recupCase(operandeTmp);
-                operandeTmp = String.valueOf(this.fenetre.getModele()
-                        .getValueAt(coordonnees[0], coordonnees[1]));
-                if (Double.parseDouble(operandeTmp) < 0) {
-                    operandeTmp = String.valueOf(
-                            Double.parseDouble(operandeTmp) * (-1.0));
-                    chaineModifiee = ""; // reset du '-'
-                }
-            }
-            chaineModifiee = chaineModifiee.concat(operandeTmp);
-        } catch (NoSuchElementException e) { // chaine vide
-        } catch (NullPointerException e) {   // chaine vide
-        } catch (NumberFormatException e) {  // contient pas un double
-        }
         while (recupOperande.hasNext()) {
-            // ajout du prochain opérateur
-            try {
-                operandeTmp = recupOperateur.next();
-                chaineModifiee = chaineModifiee.concat(operandeTmp);
-            } catch (NoSuchElementException e) { // rien n'est géré ici
-            }
-            // ajout de la prochaine opérande
-            try {
-                operandeTmp = recupOperande.next();
-                if (operandeTmp.matches(REG_MODIF)) { // si case détectée
-                    coordonnees = recupCase(operandeTmp);
-                    // on récupère sa valeur et on la place dans la chaine
-                    if (coordonnees != null) {
-                        operandeTmp = String.valueOf(this.fenetre.getModele()
-                                .getValueAt(coordonnees[0], coordonnees[1]));
-                    }
-                }
-                chaineModifiee = chaineModifiee.concat(operandeTmp);
-            } catch (NoSuchElementException e) { // rien n'est géré ici
-            }
-            //          System.out.println(chaineModifiee);
+            
         }
+        
+        //        recupOperande.useDelimiter("\\s*[)(+*/-]\\s*");
+//        /*
+//         * préparation d'un Scanner récupérant les opérateur
+//         * note: si une opérande est manquante aucune erreur ne sera renvoyée
+//         * l'erreur sera détectée au moment du calcul
+//         */
+//        Scanner recupOperateur = new Scanner(aRemplacer);
+//        recupOperateur.useDelimiter("[^+/*-]+");
+
+//        try {
+//            // inititialisation de chaineModifiee
+//            operandeTmp = recupOperande.next();
+//            if (operandeTmp.matches(REG_MODIF)) { // si case détectée
+//                coordonnees = recupCase(operandeTmp);
+//                operandeTmp = String.valueOf(this.fenetre.getModele()
+//                        .getValueAt(coordonnees[0], coordonnees[1]));
+//                if (Double.parseDouble(operandeTmp) < 0) {
+//                    operandeTmp = String.valueOf(
+//                            Double.parseDouble(operandeTmp) * (-1.0));
+//                    chaineModifiee = ""; // reset du '-'
+//                }
+//            } // else operandeTmp ne peut pas être modifiée
+//            chaineModifiee = chaineModifiee.concat(operandeTmp);
+//        } catch (NoSuchElementException e) { // chaine vide
+//        } catch (NullPointerException e) {   // chaine vide
+//        } catch (NumberFormatException e) {  // contient pas un double
+//        }
+//        while (recupOperande.hasNext()) {
+//            // ajout du prochain opérateur
+//            try {
+//                operandeTmp = recupOperateur.next();
+//                chaineModifiee = chaineModifiee.concat(operandeTmp);
+//            } catch (NoSuchElementException e) { // rien n'est géré ici
+//            }
+//            // ajout de la prochaine opérande
+//            try {
+//                
+//                operandeTmp = recupOperande.next();
+//                if (operandeTmp.matches(REG_MODIF)) { // si case détectée
+//                    coordonnees = recupCase(operandeTmp);
+//                    // on récupère sa valeur et on la place dans la chaine
+//                    if (coordonnees != null) {
+//                        operandeTmp = String.valueOf(this.fenetre.getModele()
+//                                .getValueAt(coordonnees[0], coordonnees[1]));
+//                    }
+//                }
+//                chaineModifiee = chaineModifiee.concat(operandeTmp);
+//            } catch (NoSuchElementException e) { // rien n'est géré ici
+//            }
+//        }
+        
+        
+        
         recupOperande.close();
-        recupOperateur.close();
+//        recupOperateur.close();
         return chaineModifiee;
     }
 
