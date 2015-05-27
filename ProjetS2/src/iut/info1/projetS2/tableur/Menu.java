@@ -224,10 +224,10 @@ public class Menu extends JMenuBar{
         item.setIcon(new ImageIcon("quitter.png"));
         menuFichier.add(item);
       
-    }
+    } 
     
     /**
-     * Permet de récupérer les actions de notre périphérique souris
+     * Permet de récupérer les actions de notre périphérique souris.
      */
     public void actionSouris() {
         fenetre.getConsole().addMouseListener(new MouseAdapter() {
