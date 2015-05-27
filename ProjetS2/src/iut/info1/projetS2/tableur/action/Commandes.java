@@ -5,7 +5,7 @@
 
 package iut.info1.projetS2.tableur.action;
 
-import java.util.NoSuchElementException;
+//import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,16 +65,16 @@ public class Commandes {
     // note: \\0056 est l'octal value de '.'
 
     /** REGEX de type 'simple affichage' type: nombreLettre aAfficher */
-    private static final String REG_affich1 = REG_CASE1 + "\\s+((.)*)";
+    private static final String REG_AFFICH1 = REG_CASE1 + "\\s+((.)*)";
 
     /** REGEX de type 'simple affichage' type: lettreNombre aAfficher */
-    private static final String REG_affich2 = REG_CASE2 + "\\s+((.)*)";
+    private static final String REG_AFFICH2 = REG_CASE2 + "\\s+((.)*)";
 
     /** REGEX pour définir s'il y a calcul, type: nombreLettre =aAfficher */
-    private static final String REG_needCalc = REG_CASE1 + "\\s*=\\s*((.)*)";
+    private static final String REG_NEEDCALC = REG_CASE1 + "\\s*=\\s*((.)*)";
 
     /** REGEX pour définir s'il y a calcul, type: lettreNombre =aAfficher */
-    private static final String REG_needCalc2 = REG_CASE2 + "\\s*=\\s*((.)*)";
+    private static final String REG_NEEDCALC2 = REG_CASE2 + "\\s*=\\s*((.)*)";
 
     /** Identifie une demande de copie */
     private static final String REG_COPIER = "((COPIER)\\s+(.+)\\s+(.+)\\s*)";
@@ -86,7 +86,7 @@ public class Commandes {
     private static final String REG_RAZ = "((RAZ)\\s+((.)+)\\s*)";
 
     /** Détermine si une commande a été entrée */
-    private static final String REG_needCommande = 
+    private static final String REG_NEEDCOMMANDE = 
             REG_COPIER + "||" + REG_COPVAL + "||" + REG_RAZ;
 
     /**
@@ -97,16 +97,16 @@ public class Commandes {
         // recupération du texte de la console
         String aRenvoyer = fenetre.getConsole().getText();
         // test via pattern si une commande est appelée
-        Pattern testSiCom = Pattern.compile(REG_needCommande);
+        Pattern testSiCom = Pattern.compile(REG_NEEDCOMMANDE);
         Matcher matchSiCom = testSiCom.matcher(aRenvoyer);
         // test via pattern si besoin de calcul ou pas
-        Pattern testSiCalc = Pattern.compile(REG_needCalc);
-        Pattern testSiCalc2 = Pattern.compile(REG_needCalc2);
+        Pattern testSiCalc = Pattern.compile(REG_NEEDCALC);
+        Pattern testSiCalc2 = Pattern.compile(REG_NEEDCALC2);
         Matcher matchSiCalc = testSiCalc.matcher(aRenvoyer);
         Matcher matchSiCalc2 = testSiCalc2.matcher(aRenvoyer);
         // test si un simpleaffichage peut être réalisé
-        Pattern testSiAffich = Pattern.compile(REG_affich1);
-        Pattern testSiAffich2 = Pattern.compile(REG_affich2);
+        Pattern testSiAffich = Pattern.compile(REG_AFFICH1);
+        Pattern testSiAffich2 = Pattern.compile(REG_AFFICH2);
         Matcher matchSiAffich = testSiAffich.matcher(aRenvoyer);
         Matcher matchSiAffich2 = testSiAffich2.matcher(aRenvoyer);
 
@@ -372,10 +372,10 @@ public class Commandes {
 
         String aAfficherTraite = ""; // texte à afficher après traitement
         // test sur les deux pattern autorisés
-        Pattern ok = Pattern.compile(REG_affich1);
-        Pattern ok2 = Pattern.compile(REG_affich2);
-        Pattern ok3 = Pattern.compile(REG_needCalc);
-        Pattern ok4 = Pattern.compile(REG_needCalc2);
+        Pattern ok = Pattern.compile(REG_AFFICH1);
+        Pattern ok2 = Pattern.compile(REG_AFFICH2);
+        Pattern ok3 = Pattern.compile(REG_NEEDCALC);
+        Pattern ok4 = Pattern.compile(REG_NEEDCALC2);
         Matcher lol = ok.matcher(aAfficher);
         Matcher lel = ok2.matcher(aAfficher);
         Matcher lil = ok3.matcher(aAfficher);
@@ -389,7 +389,6 @@ public class Commandes {
             /*
              * on enleve pour simplifier l'utilisation du tableur (1~20)
              * au lieu de (0~19)
-<<<<<<< HEAD
              */             
             lig = Integer.parseInt(lul.group(3)) - 1;
             // on recupère la lettre et on la transforme en int utilisable
@@ -508,105 +507,103 @@ public class Commandes {
      * @return une chaine prête à être exploiter pour un calcul évolué
      */
     private String prepareCalc(String aPreparer) {
-        String aRenvoyer = ""; // chaine transformée à renvoyer
-        String tmp; // chaine temporaire
-        String subTmp; // coupure de chaine temporaire
-        Scanner calcul = new Scanner(aPreparer); // Scanner d'analyse du calcul
-        
-        if (Utilitaires.verifNbParent(aPreparer)) {
-            return "NaN";
-        }
-        if (Utilitaires.verifNbParent(aPreparer)) {
-            return "NaN";
-        }
-
-        while (calcul.hasNext()) { // remplace toutes les occurences de cases
-            // on supprimer les occurences d'espaces, inutiles au calcul
-            calcul.skip("\\s*");
-            // on stocke le contenu du Scanner dans tmp
-            tmp = calcul.nextLine();
-            /*
-             *  calcul analyse une String equals à celle analysée avant
-             *  l'instruction précédente
-             */
-            calcul = new Scanner(tmp);
-            /*
-             *  la délimitation entre calculs simple et calcul évolué est
-             *  toujours de type opérande suivit d'une parenthèse ouvrante
-             *  donc on modifie le delimier pour séparer ces deux types de 
-             *  calculs
-             */
-            calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
-            // le prochain calcul est un calcul évolué
-            if (tmp.charAt(0) == '(') {
-                // récupère l'indexe de fin de ce calcul évolué
-                int fin = fermetureParentheseA(tmp);
-                // sauvegarde de tmp qui va être modifiée
-                String sauvegarde = tmp.toString();
-                // réupère le calcul évolué dans subTmp 
-                subTmp = prepareCalc(tmp.substring(1, fin));
-                /*
-                 *  les occurences de cases ont égé remplacée, on remet les 
-                 *  parenthèses
-                 */
-                tmp = "(" + subTmp.toString() + ")";
-                aRenvoyer = aRenvoyer.concat(tmp);
-                //tmp retrouve sa valeur avant de modification
-                tmp = sauvegarde.substring(fin + 1);
-                /* 
-                 * créé un nouveau scanner qui a été 'avancé' de la chaine 
-                 * récupérée à la main
-                 */
-                calcul.close();
-                calcul = new Scanner(tmp);
-            } else {
-                // calcul simple que remplaceCases peut modifier correctement
-                tmp = this.remplaceCases(calcul.next());
-                aRenvoyer = aRenvoyer.concat(tmp);
-            }
-            try {
-                // ajout du prochain opérateur
-                calcul.useDelimiter("[^*/+-]+");
-                aRenvoyer = aRenvoyer.concat(calcul.next());
-                calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
-            } catch (NoSuchElementException e) {
-                /* 
-                 * calcul n'a plus d'opérateur et est donc vide, la 
-                 * transformation est terminée
-                 */
-                calcul.close();
-                return aRenvoyer;
-            }
-        }
-        // si le calcul est syntaxiquement correcte on ne passe pas ici
-        calcul.close();
+        String aRenvoyer = aPreparer.toString(); // chaine transformée à renvoyer
+//        String tmp; // chaine temporaire
+//        String subTmp; // coupure de chaine temporaire
+//        Scanner calcul = new Scanner(aPreparer); // Scanner d'analyse du calcul
+//
+//        while (calcul.hasNext()) { // remplace toutes les occurences de cases
+//            // on supprimer les occurences d'espaces, inutiles au calcul
+//            calcul.skip("\\s*");
+//            // on stocke le contenu du Scanner dans tmp
+//            tmp = calcul.nextLine();
+//            /*
+//             *  calcul analyse une String equals à celle analysée avant
+//             *  l'instruction précédente
+//             */
+//            calcul = new Scanner(tmp);
+//            /*
+//             *  la délimitation entre calculs simple et calcul évolué est
+//             *  toujours de type opérande suivit d'une parenthèse ouvrante
+//             *  donc on modifie le delimier pour séparer ces deux types de 
+//             *  calculs
+//             */
+//            calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
+//            // le prochain calcul est un calcul évolué
+//            if (tmp.charAt(0) == '(') {
+//                // récupère l'indexe de fin de ce calcul évolué
+//                int fin = fermetureParentheseA(tmp);
+//                // sauvegarde de tmp qui va être modifiée
+//                String sauvegarde = tmp.toString();
+//                // réupère le calcul évolué dans subTmp 
+//                subTmp = prepareCalc(tmp.substring(1, fin));
+//                /*
+//                 *  les occurences de cases ont égé remplacée, on remet les 
+//                 *  parenthèses
+//                 */
+//                tmp = "(" + subTmp.toString() + ")";
+//                aRenvoyer = aRenvoyer.concat(tmp);
+//                //tmp retrouve sa valeur avant de modification
+//                tmp = sauvegarde.substring(fin + 1);
+//                /* 
+//                 * créé un nouveau scanner qui a été 'avancé' de la chaine 
+//                 * récupérée à la main
+//                 */
+//                calcul.close();
+//                calcul = new Scanner(tmp);
+//            } else {
+//                // calcul simple que remplaceCases peut modifier correctement
+//                tmp = this.remplaceCases(calcul.next());
+//                aRenvoyer = aRenvoyer.concat(tmp);
+//            }
+//            try {
+//                // ajout du prochain opérateur
+//                calcul.useDelimiter("[^*/+-]+");
+//                aRenvoyer = aRenvoyer.concat(calcul.next());
+//                calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
+//            } catch (NoSuchElementException e) {
+//                /* 
+//                 * calcul n'a plus d'opérateur et est donc vide, la 
+//                 * transformation est terminée
+//                 */
+//                calcul.close();
+//                return aRenvoyer;
+//            }
+//        }
+//        // si le calcul est syntaxiquement correcte on ne passe pas ici
+//        calcul.close();
+        aRenvoyer = "A1 + 2B + 3";
+        aRenvoyer = aRenvoyer.replaceAll(REG_MODIF2, "lol");
         return aRenvoyer;
     }
 
-    /**
-     * Remplace chaque occurences de coordonnées de cases par leur valeur
-     * correspondante
-     * @param aRemplacer chaine qu'il faut modifier
-     * @return une chaine de caractères utilisable pour les calculs
-     */
-    private String remplaceCases(String aRemplacer) {
-        String chaineModifiee = "";      // chaine après modification
-        String operandeTmp;         // dernière opérande récupérée à analyser
-        int[] coordonnees; // coordonnées d'une opérande identifiée comme case
-
-        /*
-         *  préparation d'un Scanner récupérant les opérandes
-         *  note: si une opérande n'est pas valide elle ne sera pas gérée ici
-         *  elle sera tout simplement ignorée, la vérification s'effectuera
-         *  au moment du calcul
-         */
-        Scanner recupOperande = new Scanner(aRemplacer);
-
-        while (recupOperande.hasNext()) {
-            
-        }
-        
-        //        recupOperande.useDelimiter("\\s*[)(+*/-]\\s*");
+//    /**
+//     * Remplace chaque occurences de coordonnées de cases par leur valeur
+//     * correspondante
+//     * @param aRemplacer chaine qu'il faut modifier
+//     * @return une chaine de caractères utilisable pour les calculs
+//     */
+//    private String remplaceCases(String aRemplacer) {
+//        String chaineModifiee = "";      // chaine après modification
+//        String operandeTmp;         // dernière opérande récupérée à analyser
+//        int[] coordonnees; // coordonnées d'une opérande identifiée comme case
+////        String aRemplacerVerif;
+////        if (aRemplacer.length() > 0 && aRemplacer.charAt(0) == '-') {
+////            aRemplacerVerif = aRemplacer.substring(1);
+////            chaineModifiee = "-";
+////        } else {
+////            aRemplacerVerif = aRemplacer;
+////            chaineModifiee = "";
+////        }
+//
+//        /*
+//         *  préparation d'un Scanner récupérant les opérandes
+//         *  note: si une opérande n'est pas valide elle ne sera pas gérée ici
+//         *  elle sera tout simplement ignorée, la vérification s'effectuera
+//         *  au moment du calcul
+//         */
+//        Scanner recupOperande = new Scanner(aRemplacer);
+//        recupOperande.useDelimiter("\\s*[)(+*/-]\\s*");
 //        /*
 //         * préparation d'un Scanner récupérant les opérateur
 //         * note: si une opérande est manquante aucune erreur ne sera renvoyée
@@ -614,7 +611,7 @@ public class Commandes {
 //         */
 //        Scanner recupOperateur = new Scanner(aRemplacer);
 //        recupOperateur.useDelimiter("[^+/*-]+");
-
+//
 //        try {
 //            // inititialisation de chaineModifiee
 //            operandeTmp = recupOperande.next();
@@ -627,7 +624,7 @@ public class Commandes {
 //                            Double.parseDouble(operandeTmp) * (-1.0));
 //                    chaineModifiee = ""; // reset du '-'
 //                }
-//            } // else operandeTmp ne peut pas être modifiée
+//            }
 //            chaineModifiee = chaineModifiee.concat(operandeTmp);
 //        } catch (NoSuchElementException e) { // chaine vide
 //        } catch (NullPointerException e) {   // chaine vide
@@ -642,7 +639,6 @@ public class Commandes {
 //            }
 //            // ajout de la prochaine opérande
 //            try {
-//                
 //                operandeTmp = recupOperande.next();
 //                if (operandeTmp.matches(REG_MODIF)) { // si case détectée
 //                    coordonnees = recupCase(operandeTmp);
@@ -655,14 +651,12 @@ public class Commandes {
 //                chaineModifiee = chaineModifiee.concat(operandeTmp);
 //            } catch (NoSuchElementException e) { // rien n'est géré ici
 //            }
+//            //          System.out.println(chaineModifiee);
 //        }
-        
-        
-        
-        recupOperande.close();
+//        recupOperande.close();
 //        recupOperateur.close();
-        return chaineModifiee;
-    }
+//        return chaineModifiee;
+//    }
 
     /**
      * Permet un simple affichage de ce que l'utilisateur a entré dans la
@@ -716,7 +710,10 @@ public class Commandes {
             }
         }
     }
-
+    
+    //public String 
+    
+    
     /**
      * @return the entrees
      */
@@ -731,340 +728,3 @@ public class Commandes {
         this.entrees = entrees;
     }
 }
-=======
-             * 
-             */             
-            lig = Integer.parseInt(lul.group(3)) - 1;
-            // on recupère la lettre et on la transforme en int utilisable
-            col = lul.group(2).charAt(0) - 65;
-            aAfficherTraite = String.valueOf(Utilitaires.calculEvolue(
-                    this.prepareCalc(lul.group(7))));
-            this.entrees[lig][col] = "=" + lul.group(7);
-            if (!aAfficherTraite.equals("NaN")) {
-                this.fenetre.getLabel().setText("Calcul effectué");
-            } else {
-                this.fenetre.getLabel().setText("Calcul non effectué");  
-            }
-        } else if (lil.matches()) { // lettre/nombre
-            //            for (int i = 0; i < lil.groupCount(); i++) {
-            //                System.out.println(i + " lil " + lil.group(i));
-            //            }
-            /* 
-             * on enleve pour simplifier l'utilisation du tableur (1~20)
-             * au lieu de (0~19)
-             */
-            lig = Integer.parseInt(lil.group(2)) - 1;
-            // on recupère la lettre et on la transforme en int utilisable
-            col = lil.group(6).charAt(0) - 65;
-            aAfficherTraite = String.valueOf(Utilitaires.calculEvolue(
-                    this.prepareCalc(lil.group(7))));
-            this.entrees[lig][col] = "=" + lil.group(7);
-            if (!aAfficherTraite.equals("NaN")) {
-                this.fenetre.getLabel().setText("Calcul effectué");
-            } else {
-                this.fenetre.getLabel().setText("Calcul non effectué");
-            }
-        } else if (lel.matches()) {
-            //            for (int i = 0; i < lel.groupCount(); i++) {
-            //                System.out.println(i + " lel " + lel.group(i));
-            //            }
-            /* 
-             * on enleve pour simplifier l'utilisation du tableur (1~20)
-             * au lieu de (0~19)
-             */
-            lig = Integer.parseInt(lel.group(3)) - 1;
-            // on recupère la lettre et on la transforme en int utilisable
-            col = lel.group(2).charAt(0) - 65;  
-            aAfficherTraite = lel.group(7);
-            this.entrees[lig][col] = lel.group(7);
-        } else if (lol.matches()) {
-            //            for (int i = 0; i < lol.groupCount(); i++) {
-            //                System.out.println(i + " lol " + lol.group(i));
-            //            }
-            /* 
-             * on enleve pour simplifier l'utilisation du tableur (1~20)
-             * au lieu de (0~19)
-             */
-            lig = Integer.parseInt(lol.group(2)) - 1;
-            // on recupère la lettre et on la transforme en int utilisable
-            col = lol.group(6).charAt(0) - 65;
-            aAfficherTraite = lol.group(7);
-            this.entrees[lig][col] = lol.group(7);
-        }
-        // else => lig = -1 et col = -1 => prochaine condition false
-
-        if (lig > -1 & col > -1) { // La syntaxe est ok et tout est récupéré
-            this.fenetre.getModele().setValueAt(aAfficherTraite, lig, col);
-            if (!aAfficherTraite.equals("NaN")) {
-                this.fenetre.getConsole().setText("");
-            }
-            this.entrees[lig][col] = aAfficherTraite;
-        } else { // syntaxiquement faux
-            this.fenetre.getLabel().setText("Erreur de syntaxe type: "
-                    + "A1 texte ou 1A texte");
-        }
-    }
-
-
-    /**
-     * permet de chercher la position de la parenthèse fermante correspondant
-     * à la parenthèse ouvrante située en position 0, prends en compte
-     * les parenthèses ouvrantes situées après et cherche la bonne occurence
-     * de ')'correspondant mathématiquement à la première occurence de '('
-     * ex: "(bonjour), je suis pacifique" retourne 8
-     *     "((bonjour), je suis) pacifique" retourne 19
-     *     "((bonjour), (je) suis) pacifique" retourne 21
-     * @param aChercher l'indexe de l'occurence
-     * @return l'occurence fermant la première parenthèse ouvrante
-     *         -1 si le premier caractère n'est pas une parenthèse ou si
-     *         aucune occurence ne correspond à la parenthèse ouvrante
-     */
-    public static int fermetureParentheseA(String aChercher) {
-        // nombre de '(' rencontrés après la première occurence de '('
-        int parentOuvranteSupp = 0;
-        int i; // variable parcourant aChercher
-
-        if (aChercher.charAt(0) != '(') {
-            return -1; // erreur de syntaxe sur aChercher
-        }
-        // else
-        // parcourt la aChercher en scrutant les occurences de '(' et ')'
-        for (i=1; i < aChercher.length(); i++) {
-            if (aChercher.charAt(i) == '(') {
-                parentOuvranteSupp++; // ajout d'une parenthèse à fermer
-            } else if (aChercher.charAt(i) == ')') {
-                if (parentOuvranteSupp == 0) {
-                    return i; // la première parenthèse a été fermée
-                } else {
-                    parentOuvranteSupp--; // une parenthèse a été fermée
-                }
-            }
-        }
-        return -1; // aucune occurence fermante de la première occurence de '('
-    }
-
-
-    /**
-     * prepare un calcul évolué en remplaçant les occurences de case par 
-     * leurs valeurs, erreurs de syntaxe non vérifiées
-     * @param aPreparer chaine à modifier
-     * @return une chaine prête à être exploiter pour un calcul évolué
-     */
-    private String prepareCalc(String aPreparer) {
-        String aRenvoyer = ""; // chaine transformée à renvoyer
-        String tmp; // chaine temporaire
-        String subTmp; // coupure de chaine temporaire
-        Scanner calcul = new Scanner(aPreparer); // Scanner d'analyse du calcul
-
-        while (calcul.hasNext()) { // remplace toutes les occurences de cases
-            // on supprimer les occurences d'espaces, inutiles au calcul
-            calcul.skip("\\s*");
-            // on stocke le contenu du Scanner dans tmp
-            tmp = calcul.nextLine();
-            /*
-             *  calcul analyse une String equals à celle analysée avant
-             *  l'instruction précédente
-             */
-            calcul = new Scanner(tmp);
-            /*
-             *  la délimitation entre calculs simple et calcul évolué est
-             *  toujours de type opérande suivit d'une parenthèse ouvrante
-             *  donc on modifie le delimier pour séparer ces deux types de 
-             *  calculs
-             */
-            calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
-            // le prochain calcul est un calcul évolué
-            if (tmp.charAt(0) == '(') {
-                // récupère l'indexe de fin de ce calcul évolué
-                int fin = fermetureParentheseA(tmp);
-                // sauvegarde de tmp qui va être modifiée
-                String sauvegarde = tmp.toString();
-                // réupère le calcul évolué dans subTmp 
-                subTmp = prepareCalc(tmp.substring(1, fin));
-                /*
-                 *  les occurences de cases ont égé remplacée, on remet les 
-                 *  parenthèses
-                 */
-                tmp = "(" + subTmp.toString() + ")";
-                aRenvoyer = aRenvoyer.concat(tmp);
-                //tmp retrouve sa valeur avant de modification
-                tmp = sauvegarde.substring(fin + 1);
-                /* 
-                 * créé un nouveau scanner qui a été 'avancé' de la chaine 
-                 * récupérée à la main
-                 */
-                calcul.close();
-                calcul = new Scanner(tmp);
-            } else {
-                // calcul simple que remplaceCases peut modifier correctement
-                tmp = this.remplaceCases(calcul.next());
-                aRenvoyer = aRenvoyer.concat(tmp);
-            }
-            try {
-                // ajout du prochain opérateur
-                calcul.useDelimiter("[^*/+-]+");
-                aRenvoyer = aRenvoyer.concat(calcul.next());
-                calcul.useDelimiter(Utilitaires.REG_OPERATEUR + "[(]");
-            } catch (NoSuchElementException e) {
-                /* 
-                 * calcul n'a plus d'opérateur et est donc vide, la 
-                 * transformation est terminée
-                 */
-                calcul.close();
-                return aRenvoyer;
-            }
-        }
-        // si le calcul est syntaxiquement correcte on ne passe pas ici
-        calcul.close();
-        return aRenvoyer;
-    }
-
-    /**
-     * Remplace chaque occurences de coordonnées de cases par leur valeur
-     * correspondante
-     * @param aRemplacer chaine qu'il faut modifier
-     * @return une chaine de caractères utilisable pour les calculs
-     */
-    private String remplaceCases(String aRemplacer) {
-        String chaineModifiee = "";      // chaine après modification
-        String operandeTmp;         // dernière opérande récupérée à analyser
-        int[] coordonnees; // coordonnées d'une opérande identifiée comme case
-//        String aRemplacerVerif;
-//        if (aRemplacer.length() > 0 && aRemplacer.charAt(0) == '-') {
-//            aRemplacerVerif = aRemplacer.substring(1);
-//            chaineModifiee = "-";
-//        } else {
-//            aRemplacerVerif = aRemplacer;
-//            chaineModifiee = "";
-//        }
-
-        /*
-         *  préparation d'un Scanner récupérant les opérandes
-         *  note: si une opérande n'est pas valide elle ne sera pas gérée ici
-         *  elle sera tout simplement ignorée, la vérification s'effectuera
-         *  au moment du calcul
-         */
-        Scanner recupOperande = new Scanner(aRemplacer);
-        recupOperande.useDelimiter("\\s*[)(+*/-]\\s*");
-        /*
-         * préparation d'un Scanner récupérant les opérateur
-         * note: si une opérande est manquante aucune erreur ne sera renvoyée
-         * l'erreur sera détectée au moment du calcul
-         */
-        Scanner recupOperateur = new Scanner(aRemplacer);
-        recupOperateur.useDelimiter("[^+/*-]+");
-
-        try {
-            // inititialisation de chaineModifiee
-            operandeTmp = recupOperande.next();
-            if (operandeTmp.matches(REG_MODIF)) { // si case détectée
-                coordonnees = recupCase(operandeTmp);
-                operandeTmp = String.valueOf(this.fenetre.getModele()
-                        .getValueAt(coordonnees[0], coordonnees[1]));
-                if (Double.parseDouble(operandeTmp) < 0) {
-                    operandeTmp = String.valueOf(
-                            Double.parseDouble(operandeTmp) * (-1.0));
-                    chaineModifiee = ""; // reset du '-'
-                }
-            }
-            chaineModifiee = chaineModifiee.concat(operandeTmp);
-        } catch (NoSuchElementException e) { // chaine vide
-        } catch (NullPointerException e) {   // chaine vide
-        } catch (NumberFormatException e) {  // contient pas un double
-        }
-        while (recupOperande.hasNext()) {
-            // ajout du prochain opérateur
-            try {
-                operandeTmp = recupOperateur.next();
-                chaineModifiee = chaineModifiee.concat(operandeTmp);
-            } catch (NoSuchElementException e) { // rien n'est géré ici
-            }
-            // ajout de la prochaine opérande
-            try {
-                operandeTmp = recupOperande.next();
-                if (operandeTmp.matches(REG_MODIF)) { // si case détectée
-                    coordonnees = recupCase(operandeTmp);
-                    // on récupère sa valeur et on la place dans la chaine
-                    if (coordonnees != null) {
-                        operandeTmp = String.valueOf(this.fenetre.getModele()
-                                .getValueAt(coordonnees[0], coordonnees[1]));
-                    }
-                }
-                chaineModifiee = chaineModifiee.concat(operandeTmp);
-            } catch (NoSuchElementException e) { // rien n'est géré ici
-            }
-            //          System.out.println(chaineModifiee);
-        }
-        recupOperande.close();
-        recupOperateur.close();
-        return chaineModifiee;
-    }
-
-    /**
-     * Permet un simple affichage de ce que l'utilisateur a entré dans la
-     * 'ligne de commande' de type nombreLettre aAfficher
-     *                          ou lettreNombre aAfficher
-     */
-    private void affichageSimple() {
-        String aAfficher = this.fenetre.getConsole().getText();
-        if (aAfficher == null) {
-            aAfficher = "";
-        }
-        this.affichage(aAfficher); // affichage du texte voulu
-        this.fenetre.getLabel().setText("Texte affiché");
-    }
-
-
-    /**
-     * Permet d'afficher dans une case du tableur le résultat d'un calcul
-     * entré dans la 'ligne de commande'
-     */
-    private void affichageCalcule() {
-        String aAfficher = this.fenetre.getConsole().getText();
-        if (aAfficher == null) {
-            aAfficher = "";
-        }
-        this.affichage(aAfficher); // affichage du texte (après calcul)
-    }
-
-
-    /**
-     * Redéfinition du contructeur par défaut crée par java, il est rendu
-     * unitilisable pour éviter qu'une instance de Commandes se retrouve sans
-     * fenêtre.
-     */
-    private Commandes() {
-    }
-
-    /**
-     * Unique constructeur disponible pour la classe Commandes permet une
-     * navigabilité vers le tableur
-     * @param fenetre fenêtre à laquelle cette classe sera liée
-     */
-    public Commandes(Tableur fenetre) {
-        this();
-        this.fenetre = fenetre;
-        this.fenetre.getLabel().setText(" ");
-        // initialisation de entrees
-        for (int i = 0; i < entrees.length; i++) {
-            for (int j = 0; j < entrees[i].length; j++) {
-                entrees[i][j] = "";
-            }
-        }
-    }
-
-    /**
-     * @return the entrees
-     */
-    public String[][] getEntrees() {
-        return entrees;
-    }
-
-    /**
-     * @param entrees the entrees to set
-     */
-    public void setEntrees(String[][] entrees) {
-        this.entrees = entrees;
-    }
-}
->>>>>>> branch 'master' of https://github.com/Vinvin2/Calculatrice.git
