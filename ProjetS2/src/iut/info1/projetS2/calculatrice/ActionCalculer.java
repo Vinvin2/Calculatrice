@@ -58,7 +58,7 @@ public class ActionCalculer implements ActionListener {
         ecran.insert(" " + commande + "\n", ecran.getText().length());
         
 
-
+// lol
         if (!modeMem) {
             // on cherche une fonction non liée au mode mémoire et correspondant
             // à la commande
