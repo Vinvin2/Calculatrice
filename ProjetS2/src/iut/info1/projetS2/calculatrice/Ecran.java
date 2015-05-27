@@ -7,6 +7,7 @@ package iut.info1.projetS2.calculatrice;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.JTextArea;
 
@@ -47,6 +48,8 @@ public class Ecran extends JTextArea {
         
         // On empêche l'écran d'être éditable 
         setEditable(false);
+        
+        setMargin(new Insets(20,20,20,20));
         
     }
 

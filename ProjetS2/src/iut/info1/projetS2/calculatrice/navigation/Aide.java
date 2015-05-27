@@ -6,6 +6,7 @@
 package iut.info1.projetS2.calculatrice.navigation;
 
 import java.awt.Dimension;
+import java.awt.Insets;
 
 import iut.info1.projetS2.calculatrice.Container;
 
@@ -21,58 +22,53 @@ import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class Aide extends JFrame {
-	
-	/** Container principal de l'application */
-	private Container containerPrincipal = new Container(900, 700);
-	
-	/** Container pour le positionnement */
-    private Container containerPositionnement = new Container(120, 700);
-	
-	/** Ecran où les commandes disponibles seront affichées */
+
+    /** Container principal de l'application */
+    private Container containerPrincipal = new Container(900, 700);
+
+    /** Ecran où les commandes disponibles seront affichées */
     private TexteAide ecranCommandes = new TexteAide();
-    
+
     /** Barre de défilement pour l'écran */
     private JScrollPane scroll = new JScrollPane(ecranCommandes);
 
-	/**
-	 * Création de la fenêtre contenant le menu principal de l'application
-	 */
-	public Aide() {
+    /**
+     * Création de la fenêtre contenant le menu principal de l'application
+     */
+    public Aide() {
 
-		super();
+        super();
 
-		//Définit un titre pour la fenêtre
-		this.setTitle("AIDE : Commandes Mini-Calculatrice");
+        //Définit un titre pour la fenêtre
+        this.setTitle("AIDE : Commandes Mini-Calculatrice");
 
-		// On définit la taille de la fenêtre
-		this.setSize(630, 500);
+        // On définit la taille de la fenêtre
+        this.setSize(630, 500);
 
-		// On place la fenêtre au centre de l'écran
-		this.setLocationRelativeTo(null);
+        // On place la fenêtre au centre de l'écran
+        this.setLocationRelativeTo(null);
 
-		// On ferme la fenêtre en cliquant sur la croix rouge
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        // On ferme la fenêtre en cliquant sur la croix rouge
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-		// On empêche la modification de la taille de la fenêtre
-		this.setResizable(false);
+        // On empêche la modification de la taille de la fenêtre
+        this.setResizable(false);
 
-		// On ajoute le container principal
-		this.setContentPane(containerPrincipal);
+        // On ajoute le container principal
+        this.setContentPane(containerPrincipal);
 
-		// On rend visible la fenêtre
-		this.setVisible(true);
-		
-		// propriétés du scroll pour le défilement de la fenêtre
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scroll.setPreferredSize(new Dimension(530, 350));
-		
+        // On rend visible la fenêtre
+        this.setVisible(true);
+
+        // propriétés du scroll pour le défilement de la fenêtre
+        scroll.setVerticalScrollBarPolicy
+                                    (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setPreferredSize(new Dimension(610, 460));
+
         // On ajoute l'écran contenant les commandes à la fenêtre
-		containerPrincipal.add(ecranCommandes);
-		// On ajoute la barre de scroll à l'écran
-		ecranCommandes.add(scroll);
-		// On positionne le texte plus à droite de l'écran
-		containerPrincipal.add(containerPositionnement);
-		
-	}
-	
+        containerPrincipal.add(scroll);
+        ecranCommandes.setMargin(new Insets(20,30,20,20));
+
+    }
+
 }

@@ -69,9 +69,6 @@ public class Calculatrice extends JFrame {
         // On prévient notre JFrame que notre JPanel sera son content pane
         this.setContentPane(containerPrincipal);
 
-        // Ajout des boutons à notre content pane
-        this.setContentPane(containerPrincipal);
-
         // Les autres champs seront à droite
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroll.setPreferredSize(new Dimension(600, 550));
