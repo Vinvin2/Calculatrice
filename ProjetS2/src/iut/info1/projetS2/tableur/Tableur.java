@@ -1,12 +1,12 @@
 /*
- * Tableur.java				2 mai 2015
+ * Tableur.java                         2 mai 2015
  * IUT INFO1 2014-2015 
  */
 package iut.info1.projetS2.tableur;
 
 import iut.info1.projetS2.tableur.Menu;
 import iut.info1.projetS2.tableur.action.*;
-import iut.info1.projetS2.tests.SauvegardeFichier;
+//import iut.info1.projetS2.tests.SauvegardeFichier;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -73,6 +73,9 @@ public class Tableur extends JFrame{
     /** contient les commandes liées à cette fenêtre */
     private Commandes actions;
     
+    /** contient les methodes de sauvegardes associées à ce fchier */
+    private OutilsFichier sauvegarde; 
+    
     /**
      * Création d'un objet tableur
      */
@@ -127,6 +130,9 @@ public class Tableur extends JFrame{
          *  commandes est liée à un tableur précis
          */
         actions = new Commandes(this);
+        
+        // lie le tableur avec une instance de methodes de sauvegarde
+        sauvegarde = new OutilsFichier(this);
     }
 
     /**
@@ -396,5 +402,12 @@ public class Tableur extends JFrame{
      */
     public Commandes getActions() {
         return actions;
+    }
+
+    /**
+     * @return the sauvegarde
+     */
+    public OutilsFichier getSauvegarde() {
+        return sauvegarde;
     }
 }
