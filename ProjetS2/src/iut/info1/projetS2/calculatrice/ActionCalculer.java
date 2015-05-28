@@ -306,7 +306,7 @@ public class ActionCalculer implements ActionListener {
         Matcher affectok = patAffect.matcher(commande);
         
         Pattern patCalcul = 
-           Pattern.compile("(\\s*-?(\\d).*(\\d)*)||(.*[(].*[)].*)");
+           Pattern.compile("(\\s*-?(\\d).*(\\d)*)|(.*[(].*[)].*)");
         Matcher calculok = patCalcul.matcher(commande);
         
         Pattern PatCalcVar = Pattern.compile(".*[^A-Z][A-Z][^A-Z].*");
