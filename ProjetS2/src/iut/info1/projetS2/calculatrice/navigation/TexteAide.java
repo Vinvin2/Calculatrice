@@ -11,7 +11,8 @@ import java.awt.Font;
 import javax.swing.JTextArea;
 
 /**
- * On créé une JTextArea afin de regrouper toutes les commandes d'aide o l'intérieur 
+ * On créé une JTextArea afin de regrouper toutes les commandes d'aide
+ * à l'intérieur 
  * @author 20-20
  * @version 0.1
  */
