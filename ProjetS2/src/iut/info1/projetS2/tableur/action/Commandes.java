@@ -204,6 +204,10 @@ public class Commandes {
             //System.out.println(aRenvoyer);
             if (lol.get(i).matches(REG_MODIF2)) { // lettre/chiffre
                 testeur = Pattern.compile(REG_MODIF2).matcher(lol.get(i));
+                testeur.matches();
+                for (int j = 0; j < testeur.groupCount(); j++) {
+                    System.out.println(i + " = " + testeur.group(i));
+                }
                 tmpChar = colonneLocked(lol.get(i)) ? lol.get(i).charAt(0)
                         : (char)(lol.get(i).charAt(0) + nbDecCol);
                 System.out.println("char " + tmpChar);
@@ -212,9 +216,6 @@ public class Commandes {
                 System.out.println("nbre " + tmp);
                 tmp = String.valueOf(tmpChar).concat(tmp);
                 aRenvoyer = aRenvoyer.replaceFirst(lol.get(i), tmp);
-                for (int j = 0; j < testeur.groupCount(); j++) {
-                    System.out.println(i + " = " + testeur.group(i));
-                }
             }
             if (lol.get(i).matches(REG_MODIF1)) { //chiffre/lettre
                 testeur = Pattern.compile(REG_MODIF1).matcher(lol.get(i));   
