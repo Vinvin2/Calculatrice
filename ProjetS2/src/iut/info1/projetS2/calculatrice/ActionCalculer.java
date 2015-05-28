@@ -309,7 +309,7 @@ public class ActionCalculer implements ActionListener {
            Pattern.compile("(\\s*-?(\\d).*(\\d)*)|(.*[(].*[)].*)");
         Matcher calculok = patCalcul.matcher(commande);
         
-        Pattern PatCalcVar = Pattern.compile(".*[^A-Z][A-Z][^A-Z].*");
+        Pattern PatCalcVar = Pattern.compile(".*[A-Z].*");
         Matcher calcvarok = PatCalcVar.matcher(commande);
         
         if (memok.matches()) {

@@ -92,6 +92,8 @@ public class CommandesMemoire {
                             aCalculer = aCalculer.replace
                                     (Character.toString(commande.charAt(i)), 
                           Double.toString(casesMem[variable - 65].getValeur()));
+                        } else {
+                            return Double.NaN;
                         }
                     }
                 }
