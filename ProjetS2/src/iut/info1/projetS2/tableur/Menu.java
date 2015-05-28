@@ -236,7 +236,7 @@ public class Menu extends JMenuBar{
              */
             public void mouseClicked(MouseEvent e) {
 
-                // si on appui sur le clic droit
+                // si on appuie sur le clic droit
                 if (SwingUtilities.isRightMouseButton(e)) {
 
                     // On affiche le pop-up là où est notre pointeur

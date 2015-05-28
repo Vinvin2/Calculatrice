@@ -70,7 +70,8 @@ public class Calculatrice extends JFrame {
         this.setContentPane(containerPrincipal);
 
         // Les autres champs seront à droite
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setVerticalScrollBarPolicy(
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroll.setPreferredSize(new Dimension(600, 550));
         containerExecution.add(scroll);
         containerExecution.add(executeur);
