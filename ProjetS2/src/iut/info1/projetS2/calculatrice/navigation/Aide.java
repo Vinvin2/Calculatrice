@@ -71,6 +71,7 @@ public class Aide extends JFrame {
         
         // On fait en sorte que la scrollbar démarre bien en haut de la fenêtre
         ecranCommandes.setCaretPosition(0);
+        
     }
 
 }

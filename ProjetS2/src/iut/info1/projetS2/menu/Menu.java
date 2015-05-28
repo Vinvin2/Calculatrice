@@ -9,13 +9,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
 
 import iut.info1.projetS2.calculatrice.Container;
 import iut.info1.projetS2.calculatrice.navigation.Quitter;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -89,10 +86,7 @@ public class Menu extends JFrame {
 
 		// On ajoute les boutons
 		this.setContentPane(containerPrincipal);
-		
-		// On définit une image comme fond d'écran
-		setContentPane(new JLabel(new ImageIcon("imgmenu.png")));
-		
+
 		// On ajoute un titre/slogan au dessus des boutons du menu
 		JLabel titre = 
 				new JLabel("Avec Mini-Calculator et Mini-Tablor, devenez "
