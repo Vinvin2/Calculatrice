@@ -30,23 +30,27 @@ public class Utilitaires {
             REG_OPERANDE + "(" + REG_OPERATEUR + REG_OPERANDE + ")*";
 
     /**
-     * TODO commenter le rôle de la méthode
-     * @param aVerifier 
-     * @return ezaq
+     * verifie s'il y a autant de parenthèses ouvrantes que de parenthèses
+     * fermante
+     * @param aVerifier chaine de caractère ou effectuer la verification
+     * @return true s'il y a autant de parenthèses ouvrante que fermantes
+     *         false sinon
      */
     public static boolean verifNbParent(String aVerifier) {
-        int nbOuv = 0;
-        int nbFerm = 0;
+        int nbOuv = 0;  // nombre de parenthèses ouvrantes trouvé
+        int nbFerm = 0; // nombre de parenthèses fermantes trouvé
+        // recherche et compte toutes les occurrences de '(' et ')'
         for (int i =0; i < aVerifier.length(); i++) {
             if (aVerifier.charAt(i) == '(') {
                 nbOuv++;
             } else if (aVerifier.charAt(i) == ')') {
                 nbFerm++;
             }
+            // else aVerifier.charAt(i) est un caractère autre
         }
         return nbOuv == nbFerm;
     }
-    
+
     /**
      * Type de calcul le plus évolué que la calculatrice et le tableur peuvent
      * réaliser, prends en compte les parenthèses
@@ -61,7 +65,7 @@ public class Utilitaires {
         String resultat = ""; // chaine transformée à renvoyer
         String tmp; // chaine temporaire
         String subTmp; // coupure de chaine temporaire
-        
+
         if (!verifNbParent(aCalculer)) {
             return Double.NaN;
         }
@@ -110,7 +114,7 @@ public class Utilitaires {
                  *  le calcul est assez simple pour être réalisé directement 
                  *  par calculIntermediaire
                  */
-                tmp = String.valueOf(calculIntermediaire(calculateur.next()));
+                tmp = calculateur.next();
                 resultat = resultat.concat(tmp);
             }
             try {
@@ -141,20 +145,19 @@ public class Utilitaires {
      *             <li>Double.NaN si erreur dans le calcul</li></ul>
      */
     public static double calculIntermediaire(String aCalculer) {
-        System.out.println(aCalculer);
         /*
          *  teste si calcul bon format via regex et retourne un NaN si err
          *  la première opérande peut être négative
          */
         Pattern testCalc = Pattern.compile(REG_CALCUL);
         Matcher estCalc = testCalc.matcher(aCalculer);
-        
+
         if (aCalculer.matches(REG_OPERANDE)) {
             return Double.parseDouble(aCalculer);
         }
-        
+
         if (!estCalc.matches()) {
-            // return Double.NaN; // le calcul n'est pas réalisable
+            return Double.NaN; // le calcul n'est pas réalisable
             //System.out.println("detecté comme faux");
         }
         // else
@@ -192,9 +195,9 @@ public class Utilitaires {
                 testeur.skip("\\s*");
             }
         }
-        //System.out.println(listeOperande.toString());
-        //System.out.println(listeOperateur.toString());
-
+        // System.out.println(listeOperande.toString());
+        // System.out.println(listeOperateur.toString());
+        // System.out.println(aCalculer);
         resultat = listeOperande.get(0);
         // pour chaques opérateur on effectue les calculs associés
         for (int i=0; i < listeOperateur.size(); i++) {
