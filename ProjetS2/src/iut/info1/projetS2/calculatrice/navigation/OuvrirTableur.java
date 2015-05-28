@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Permet d'ouvrir le tableur et de fermer la calculatrice
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 @SuppressWarnings("serial")

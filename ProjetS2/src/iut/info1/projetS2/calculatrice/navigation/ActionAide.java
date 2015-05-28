@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  * Permet d'appeler la classe Aide car on ne peut pas appeler cette dernière 
  * directement via le JMenuBar étant donné que la classe n'hérite pas de 
  * AbstractAction.
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 @SuppressWarnings("serial")

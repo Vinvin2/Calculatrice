@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 /**
  * Classe utilitaire permettant de réaliser les opérations en fonction des
  * commandes entrées ou des boutons cliqués
- * @author Sébi & jo
+ * @author Sebastien et Jonathan
  * @version 1.0
  */
 public class Utilitaires {    

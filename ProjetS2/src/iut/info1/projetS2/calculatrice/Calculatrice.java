@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 
 /**
  * Création d'une interface graphique pour l'application Calculatrice
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 

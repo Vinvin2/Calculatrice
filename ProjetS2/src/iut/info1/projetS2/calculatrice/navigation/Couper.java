@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
 /**
  * Permet de couper le texte à l'intérieur de la console dans le presse-papier
  * lors de l'activation de l'évènement
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 @SuppressWarnings("serial")

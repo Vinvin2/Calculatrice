@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /** 
  * Permet d'afficher des informations lors de l'activation de l'évènement
- * @author Mickaël
+ * @author Maxime
  * @version 0.1
  */
 @SuppressWarnings("serial")

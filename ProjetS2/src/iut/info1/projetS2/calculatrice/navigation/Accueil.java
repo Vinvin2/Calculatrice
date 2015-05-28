@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /** 
  * Permet de fermer la calculatrice et de revenir au menu
- * @author 20-20
+ * @author Maxime
  * @version 0.1
  */
 @SuppressWarnings("serial")

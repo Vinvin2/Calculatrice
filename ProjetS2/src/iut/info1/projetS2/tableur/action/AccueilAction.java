@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 /** 
  * Permet de fermer le tableur et de revenir au menu lors de l'activation de 
  * cet évènement
- * @author Mickaël
+ * @author Maxime
  * @version 0.1
  */
 @SuppressWarnings("serial")

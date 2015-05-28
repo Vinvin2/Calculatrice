@@ -19,7 +19,7 @@ import iut.info1.projetS2.utilitaires.Utilitaires;
  * --> Important : <--
  * La classe commande est instaciable et sera FORCEMENT liée à un tableur (lors
  * de l'instanciation de ce dernier)
- * @author jo
+ * @author Jonathan
  * @version 0.1
  */
 public class Commandes {

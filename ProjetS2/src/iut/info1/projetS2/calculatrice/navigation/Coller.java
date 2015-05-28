@@ -13,7 +13,7 @@ import javax.swing.AbstractAction;
 /**
  * Permet de coller du texte dans notre console lors de l'activation de 
  * l'évènement
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 @SuppressWarnings("serial")

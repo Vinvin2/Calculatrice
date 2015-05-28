@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 /**
  * On créé une JTextArea afin de regrouper toutes les commandes d'aide 
  * concernant le tableur à l'intérieur 
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 @SuppressWarnings("serial")
@@ -60,13 +60,7 @@ public class TexteTabAide extends JTextArea {
         + "Les commandes ont en argument soit les coordonnées d'une cellule\n"
         + " comme par exemple A1 ou Z20, soit une plage de cellule comme : \n "
         + "A1..D5 ou B5..B20\n\n"
-        // Texte regroupant les commandes disponibles pour le mini-tableur
-        +"- Commandes pour le Mini-Tableur : \n\n"
-        +"VOIR   : Affiche soit le contenu de toutes les cellules de la \n"
-        + "feuille , soit le contenu de la cellule spécifiée, soit celui\n"
-        + "des cellules de la plage spécifiée\n"
-        + "--> Argument 1 : aucun ou cellule ou plage \n\n" 
-
+        // Texte regroupant les commandes disponibles pour le mini-tableur 
         +"VALEUR : Affiche soit le contenu de toutes les cellules de la \n"
         + "feuille, soit la valeur de la cellule spécifiée, soit celle des\n"
         + "cellules de la plage spécifiée\n"

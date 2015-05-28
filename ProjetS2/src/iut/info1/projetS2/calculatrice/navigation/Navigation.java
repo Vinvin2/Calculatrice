@@ -22,7 +22,7 @@ import javax.swing.SwingUtilities;
 
 /** 
  * Permet la création d'un menu de navigation pour la calculatrice
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Permet d'ouvrir la calculatrice et de fermer le menu de l'appli
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 @SuppressWarnings("serial")

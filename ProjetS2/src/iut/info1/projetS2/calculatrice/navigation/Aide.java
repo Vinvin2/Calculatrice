@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 /**
  * Classe qui permet d'ouvrir une fenêtre contenant les aides,
  * exemples d'utilisation et qui regroupe les commandes disponibles 
- * @author 20-20
+ * @author Vincent
  * @version 0.1
  */
 

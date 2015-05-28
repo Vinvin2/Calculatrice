@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /** 
  * Affiche des informations à propos du projet
- * @author 20-20
+ * @author Maxime
  * @version 0.1
  */
 @SuppressWarnings("serial")
