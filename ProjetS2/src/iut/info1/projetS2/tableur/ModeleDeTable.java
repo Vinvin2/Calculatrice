@@ -15,6 +15,19 @@ import javax.swing.table.AbstractTableModel;
 @SuppressWarnings("serial")
 public class ModeleDeTable extends AbstractTableModel {
     
+    /** fenetre de notre tableur */
+    private Tableur fenetre;
+    
+    /**
+     * Construction de notre classe qui appelle l'instance Tableur pour
+     * récupérer sa fenetre
+     * @param fenetre à récupérer
+     */
+    public ModeleDeTable(Tableur fenetre) {
+        
+        this.fenetre = fenetre;
+    }
+    
     /** Liste de toutes nos en-têtes */
     private String[] nomColonnes = {"A","B","C","D","E","F","G","H","I","J","K",
                                     "L","M","N","O","P","Q","R","S","T","U","V",
