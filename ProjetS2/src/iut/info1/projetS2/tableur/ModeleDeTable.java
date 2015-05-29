@@ -16,6 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class ModeleDeTable extends AbstractTableModel {
     
     /** fenetre de notre tableur */
+    @SuppressWarnings("unused")
     private Tableur fenetre;
     
     /**
