@@ -371,7 +371,7 @@ public class ActionTableur {
 
     /** 
      * Permet de savoir quand la touche espace ou la touche tab sont pressées
-     * @param arg0 touche pressée
+     * @param arg0 touche pressée 
      * @return  vrai si entrée ou tab sinon false
      */
     @SuppressWarnings("static-method")
