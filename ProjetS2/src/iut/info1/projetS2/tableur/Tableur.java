@@ -15,6 +15,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.awt.event.FocusEvent;
@@ -85,18 +86,12 @@ public class Tableur extends JFrame{
 
     /** contient les commandes liées à cette fenêtre */
     private Commandes actions;
+    
+    /** contient les actions liées au tableur */
+    private ActionTableur actionsTableur;
 
     /** contient les methodes de sauvegardes associées à ce fchier */
     private OutilsFichier sauvegarde; 
-    
-    /** Texte à l'intérieur de notre console */
-    private String textConsole = "";
-    
-    /** numéro de la ligne du tableur */
-    private int ligne = 0;
-    
-    /** numéro de la colonne du tableur */
-    private int colonne = 0;
 
     /**
      * Création d'un objet tableur
@@ -240,38 +235,10 @@ public class Tableur extends JFrame{
         // Ajout  de notre tableau dans le JPanel principal
         container.add(scroll, BorderLayout.CENTER);
         
-//        tableur.addKeyListener(new KeyListener() {
-//            
-//            @Override
-//            public void keyTyped(KeyEvent arg0) {               
-//                
-//            }
-//            
-//            @Override
-//            public void keyReleased(KeyEvent arg0) {
-//                                
-//            }
-//            
-//            @Override
-//            public void keyPressed(KeyEvent arg0) {
-//                if (ligne != tableur.getSelectedRow() + 1
-//                    || colonne != tableur.getSelectedColumn() + 1) {
-//                    ligne = tableur.getSelectedRow() + 1;
-//                    colonne = tableur.getSelectedColumn() + 1;
-//                    textConsole = "";
-//                    
-//                }
-//                
-//                char lettre = (char) (colonne + 64);
-//                if (textConsole == "") {
-//                    textConsole = lettre + String.valueOf(ligne) + " ";
-//                }
-//                textConsole += String.valueOf(arg0.getKeyChar());
-//                getConsole().setText(textConsole);
-//                
-//                
-//            }
-//        });
+        // permet de faire des actions dans le tableur
+        actionsTableur = new ActionTableur(this);
+        
+        
        
     }   
 
