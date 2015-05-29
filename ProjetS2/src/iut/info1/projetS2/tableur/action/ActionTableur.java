@@ -121,6 +121,10 @@ public class ActionTableur {
 
             @Override
             public void keyPressed(KeyEvent arg0) {
+                
+                // on récupère le tableau à deux dimensions contenant
+                // toutes les données de la table
+                String[][] stringTab = fenetre.getActions().getEntrees();
 
                 // On réinitialise notre console si on change de ligne ou 
                 // de colonne et on met à jour les valeurs de nos variables
@@ -160,22 +164,68 @@ public class ActionTableur {
 
                 // si la touche appuyé est celle du retour chariot
                 if (arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    textConsole = textConsole.substring(0,
-                                                        textConsole.length()-1);
-                    fenetre.getConsole().setText(textConsole);
+                    
+                    // si la taille de la chaine est supérieure à 3
+                    if (textConsole.length() > 3) {
+                        
+                        // on supprime le dernier caractère
+                        textConsole = textConsole.substring(0,
+                                textConsole.length()-1);
+                        
+                        // on affiche me texte dans la console
+                        fenetre.getConsole().setText(textConsole);
+                    }
                 }
 
                 // si entrée ou tab sont rentrées
                 if (actionPerformed(arg0)) {
+                    
+                    fenetre.getTableur().clearSelection();
                     
                     // on lance le calcul si possible
                     fenetre.getActions().actionValider();
 
                     // on vide la console
                     fenetre.getConsole().setText("");
-                }
+                    
+                    fenetre.getConsole().setText(stringTab[ligne-1][colonne-1]);
 
+                }
+                
+                // si on se déplace avec la touche directionnelle haut
+                if (arg0.getKeyCode() == KeyEvent.VK_UP) {
+                    
+                    // on affiche la valeur correspondante dans le tableur
+                    fenetre.getConsole().setText(stringTab[ligne-2][colonne-1]);
+                    
+                }
+                
+                // si on se déplace avec la touche directionnelle bas
+                if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
+                    
+                    // on affiche la valeur correspondante dans le tableur
+                    fenetre.getConsole().setText(stringTab[ligne][colonne-1]);
+                    
+                }
+                
+                // si on se déplace avec la touche directionnelle gauche
+                if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
+                    
+                    // on affiche la valeur correspondante dans le tableur
+                    fenetre.getConsole().setText(stringTab[ligne-1][colonne-2]);
+                    
+                }
+                
+                // si on se déplace avec la touche directionnelle droite
+                if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    
+                    // on affiche la valeur correspondante dans le tableur
+                    fenetre.getConsole().setText(stringTab[ligne-1][colonne]);
+                    
+                }
+                
             }  
+            
         });
     }
 

@@ -54,8 +54,10 @@ public class NouveauAction extends AbstractAction {
         // Si on veut ouvrir une nouveau tableur
         if (choix == JOptionPane.YES_NO_OPTION) {
             
-            // On réinitialise notre tableur 
+            // On réinitialise nos tableurs 
             ModeleDeTable.setDonnees(new Object[20][26]);
+            fenetre.getActions().setEntrees(
+                    new Commandes(fenetre).getEntrees());
 
             // On réinitialise le texte à l'intérieur de la console
             fenetre.getConsole().setText("");
