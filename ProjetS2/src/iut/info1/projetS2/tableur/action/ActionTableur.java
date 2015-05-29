@@ -85,8 +85,19 @@ public class ActionTableur {
                 // toutes les données de la table
                 String[][] stringTab = fenetre.getActions().getEntrees();
                 
-                // on affiche les données correspondant à la cellule sélectionée
-                fenetre.getConsole().setText(stringTab[ligne][colonne]);
+                // si la case est vide
+                if (stringTab[ligne][colonne] == "") {
+                    // on converti notre nombre en lettre
+                    char lettre = (char) (colonne + 65);
+                    
+                    textConsole = lettre + String.valueOf(ligne+1) + " ";
+                    fenetre.getConsole().setText(textConsole);
+
+                } else {
+
+                    // on affiche les données correspondant à la cellule sélectionée
+                    fenetre.getConsole().setText(stringTab[ligne][colonne]);
+                }
             }
         });
     }
