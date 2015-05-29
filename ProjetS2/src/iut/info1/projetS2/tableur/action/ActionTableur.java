@@ -44,7 +44,7 @@ public class ActionTableur {
         // On appelle les actions liées aux touches du clavier
         actionsTouches();
     }
-    
+
     /**
      * Permet de gérer toutes les actions reliées à la souris
      */
@@ -74,28 +74,29 @@ public class ActionTableur {
 
             @Override
             public void mouseClicked(MouseEvent arg0) {
-                
+
                 // on récupère le numéro de ligne
                 ligne = fenetre.getTableur().getSelectedRow();
-                
+
                 // on récupère le numéro de colonne
                 colonne = fenetre.getTableur().getSelectedColumn();
-                
+
                 // on récupère le tableau à deux dimensions contenant
                 // toutes les données de la table
                 String[][] stringTab = fenetre.getActions().getEntrees();
-                
+
                 // si la case est vide
                 if (stringTab[ligne][colonne] == "") {
                     // on converti notre nombre en lettre
                     char lettre = (char) (colonne + 65);
-                    
+
                     textConsole = lettre + String.valueOf(ligne+1) + " ";
                     fenetre.getConsole().setText(textConsole);
 
                 } else {
 
-                    // on affiche les données correspondant à la cellule sélectionée
+                    // on affiche les données correspondant à 
+                    // la cellule sélectionée
                     fenetre.getConsole().setText(stringTab[ligne][colonne]);
                 }
             }
@@ -106,127 +107,189 @@ public class ActionTableur {
      * Permet de gérer toutes les actions reliées aux touches de la souris
      */
     public void actionsTouches() {
+        try {
+            fenetre.getTableur().addKeyListener(new KeyListener() {
 
-        fenetre.getTableur().addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyTyped(KeyEvent arg0) {               
-                // non utilisée
-            }
-
-            @Override
-            public void keyReleased(KeyEvent arg0) {
-                // non utilisée
-            }
-
-            @Override
-            public void keyPressed(KeyEvent arg0) {
-                
-                // on récupère le tableau à deux dimensions contenant
-                // toutes les données de la table
-                String[][] stringTab = fenetre.getActions().getEntrees();
-
-                // On réinitialise notre console si on change de ligne ou 
-                // de colonne et on met à jour les valeurs de nos variables
-                if (ligne != fenetre.getTableur().getSelectedRow() + 1
-                   || colonne != fenetre.getTableur().getSelectedColumn() + 1) {
-                    
-                    // on récupère le numéro de ligne
-                    ligne = fenetre.getTableur().getSelectedRow() + 1;
-                    
-                    // on récupère le numéro de colonne
-                    colonne = fenetre.getTableur().getSelectedColumn() + 1;
-                    
-                    // on réinitialise notre texte
-                    textConsole = "";
-
+                @Override
+                public void keyTyped(KeyEvent arg0) {               
+                    // non utilisée
                 }
 
-                // on converti notre nombre en lettre
-                char lettre = (char) (colonne + 64);
-
-                // si la console est vide on lui rajoute le numéro de la 
-                // ligne et la lettre de la colonne
-                if (textConsole == "") {
-                    textConsole = lettre + String.valueOf(ligne) + " ";
+                @Override
+                public void keyReleased(KeyEvent arg0) {
+                    // non utilisée
                 }
 
-                // si la touche appuyée est différente des flèches et du 
-                // retour chariot
-                if (toucheCorrecte(arg0)) {
+                @Override
+                public void keyPressed(KeyEvent arg0) {
 
-                    // A chaque fois que l'on appui sur une touche on ajoute le
-                    // caractère entré dans notre console
-                    textConsole += String.valueOf(arg0.getKeyChar());
-                    fenetre.getConsole().setText(textConsole);
+                    // on récupère le tableau à deux dimensions contenant
+                    // toutes les données de la table
+                    String[][] stringTab = fenetre.getActions().getEntrees();
 
-                }
+                    // On réinitialise notre console si on change de ligne ou 
+                    // de colonne et on met à jour les valeurs de nos variables
+                    if (ligne != fenetre.getTableur().getSelectedRow() + 1
+                            || colonne != fenetre.getTableur()
+                            .getSelectedColumn() + 1) {
 
-                // si la touche appuyé est celle du retour chariot
-                if (arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    
-                    // si la taille de la chaine est supérieure à 3
-                    if (textConsole.length() > 3) {
-                        
-                        // on supprime le dernier caractère
-                        textConsole = textConsole.substring(0,
-                                textConsole.length()-1);
-                        
-                        // on affiche me texte dans la console
-                        fenetre.getConsole().setText(textConsole);
+                        // on récupère le numéro de ligne
+                        ligne = fenetre.getTableur().getSelectedRow() + 1;
+
+                        // on récupère le numéro de colonne
+                        colonne = fenetre.getTableur().getSelectedColumn() + 1;
+
+                        // on réinitialise notre texte
+                        textConsole = "";
+
                     }
-                }
 
-                // si entrée ou tab sont rentrées
-                if (actionPerformed(arg0)) {
-                    
-                    fenetre.getTableur().clearSelection();
-                    
-                    // on lance le calcul si possible
-                    fenetre.getActions().actionValider();
+                    // on converti notre nombre en lettre
+                    char lettre = (char) (colonne + 64);
 
-                    // on vide la console
-                    fenetre.getConsole().setText("");
-                    
-                    fenetre.getConsole().setText(stringTab[ligne-1][colonne-1]);
+                    // si la console est vide on lui rajoute le numéro de la 
+                    // ligne et la lettre de la colonne
+                    if (textConsole == "") {
+                        textConsole = lettre + String.valueOf(ligne) + " ";
+                    }
 
-                }
-                
-                // si on se déplace avec la touche directionnelle haut
-                if (arg0.getKeyCode() == KeyEvent.VK_UP) {
-                    
-                    // on affiche la valeur correspondante dans le tableur
-                    fenetre.getConsole().setText(stringTab[ligne-2][colonne-1]);
-                    
-                }
-                
-                // si on se déplace avec la touche directionnelle bas
-                if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
-                    
-                    // on affiche la valeur correspondante dans le tableur
-                    fenetre.getConsole().setText(stringTab[ligne][colonne-1]);
-                    
-                }
-                
-                // si on se déplace avec la touche directionnelle gauche
-                if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-                    
-                    // on affiche la valeur correspondante dans le tableur
-                    fenetre.getConsole().setText(stringTab[ligne-1][colonne-2]);
-                    
-                }
-                
-                // si on se déplace avec la touche directionnelle droite
-                if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    
-                    // on affiche la valeur correspondante dans le tableur
-                    fenetre.getConsole().setText(stringTab[ligne-1][colonne]);
-                    
-                }
-                
-            }  
-            
-        });
+                    // si la touche appuyée est différente des flèches et du 
+                    // retour chariot
+                    if (toucheCorrecte(arg0)) {
+
+                        // A chaque fois que l'on appui sur une touche on
+                        // ajoute le caractère entré dans notre console
+                        textConsole += String.valueOf(arg0.getKeyChar());
+                        fenetre.getConsole().setText(textConsole);
+
+                    }
+
+                    // si la touche appuyé est celle du retour chariot
+                    if (arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+
+                        // si la taille de la chaine est supérieure à 3
+                        if (textConsole.length() > 3) {
+
+                            // on supprime le dernier caractère
+                            textConsole = textConsole.substring(0,
+                                    textConsole.length()-1);
+
+                            // on affiche me texte dans la console
+                            fenetre.getConsole().setText(textConsole);
+                        }
+                    }
+
+                    // si entrée ou tab sont rentrées
+                    if (actionPerformed(arg0)) {
+
+                        // on lance le calcul si possible
+                        fenetre.getActions().actionValider();
+
+                        // on vide la console
+                        fenetre.getConsole().setText("");
+
+                        fenetre.getConsole().setText(
+                                stringTab[ligne-1][colonne-1]);
+
+                    }
+
+                    // si on se déplace avec la touche directionnelle haut
+                    if (arg0.getKeyCode() == KeyEvent.VK_UP) {
+
+                        // si la case est vide
+                        if (stringTab[ligne-2][colonne-1] == "") {
+                            // on converti notre nombre en lettre
+                            lettre = (char) (colonne + 64);
+
+                            textConsole = lettre 
+                                    + String.valueOf(ligne-1) + " ";
+                            fenetre.getConsole().setText(textConsole);
+
+                            // on lance le calcul si possible
+                            fenetre.getActions().actionValider();
+
+                        } else {
+
+                            // on affiche la valeur correspondante
+                            // dans le tableur
+                            fenetre.getConsole().setText(
+                                    stringTab[ligne-2][colonne-1]);
+                        }
+                    }
+
+                    // si on se déplace avec la touche directionnelle bas
+                    if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
+
+                        // si la case est vide
+                        if (stringTab[ligne][colonne-1] == "") {
+                            // on converti notre nombre en lettre
+                            lettre = (char) (colonne + 64);
+
+                            textConsole = lettre 
+                                    + String.valueOf(ligne+1) + " ";
+                            fenetre.getConsole().setText(textConsole);
+
+                            // on lance le calcul si possible
+                            fenetre.getActions().actionValider();
+
+                        } else {
+                            // on affiche la valeur correspondante
+                            // dans le tableur
+                            fenetre.getConsole().setText(
+                                    stringTab[ligne][colonne-1]);
+                        }
+                    }
+
+                    // si on se déplace avec la touche directionnelle gauche
+                    if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
+
+                        // si la case est vide
+                        if (stringTab[ligne-1][colonne-2] == "") {
+                            // on converti notre nombre en lettre
+                            lettre = (char) (colonne + 63);
+
+                            textConsole = lettre + String.valueOf(ligne) + " ";
+                            fenetre.getConsole().setText(textConsole);
+
+                            // on lance le calcul si possible
+                            fenetre.getActions().actionValider();
+
+                        } else {
+                            // on affiche la valeur correspondante
+                            // dans le tableur
+                            fenetre.getConsole().setText(
+                                    stringTab[ligne-1][colonne-2]);
+                        }
+                    }
+
+                    // si on se déplace avec la touche directionnelle droite
+                    if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
+
+                        // si la case est vide
+                        if (stringTab[ligne-1][colonne] == "") {
+                            // on converti notre nombre en lettre
+                            lettre = (char) (colonne + 65);
+
+                            textConsole = lettre + String.valueOf(ligne) + " ";
+                            fenetre.getConsole().setText(textConsole);
+
+                            // on lance le calcul si possible
+                            fenetre.getActions().actionValider();
+
+                        } else {
+
+                            // on affiche la valeur correspondante
+                            // dans le tableur
+                            fenetre.getConsole().setText(
+                                    stringTab[ligne-1][colonne]);
+                        }
+                    }
+
+                }  
+            });
+        } catch (IndexOutOfBoundsException e) {
+            // branche morte
+        }
     }
 
     /** 
@@ -237,7 +300,7 @@ public class ActionTableur {
     protected static boolean toucheCorrecte(KeyEvent arg0) {
 
         boolean bon = false;
-        
+
         // code de notre touche
         int source = arg0.getKeyCode();
 
@@ -313,9 +376,9 @@ public class ActionTableur {
      */
     @SuppressWarnings("static-method")
     public boolean actionPerformed(KeyEvent arg0) {
-        
+
         boolean ok = false; 
-        
+
         // code de notre touche
         int source = arg0.getKeyCode();
 
