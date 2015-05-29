@@ -3,7 +3,7 @@
  * IUT Info 1 2014/2015 groupe 3
  */
 package iut.info1.projetS2.tableur.action;
-
+import iut.info1.projetS2.tableur.*;
 
 /**
  * tests de la classe commande

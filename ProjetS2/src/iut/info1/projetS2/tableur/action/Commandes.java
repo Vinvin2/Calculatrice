@@ -197,7 +197,7 @@ public class Commandes {
                 break;
             }
         }
-        System.out.println(lol.toString());
+        // System.out.println(lol.toString());
         // remplace s'il y en a les occurence de cases par leur valeur
         for (int i = 0; i < lol.size(); i++) {
             if (lol.get(i).matches(REG_MODIF2)) { // lettre/chiffre
@@ -242,7 +242,7 @@ public class Commandes {
 
         }
         test.close();
-        System.out.println("aRenvoyer " + aRenvoyer);
+        // System.out.println("aRenvoyer " + aRenvoyer);
         return aRenvoyer;
     }
 
