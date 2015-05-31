@@ -40,7 +40,7 @@ public class Commandes {
     private static final String REG_NBRE = "(0*(1?\\d|20))";
 
     /** pattern d'un nombre de cellule */
-    private static final String REG_NBRE2 = "((\\0044)?0*((1?\\d|20)))";
+    private static final String REG_NBRE2 = "((\\0044)?0*((20|1?\\d)))";
 
     /** Pattern d'une case type nombreLettre */
     private static final String REG_CASE1 = "("+REG_NBRE+REG_LETTRE+")";
@@ -176,7 +176,7 @@ public class Commandes {
      * @param nbDecCol nombre de décalage à effectuer sur la colonne
      * @return une chaine représentant le calcul adapté
      */
-    private static String adapteCalc(String aAdapter, int nbDecLig,
+    protected static String adapteCalc(String aAdapter, int nbDecLig,
             int nbDecCol) {
         // ArrayList contenant les cases à remplacer trouvées
         ArrayList<String> lol = new ArrayList<String>();
@@ -226,15 +226,16 @@ public class Commandes {
                 //for (int j = 0; j < testeur.groupCount(); j++) {
                 //    System.out.println(j + " lol " + testeur.group(j));
                 //}
-                tmpChar // recupère la colonne modifiée ou non en cas de '$'
-                = colonneLocked(lol.get(i)) ? testeur.group(6)
-                        : testeur.group(6);
                 tmp // recupère la ligne modifiée ou non en cas de '$'
                 = ligneLocked(lol.get(i)) ? "$".concat(testeur.group(5))
                         : String.valueOf(
                                 Integer.parseInt(testeur.group(5)) + nbDecLig);
+                tmpChar // recupère la colonne modifiée ou non en cas de '$'
+                = colonneLocked(lol.get(i)) ? testeur.group(6)
+                        : String.valueOf(
+                                (char)(testeur.group(6).charAt(0) + nbDecCol));
                 // rend les '$' utilisable pour replaceFirst
-                tmp = String.valueOf(tmpChar).concat(tmp);
+                tmp = tmp.concat(tmpChar);
                 tmp = Matcher.quoteReplacement(tmp);
                 aRenvoyer = aRenvoyer.replaceFirst(
                         Matcher.quoteReplacement(lol.get(i)), tmp);  
@@ -369,37 +370,38 @@ public class Commandes {
         int[] coordFinalInit; // début coordonnées de l'emplacement ou copier
         int[] coordFinalFinal;// fin coordonnées del'emplacement ou copier
         Scanner donnees; // analyseur de plages
+        Scanner recup; // analyser une chaine pour récuperer la case ouCopier
+        String tmp; // contient la case initale de ouCopier
 
         if (aCopier.matches(REG_CASE) && ouCopier.matches(REG_CASE)) {
             coordInitInit = recupCase(aCopier);
             coordFinalInit = recupCase(ouCopier);
             // les données sont correctement récupérées
-            this.fenetre.getModele().setValueAt(
-                    this.entrees[coordInitInit[0]][coordInitInit[1]],
-                    coordFinalInit[0], coordFinalInit[1]);
-            this.entrees[coordInitInit[0]][coordInitInit[1]]
-                    = this.entrees[coordFinalInit[0]][coordFinalInit[1]];
-            this.fenetre.getLabel().setText("Copie effectuée");
+            recup = new Scanner(
+                    this.entrees[coordInitInit[0]][coordInitInit[1]]);
+            recup.next();
+            this.affichage(ouCopier + " " + recup.nextLine());
             // this.fenetre.getConsole().setText("");
         } else if (aCopier.matches(REG_CASE) && ouCopier.matches(REG_PLAGE)) {
             coordInitInit = recupCase(aCopier);
             // donnees analyse la plage ouCopier
             donnees = new Scanner(ouCopier).useDelimiter("\\0056{2}");
             // la syntaxe est déjà vérifiée, la récupération marchera
-            coordFinalInit = recupCase(donnees.next());
+            tmp = donnees.next();
+            coordFinalInit = recupCase(tmp);
             coordFinalFinal = recupCase(donnees.next());
             // copie i*j fois la case coordInitInit
             for (int i = coordFinalInit[0]; i <= coordFinalFinal[0]; i++) {
                 for (int j = coordFinalInit[1]; j <= coordFinalFinal[1]; j++) {
-                    this.fenetre.getModele().setValueAt(
-                            this.fenetre.getModele().getValueAt(
-                                    coordInitInit[0], coordInitInit[1]), i, j);
-                    this.entrees[i][j] = 
-                            this.entrees[coordInitInit[0]][coordInitInit[1]];
+                    recup = new Scanner( // récupère la commande source
+                            this.entrees[coordInitInit[0]][coordInitInit[1]]);
+                    recup.skip(REG_CASE);
+                    this.affichage(adapteCalc(tmp, i - coordFinalInit[0], 
+                            j - coordFinalInit[1]) + " " + recup.nextLine());
                 }
             }
             this.fenetre.getLabel().setText("Copie effectuée");
-            // this.fenetre.getConsole().setText("");
+            // // this.fenetre.getConsole().setText("");
         } else if (aCopier.matches(REG_PLAGE) && ouCopier.matches(REG_PLAGE)) {
 
             int xPattern; //nombre de colonnes du pattern à copier
@@ -414,7 +416,8 @@ public class Commandes {
             // donnees analyse la plage ouCopier
             donnees = new Scanner(ouCopier);
             donnees.useDelimiter("\\0056{2}");
-            coordFinalInit = recupCase(donnees.next());
+            tmp = donnees.next();
+            coordFinalInit = recupCase(tmp);
             coordFinalFinal = recupCase(donnees.next());
             donnees.close();
             /*
@@ -429,17 +432,17 @@ public class Commandes {
              * initfinal[1] - initfinal[1] 
              */
             try { // gère le cas de la division par 0
-                copieOk = ((coordFinalFinal[0]-coordFinalInit[0]+1)
+                copieOk = (((coordFinalFinal[0]-coordFinalInit[0]+1)
                         /(coordInitFinal[0]-coordInitInit[0]+1))
-                        %((coordFinalFinal[0]-coordFinalInit[0]+1)
-                                /(coordInitFinal[0]-coordInitInit[0]+1))==0
-                                && ((coordFinalFinal[1]-coordFinalInit[1]+1)
+                        %((coordInitFinal[0]-coordInitInit[0]+1)
+                                /(coordInitFinal[0]-coordInitInit[0]+1))==0)
+                                &&(((coordFinalFinal[1]-coordFinalInit[1]+1)
                                         /(coordInitFinal[1]-coordInitInit[1]+1))
                                         %((coordFinalFinal[1]
                                                 -coordFinalInit[1]+1)
                                                 /(coordInitFinal[1]
                                                         -coordInitInit[1]
-                                                                +1))==0;
+                                                                +1))==0);
             } catch (ArithmeticException e) {
                 // division par 0 => intervalle mauvais
                 copieOk = false;
@@ -449,17 +452,15 @@ public class Commandes {
                 xPattern = coordInitFinal[0] - coordInitInit[0] + 1;
                 yPattern = coordInitFinal[1] - coordInitInit[1] + 1;
                 // copie
-                for (int i = coordFinalInit[0]; i<=coordFinalFinal[0];i++) {
-                    for (int j = coordFinalInit[1]; j<=coordFinalFinal[1];j++) {
-                        this.fenetre.getModele().setValueAt(
-                                this.fenetre.getModele().getValueAt(
-                                        (coordInitInit[0] + i) % xPattern, 
-                                        (coordInitInit[1] + j) % yPattern),
-                                        i, j);
-                        // copie également les commandes enregistrées
-                        this.entrees[i][j] =
-                                this.entrees[(coordInitInit[0] + i) % xPattern]
-                                        [(coordInitInit[1] + j) % yPattern];
+                for (int i = 0; i<=coordFinalFinal[0]-coordFinalInit[0]; i++) {
+                    for (int j = 0; j<=coordFinalFinal[1]-coordFinalInit[1]
+                            ;j++) {
+                        recup= new Scanner( // récupère la commande source
+                                this.entrees[coordInitInit[0]+(i%xPattern)]
+                                        [coordInitInit[1]+(j%yPattern)]);
+                        recup.next();
+                        this.affichage(adapteCalc(tmp, i, j)
+                                + " " + recup.nextLine());
                     }
                 }
                 this.fenetre.getLabel().setText("Copie effectuée");
@@ -498,7 +499,7 @@ public class Commandes {
             coordInit = recupCase(recup.next());
             coordFinal = recupCase(recup.next());
             recup.close();
-            
+
             // les coordonnées ont été récupérées
             if (coordInit != null && coordFinal != null) {
                 for (i = coordInit[0]; i <= coordFinal[0]; i++) {
@@ -729,7 +730,7 @@ public class Commandes {
      * @param caseAtester case ou la recherche s'effectue
      * @return true si la case est verrouillée false sinon
      */
-    private static boolean ligneLocked(String caseAtester) {
+    protected static boolean ligneLocked(String caseAtester) {
         Pattern testCase = Pattern.compile(REG_MODIF);
         Matcher siCase = testCase.matcher(caseAtester);
         if (siCase.matches()) {
@@ -750,7 +751,7 @@ public class Commandes {
      * @param caseAtester case ou la recherche s'eefectue
      * @return true si la case est verrouillée false sinon
      */
-    private static boolean colonneLocked(String caseAtester) {
+    protected static boolean colonneLocked(String caseAtester) {
         Pattern testCase = Pattern.compile(REG_MODIF);
         Matcher siCase = testCase.matcher(caseAtester);
         if (siCase.matches()) {
@@ -817,9 +818,6 @@ public class Commandes {
             }
         }
     }
-
-    //public String 
-
 
     /**
      * @return the entrees
